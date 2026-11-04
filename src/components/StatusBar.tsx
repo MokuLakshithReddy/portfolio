@@ -1,7 +1,64 @@
-import React from 'react'
-import { Wifi } from 'lucide-react'
+import React, { useState, useEffect } from 'react'
+import { Wifi, WifiOff, Zap } from 'lucide-react'
+
+const formatDateTime = (date: Date): string => {
+  const weekday = date.toLocaleDateString('en-US', { weekday: 'short' })
+  const month = date.toLocaleDateString('en-US', { month: 'short' })
+  const day = date.getDate()
+  const year = date.getFullYear()
+  const time = date.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true
+  })
+  return `${weekday}, ${month} ${day}, ${year} ${time}`
+}
 
 export const StatusBar: React.FC = () => {
+  const [currentDateTime, setCurrentDateTime] = useState<string>(() => formatDateTime(new Date()))
+  const [batteryLevel, setBatteryLevel] = useState<number>(85)
+  const [isCharging, setIsCharging] = useState<boolean>(false)
+  const [isOnline, setIsOnline] = useState<boolean>(() => typeof navigator !== 'undefined' ? navigator.onLine : true)
+
+  useEffect(() => {
+    // 1. Live ticking clock
+    const timer = setInterval(() => {
+      setCurrentDateTime(formatDateTime(new Date()))
+    }, 1000)
+
+    // 2. Network status
+    const handleOnline = () => setIsOnline(true)
+    const handleOffline = () => setIsOnline(false)
+    window.addEventListener('online', handleOnline)
+    window.addEventListener('offline', handleOffline)
+
+    // 3. Battery API (if supported by browser)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const nav = navigator as any
+    if (nav && typeof nav.getBattery === 'function') {
+      nav.getBattery().then((battery: {
+        level: number
+        charging: boolean
+        addEventListener: (event: string, fn: () => void) => void
+        removeEventListener: (event: string, fn: () => void) => void
+      }) => {
+        const updateBattery = () => {
+          setBatteryLevel(Math.round(battery.level * 100))
+          setIsCharging(battery.charging)
+        }
+        updateBattery()
+        battery.addEventListener('levelchange', updateBattery)
+        battery.addEventListener('chargingchange', updateBattery)
+      }).catch(() => {})
+    }
+
+    return () => {
+      clearInterval(timer)
+      window.removeEventListener('online', handleOnline)
+      window.removeEventListener('offline', handleOffline)
+    }
+  }, [])
+
   return (
     <header className="w-full h-[36px] bg-[#ECE4D4]/90 border-b border-[#D8CEBD] px-4 md:px-6 flex items-center justify-between text-[#111111] text-[12px] font-sans select-none z-30 relative">
       {/* Left controls */}
@@ -24,20 +81,33 @@ export const StatusBar: React.FC = () => {
 
       {/* Right status items */}
       <div className="flex items-center gap-3 font-normal text-[12px] text-[#222222]">
-        <span>Mon, Nov 3, 2025 10:24 AM</span>
+        <span className="tabular-nums font-mono-tech sm:font-sans">{currentDateTime}</span>
         
         {/* Wifi */}
-        <Wifi className="w-3.5 h-3.5 stroke-[2.2] text-[#111111]" />
+        <span title={isOnline ? 'Connected' : 'Offline'}>
+          {isOnline ? (
+            <Wifi className="w-3.5 h-3.5 stroke-[2.2] text-[#111111]" />
+          ) : (
+            <WifiOff className="w-3.5 h-3.5 stroke-[2.2] text-red-600" />
+          )}
+        </span>
 
         {/* Battery */}
-        <div className="flex items-center gap-0.5">
-          <div className="w-[20px] h-[10.5px] border border-[#111111] rounded-[2.5px] p-[1.5px] flex items-center">
-            <div className="h-full w-[80%] bg-[#111111] rounded-[1px]" />
+        <div className="flex items-center gap-1" title={`${batteryLevel}% ${isCharging ? '(Charging)' : ''}`}>
+          <div className="flex items-center gap-0.5">
+            <div className="w-[20px] h-[10.5px] border border-[#111111] rounded-[2.5px] p-[1.5px] flex items-center relative">
+              <div 
+                className="h-full bg-[#111111] rounded-[1px] transition-all duration-300"
+                style={{ width: `${Math.max(10, Math.min(100, batteryLevel))}%` }}
+              />
+              {isCharging && (
+                <Zap className="w-2.5 h-2.5 text-[#FFBD2E] fill-[#FFBD2E] absolute inset-0 m-auto" />
+              )}
+            </div>
+            <div className="w-[1.5px] h-[4px] bg-[#111111] rounded-r-[1px]" />
           </div>
-          <div className="w-[1.5px] h-[4px] bg-[#111111] rounded-r-[1px]" />
         </div>
       </div>
     </header>
   )
 }
-
