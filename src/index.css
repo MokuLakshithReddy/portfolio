@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@theme {
+  --font-anton: 'Anton', sans-serif;
+  --font-mono: 'Space Mono', 'IBM Plex Mono', monospace;
+  --font-hand: 'Caveat', 'Kalam', cursive;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --color-paper: #F5EFEB;
+  --color-paper-light: #F7F0E3;
+  --color-paper-dark: #ECE3D4;
+  --color-electric: #0755F5;
+  --color-accent-yellow: #FFB600;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #F4ECE1;
+  color: #111111;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+  width: 100%;
+}
+
+.font-anton {
+  font-family: 'Anton', sans-serif;
+}
+
+.font-mono-tech {
+  font-family: 'Space Mono', 'IBM Plex Mono', monospace;
+}
+
+.font-handwriting {
+  font-family: 'Caveat', cursive;
+}
+
+.font-kalam {
+  font-family: 'Kalam', cursive;
+}
+
+/* Paper grain overlay */
+.paper-texture {
+  background-color: #F5EFEB;
+  background-image: 
+    radial-gradient(at 10% 20%, rgba(245, 235, 220, 0.9) 0px, transparent 50%),
+    radial-gradient(at 90% 10%, rgba(240, 230, 215, 0.9) 0px, transparent 50%),
+    radial-gradient(at 50% 80%, rgba(242, 232, 218, 0.8) 0px, transparent 50%);
+}
