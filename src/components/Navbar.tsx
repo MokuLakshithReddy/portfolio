@@ -3,6 +3,7 @@ import {
   Home, 
   Folder, 
   Briefcase, 
+  Award,
   Code2, 
   FileText, 
   Mail 
@@ -84,27 +85,25 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* Navigation items: fluid, responsive spacing that avoids collision on all screen widths */}
       <div className="hidden lg:flex items-center gap-4 xl:gap-7 text-[14px] xl:text-[14.5px]">
-        {/* 1. Home - Active Pill */}
+        {/* 1. Home - Prominent Electric-Blue Pill */}
         <a
           href="#home"
           onClick={(e) => handleNavClick('home', e)}
-          className={`flex items-center gap-2 px-4 xl:px-5 py-1.5 xl:py-2 rounded-full font-medium transition-all duration-200 cursor-pointer shadow-sm outline-none ${
-            activeSection === 'home'
-              ? 'bg-[#0755F5] text-white'
-              : 'text-[#111111] hover:text-[#0755F5]'
-          }`}
+          className="flex items-center gap-2 px-4 xl:px-5 py-1.5 xl:py-2 rounded-full font-semibold transition-all duration-200 cursor-pointer shadow-sm outline-none bg-[#0755F5] text-white hover:bg-[#0043D6]"
         >
           <Home className="w-4 h-4 stroke-[2.2] text-white" />
-          <span className="font-semibold">Home</span>
+          <span>Home</span>
         </a>
 
         {/* 2. Projects */}
         <a
           href="#projects"
           onClick={(e) => handleNavClick('projects', e)}
-          className="flex items-center gap-2 px-1 text-[#111111] hover:text-[#0755F5] font-medium transition-colors cursor-pointer outline-none"
+          className={`flex items-center gap-2 px-1 font-medium transition-colors cursor-pointer outline-none ${
+            activeSection === 'projects' ? 'text-[#0755F5]' : 'text-[#111111] hover:text-[#0755F5]'
+          }`}
         >
-          <Folder className="w-4 h-4 stroke-[2] text-[#111111]" />
+          <Folder className="w-4 h-4 stroke-[2]" />
           <span>Projects</span>
         </a>
 
@@ -112,39 +111,59 @@ export const Navbar: React.FC<NavbarProps> = ({
         <a
           href="#experience"
           onClick={(e) => handleNavClick('experience', e)}
-          className="flex items-center gap-2 px-1 text-[#111111] hover:text-[#0755F5] font-medium transition-colors cursor-pointer outline-none"
+          className={`flex items-center gap-1.5 xl:gap-2 px-1 font-medium transition-colors cursor-pointer outline-none ${
+            activeSection === 'experience' ? 'text-[#0755F5]' : 'text-[#111111] hover:text-[#0755F5]'
+          }`}
         >
-          <Briefcase className="w-4 h-4 stroke-[2] text-[#111111]" />
+          <Briefcase className="w-4 h-4 stroke-[2]" />
           <span>Experience</span>
         </a>
 
-        {/* 4. Skills */}
+        {/* 4. Achievements */}
+        <a
+          href="#achievements"
+          onClick={(e) => handleNavClick('achievements', e)}
+          className={`flex items-center gap-1.5 xl:gap-2 px-1 font-medium transition-colors cursor-pointer outline-none ${
+            activeSection === 'achievements' ? 'text-[#0755F5]' : 'text-[#111111] hover:text-[#0755F5]'
+          }`}
+        >
+          <Award className="w-4 h-4 stroke-[2]" />
+          <span>Achievements</span>
+        </a>
+
+        {/* 5. Skills */}
         <a
           href="#skills"
           onClick={(e) => handleNavClick('skills', e)}
-          className="flex items-center gap-2 px-1 text-[#111111] hover:text-[#0755F5] font-medium transition-colors cursor-pointer outline-none"
+          className={`flex items-center gap-2 px-1 font-medium transition-colors cursor-pointer outline-none ${
+            activeSection === 'skills' ? 'text-[#0755F5]' : 'text-[#111111] hover:text-[#0755F5]'
+          }`}
         >
-          <Code2 className="w-4 h-4 stroke-[2] text-[#111111]" />
+          <Code2 className="w-4 h-4 stroke-[2]" />
           <span>Skills</span>
         </a>
 
-        {/* 5. Blog */}
+        {/* 6. Blog */}
         <a
           href="#blog"
           onClick={(e) => handleNavClick('blog', e)}
-          className="flex items-center gap-2 px-1 text-[#111111] hover:text-[#0755F5] font-medium transition-colors cursor-pointer outline-none"
+          className={`flex items-center gap-2 px-1 font-medium transition-colors cursor-pointer outline-none ${
+            activeSection === 'blog' ? 'text-[#0755F5]' : 'text-[#111111] hover:text-[#0755F5]'
+          }`}
         >
-          <FileText className="w-4 h-4 stroke-[2] text-[#111111]" />
+          <FileText className="w-4 h-4 stroke-[2]" />
           <span>Blog</span>
         </a>
 
-        {/* 6. Contact */}
+        {/* 7. Contact */}
         <a
           href="#contact"
           onClick={(e) => handleNavClick('contact', e)}
-          className="flex items-center gap-2 px-1 text-[#111111] hover:text-[#0755F5] font-medium transition-colors cursor-pointer outline-none"
+          className={`flex items-center gap-2 px-1 font-medium transition-colors cursor-pointer outline-none ${
+            activeSection === 'contact' ? 'text-[#0755F5]' : 'text-[#111111] hover:text-[#0755F5]'
+          }`}
         >
-          <Mail className="w-4 h-4 stroke-[2] text-[#111111]" />
+          <Mail className="w-4 h-4 stroke-[2]" />
           <span>Contact</span>
         </a>
       </div>

@@ -4,6 +4,7 @@ import { Navbar } from './components/Navbar'
 import { HeroSection } from './components/HeroSection'
 import { ProjectsSection } from './components/ProjectsSection'
 import { ExperienceSection } from './components/ExperienceSection'
+import { AchievementsSection } from './components/AchievementsSection'
 import { SkillsSection } from './components/SkillsSection'
 import { BlogSection } from './components/BlogSection'
 import { ContactSection } from './components/ContactSection'
@@ -16,7 +17,7 @@ export function App() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'projects', 'experience', 'skills', 'blog', 'contact']
+      const sections = ['home', 'projects', 'experience', 'achievements', 'skills', 'blog', 'contact']
       const scrollPos = window.scrollY + 120
 
       for (const section of sections) {
@@ -61,6 +62,7 @@ export function App() {
         <HeroSection onExploreClick={() => handleNavigate('projects')} />
         <ProjectsSection />
         <ExperienceSection />
+        <AchievementsSection />
         <SkillsSection />
         <BlogSection />
         <ContactSection />
