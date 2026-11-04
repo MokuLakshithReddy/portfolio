@@ -4,39 +4,40 @@ import { ExternalLink, FolderGit2 } from 'lucide-react'
 export const ProjectsSection: React.FC = () => {
   const projects = [
     {
-      title: 'Autonomous Multi-Agent Orchestrator',
-      description: 'Hierarchical agent runtime coordinating specialized LLM agents for complex software tasks with loop prevention and tool sandboxing.',
-      tags: ['AI Agents', 'Python', 'FastAPI', 'Vector DB', 'AsyncIO'],
-      stars: '180+',
+      title: 'Secret Leak Detector',
+      description: 'Context-aware credential security platform that detects exposed secrets, analyses risk, traces Git history, and prevents sensitive credentials from entering version control through automated Git protection.',
+      tags: ['TypeScript', 'Node.js', 'VS Code API', 'AST Analysis', 'Git Hooks'],
       featured: true,
     },
     {
-      title: 'RAG Knowledge Graph Engine',
-      description: 'Hybrid vector and graph retrieval system optimizing multi-hop question answering across unstructured technical documentation.',
-      tags: ['RAG', 'Neo4j', 'LangChain', 'Python', 'Embeddings'],
-      stars: '95',
+      title: 'Local AI Execution Agent',
+      description: 'A model-agnostic AI execution framework that turns LLM instructions into real development tasks using isolated execution environments, human approvals, and independently verifiable execution evidence.',
+      tags: ['Python', 'FastAPI', 'React', 'Docker', 'SQLite', 'Ollama'],
       featured: true,
     },
     {
-      title: 'Distributed Consensus & Replication Engine',
-      description: 'Raft-based fault-tolerant distributed key-value store with dynamic membership changes and snapshotting.',
-      tags: ['System Design', 'Go', 'gRPC', 'Distributed Systems'],
-      stars: '120',
+      title: 'ThinkMate — AI Thinking Partner',
+      description: 'An intelligent reasoning workspace that guides users through problem understanding, alternative exploration, assumption validation, and evidence-backed decision-making with persistent AI-assisted workspaces.',
+      tags: ['Next.js', 'TypeScript', 'Gemini', 'Supabase', 'MCP'],
       featured: true,
     },
     {
-      title: 'Kernel & Container Isolation Security Suite',
-      description: 'Lightweight runtime sandboxing daemon monitoring eBPF syscalls and enforcing zero-trust policies for untrusted workloads.',
-      tags: ['Cybersecurity', 'C/Rust', 'eBPF', 'Linux'],
-      stars: '64',
-      featured: false,
+      title: 'Cluely Copilot — Desktop AI Assistant',
+      description: 'A multimodal desktop AI copilot combining real-time screen understanding, conversation audio intelligence, and personal knowledge retrieval to provide contextual assistance during everyday workflows.',
+      tags: ['Electron', 'TypeScript', 'React', 'RAG', 'Audio Processing'],
+      featured: true,
     },
     {
-      title: 'Full-Stack Neural Interactive Playground',
-      description: 'Real-time in-browser neural network training and weight visualization with hardware acceleration via WebGPU.',
-      tags: ['TypeScript', 'React', 'WebGPU', 'TailwindCSS'],
-      stars: '210+',
-      featured: false,
+      title: 'Autonomous AI Coding Orchestrator',
+      description: 'An experimental multi-agent engineering platform connecting an LLM planner, autonomous coding agent, and independent verification engine to execute, evaluate, and repair software development tasks.',
+      tags: ['TypeScript', 'Node.js', 'Fastify', 'AI Agents', 'SQLite', 'Docker'],
+      featured: true,
+    },
+    {
+      title: 'BlueCarbon Registry',
+      description: 'A digital monitoring, reporting, and verification platform for blue-carbon ecosystems, combining geospatial validation, cryptographic evidence integrity, scientific carbon estimation, and blockchain-based record anchoring.',
+      tags: ['TypeScript', 'React', 'Supabase', 'Solidity', 'EVM', 'GIS'],
+      featured: true,
     },
   ]
 
@@ -51,11 +52,11 @@ export const ProjectsSection: React.FC = () => {
               <span>// 01. Portfolio Projects</span>
             </div>
             <h2 className="font-anton text-[42px] md:text-[56px] text-[#111111] uppercase tracking-tight leading-none">
-              Featured Work &amp; Systems
+              Featured Projects
             </h2>
           </div>
           <p className="font-mono-tech text-[14px] text-[#555555] max-w-md mt-4 md:mt-0">
-            Practical implementations proving architecture, reliability, and algorithmic performance.
+            Practical implementations across AI systems, developer security, local agent runtimes, and distributed applications.
           </p>
         </div>
 
