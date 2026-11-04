@@ -1,19 +1,64 @@
 import React, { useState } from 'react'
-import { Mail, Send, CheckCircle2 } from 'lucide-react'
+import { Mail, Send, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react'
 
 export const ContactSection: React.FC = () => {
-  const [submitted, setSubmitted] = useState(false)
   const [formData, setFormData] = useState({ name: '', email: '', message: '' })
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
+  const [errorMessage, setErrorMessage] = useState<string>('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!formData.name || !formData.email || !formData.message) return
-    setSubmitted(true)
-    setTimeout(() => {
-      setSubmitted(false)
-      setFormData({ name: '', email: '', message: '' })
-    }, 4000)
+
+    setStatus('submitting')
+    setErrorMessage('')
+
+    try {
+      // Endpoint can be configured via environment variable or default to formsubmit.co
+      const endpoint = (import.meta as { env?: { VITE_CONTACT_ENDPOINT?: string } }).env?.VITE_CONTACT_ENDPOINT 
+        || 'https://formsubmit.co/ajax/contact@lakshithreddy.dev'
+
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          _subject: `Portfolio Message from ${formData.name}`,
+          _template: 'table',
+        }),
+      })
+
+      if (response.ok) {
+        setStatus('success')
+        setFormData({ name: '', email: '', message: '' })
+        setTimeout(() => {
+          setStatus('idle')
+        }, 6000)
+      } else {
+        const data = await response.json().catch(() => ({}))
+        throw new Error(data.message || `Server responded with status ${response.status}`)
+      }
+    } catch (err) {
+      console.error('Contact form submission error:', err)
+      setStatus('error')
+      setErrorMessage(
+        err instanceof Error 
+          ? err.message 
+          : 'Could not send message over network. Please use direct email.'
+      )
+    }
   }
+
+  const mailtoHref = `mailto:contact@lakshithreddy.dev?subject=${encodeURIComponent(
+    `Portfolio Inquiry from ${formData.name || 'Visitor'}`
+  )}&body=${encodeURIComponent(
+    `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+  )}`
 
   return (
     <section id="contact" className="w-full py-20 px-6 md:px-12 lg:px-16 border-t border-[#D8CEBD] relative">
@@ -99,10 +144,11 @@ export const ContactSection: React.FC = () => {
                 <input
                   type="text"
                   required
+                  disabled={status === 'submitting'}
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="Ada Lovelace"
-                  className="w-full bg-[#F4ECE1] border border-[#C9BEAE] rounded-[10px] px-4 py-2.5 text-[14px] font-sans focus:outline-none focus:border-[#0755F5] transition-colors"
+                  className="w-full bg-[#F4ECE1] border border-[#C9BEAE] rounded-[10px] px-4 py-2.5 text-[14px] font-sans focus:outline-none focus:border-[#0755F5] transition-colors disabled:opacity-60"
                 />
               </div>
 
@@ -113,10 +159,11 @@ export const ContactSection: React.FC = () => {
                 <input
                   type="email"
                   required
+                  disabled={status === 'submitting'}
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder="ada@computing.org"
-                  className="w-full bg-[#F4ECE1] border border-[#C9BEAE] rounded-[10px] px-4 py-2.5 text-[14px] font-sans focus:outline-none focus:border-[#0755F5] transition-colors"
+                  className="w-full bg-[#F4ECE1] border border-[#C9BEAE] rounded-[10px] px-4 py-2.5 text-[14px] font-sans focus:outline-none focus:border-[#0755F5] transition-colors disabled:opacity-60"
                 />
               </div>
 
@@ -127,22 +174,58 @@ export const ContactSection: React.FC = () => {
                 <textarea
                   required
                   rows={4}
+                  disabled={status === 'submitting'}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   placeholder="Let's build intelligent systems..."
-                  className="w-full bg-[#F4ECE1] border border-[#C9BEAE] rounded-[10px] px-4 py-2.5 text-[14px] font-sans focus:outline-none focus:border-[#0755F5] transition-colors resize-none"
+                  className="w-full bg-[#F4ECE1] border border-[#C9BEAE] rounded-[10px] px-4 py-2.5 text-[14px] font-sans focus:outline-none focus:border-[#0755F5] transition-colors resize-none disabled:opacity-60"
                 />
               </div>
 
+              {/* Status feedback alerts */}
+              {status === 'success' && (
+                <div className="p-3.5 bg-emerald-50 border border-emerald-300 rounded-[10px] flex items-start gap-2.5 text-emerald-800 text-[13.5px]">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold">Transmission Dispatched!</div>
+                    <div>Your message has been sent directly to contact@lakshithreddy.dev. I will get back to you promptly.</div>
+                  </div>
+                </div>
+              )}
+
+              {status === 'error' && (
+                <div className="p-3.5 bg-rose-50 border border-rose-300 rounded-[10px] flex flex-col gap-2 text-rose-800 text-[13px]">
+                  <div className="flex items-start gap-2">
+                    <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-semibold">Unable to dispatch automatically</div>
+                      <div className="text-[12px] opacity-90">{errorMessage || 'Network error occurred.'}</div>
+                    </div>
+                  </div>
+                  <a
+                    href={mailtoHref}
+                    className="inline-flex items-center justify-center gap-1.5 py-1.5 px-3 bg-rose-600 text-white rounded-md text-[12px] font-semibold hover:bg-rose-700 transition-colors w-fit"
+                  >
+                    <Mail className="w-3.5 h-3.5" />
+                    Open Email Client to Send Directly
+                  </a>
+                </div>
+              )}
+
               <button
                 type="submit"
-                disabled={submitted}
-                className="w-full bg-[#0755F5] hover:bg-[#0043D6] text-white py-3 rounded-full font-semibold text-[15px] flex items-center justify-center gap-2 transition-all shadow-md active:scale-[0.99] cursor-pointer"
+                disabled={status === 'submitting'}
+                className="w-full bg-[#0755F5] hover:bg-[#0043D6] text-white py-3 rounded-full font-semibold text-[15px] flex items-center justify-center gap-2 transition-all shadow-md active:scale-[0.99] cursor-pointer disabled:opacity-75 disabled:cursor-not-allowed"
               >
-                {submitted ? (
+                {status === 'submitting' ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <span>Dispatching Transmission...</span>
+                  </>
+                ) : status === 'success' ? (
                   <>
                     <CheckCircle2 className="w-5 h-5 text-emerald-300" />
-                    <span>Message Received!</span>
+                    <span>Dispatched Successfully</span>
                   </>
                 ) : (
                   <>

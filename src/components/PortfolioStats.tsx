@@ -9,7 +9,7 @@ export const PortfolioStats: React.FC = () => {
         <Laptop className="w-7 h-7 stroke-[1.8] text-[#111111]" />
         <div>
           <div className="font-mono-tech text-[22px] font-bold text-[#111111] leading-none mb-1">
-            5+
+            6
           </div>
           <div className="text-[11px] text-[#555555] font-medium leading-tight whitespace-nowrap">
             Featured Projects
