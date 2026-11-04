@@ -6,7 +6,8 @@ import {
   Award,
   Code2, 
   FileText, 
-  Mail 
+  Mail,
+  Download 
 } from 'lucide-react'
 
 interface NavbarProps {
@@ -166,10 +167,33 @@ export const Navbar: React.FC<NavbarProps> = ({
           <Mail className="w-4 h-4 stroke-[2]" />
           <span>Contact</span>
         </a>
+
+        {/* 8. Download CV Pill */}
+        <a
+          href="/Lakshith_Reddy_CV.pdf"
+          download="Lakshith_Reddy_CV.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[#222222]/80 bg-[#FAF5EC] hover:bg-[#111111] hover:text-white text-[#111111] font-semibold text-[13px] transition-all shadow-xs ml-1 cursor-pointer"
+          title="Download Curriculum Vitae (PDF)"
+        >
+          <Download className="w-3.5 h-3.5 text-[#0755F5]" />
+          <span>CV</span>
+        </a>
       </div>
 
       {/* Mobile nav pill */}
       <div className="lg:hidden flex items-center gap-2">
+        <a
+          href="/Lakshith_Reddy_CV.pdf"
+          download="Lakshith_Reddy_CV.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="border border-[#222222]/80 bg-[#FAF5EC] text-[#111111] text-xs px-3 py-1.5 rounded-full font-semibold flex items-center gap-1"
+        >
+          <Download className="w-3 h-3 text-[#0755F5]" />
+          <span>CV</span>
+        </a>
         <a
           href="#projects"
           className="bg-[#0755F5] text-white text-xs px-3.5 py-1.5 rounded-full font-medium"
