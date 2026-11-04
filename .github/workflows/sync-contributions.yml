@@ -47,3 +47,4 @@ jobs:
             git commit -m "chore(contributions): sync latest GitHub contribution activity [skip ci]"
             git push origin main
           fi
+
