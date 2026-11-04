@@ -1,6 +1,30 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { githubContributionData, type ContributionDay } from '../data/githubData'
-import { ExternalLink, CheckCircle2, Flame, GitCommit, GitBranch } from 'lucide-react'
+import { ExternalLink, CheckCircle2, Flame, GitCommit, GitBranch, RefreshCw, Radio } from 'lucide-react'
+
+interface GitHubEvent {
+  id: string
+  type: string
+  created_at: string
+  repo: {
+    name: string
+  }
+  payload: {
+    action?: string
+    commits?: Array<{
+      message: string
+      sha: string
+    }>
+    issue?: {
+      title: string
+      number: number
+    }
+    pull_request?: {
+      title: string
+      number: number
+    }
+  }
+}
 
 // Calculate month label positions based on first week where month changes
 const getMonthPositions = () => {
@@ -12,7 +36,6 @@ const getMonthPositions = () => {
       const firstDay = new Date(week.contributionDays[0].date)
       const month = firstDay.getMonth()
       if (month !== lastMonth) {
-        // Map 0-11 to string
         const monthShort = firstDay.toLocaleDateString('en-US', { month: 'short' })
         positions.push({ month: monthShort, weekIndex: index })
         lastMonth = month
@@ -20,6 +43,17 @@ const getMonthPositions = () => {
     }
   })
   return positions
+}
+
+const formatRelativeTime = (isoString: string): string => {
+  const diff = Date.now() - new Date(isoString).getTime()
+  const minutes = Math.floor(diff / 60000)
+  if (minutes < 1) return 'just now'
+  if (minutes < 60) return `${minutes}m ago`
+  const hours = Math.floor(minutes / 60)
+  if (hours < 24) return `${hours}h ago`
+  const days = Math.floor(hours / 24)
+  return `${days}d ago`
 }
 
 export const GitHubContributions: React.FC = () => {
@@ -30,7 +64,43 @@ export const GitHubContributions: React.FC = () => {
     y: number
   } | null>(null)
 
+  // Live activity states
+  const [latestEvent, setLatestEvent] = useState<GitHubEvent | null>(null)
+  const [isFetchingLive, setIsFetchingLive] = useState(false)
+  const [liveSyncedTime, setLiveSyncedTime] = useState<string>('just now')
+  const [todayHasActivity, setTodayHasActivity] = useState(false)
+
   const monthPositions = getMonthPositions()
+  const todayIso = new Date().toISOString().split('T')[0]
+
+  const fetchLiveGitHubEvents = async () => {
+    setIsFetchingLive(true)
+    try {
+      const res = await fetch('https://api.github.com/users/MokuLakshithReddy/events?per_page=10')
+      if (res.ok) {
+        const events: GitHubEvent[] = await res.json()
+        if (events && events.length > 0) {
+          setLatestEvent(events[0])
+          setLiveSyncedTime(formatRelativeTime(events[0].created_at))
+
+          // Check if any event is from today
+          const hasToday = events.some(e => e.created_at.startsWith(todayIso))
+          setTodayHasActivity(hasToday)
+        }
+      }
+    } catch {
+      // Fallback cleanly to bundled snapshot
+    } finally {
+      setIsFetchingLive(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchLiveGitHubEvents()
+    // Poll live activity every 60 seconds
+    const interval = setInterval(fetchLiveGitHubEvents, 60000)
+    return () => clearInterval(interval)
+  }, [todayIso])
 
   // Format date helper for tooltip
   const formatTooltipDate = (dateStr: string) => {
@@ -43,15 +113,15 @@ export const GitHubContributions: React.FC = () => {
   }
 
   // Get color for day based on theme and count
-  const getCellColor = (count: number) => {
+  const getCellColor = (count: number, isToday = false) => {
     if (theme === 'dark') {
-      if (count === 0) return 'bg-[#161B22] border-[#21262D]'
+      if (count === 0) return isToday && todayHasActivity ? 'bg-[#0E4429] border-emerald-400' : 'bg-[#161B22] border-[#21262D]'
       if (count < 3) return 'bg-[#0E4429] border-[#0E4429]'
       if (count < 6) return 'bg-[#006D32] border-[#006D32]'
       if (count < 10) return 'bg-[#26A641] border-[#26A641]'
       return 'bg-[#39D353] border-[#39D353]'
     } else {
-      if (count === 0) return 'bg-[#E5DBC7] border-[#D8CEBA]'
+      if (count === 0) return isToday && todayHasActivity ? 'bg-[#9BE9A8] border-[#0755F5]' : 'bg-[#E5DBC7] border-[#D8CEBA]'
       if (count < 3) return 'bg-[#9BE9A8] border-[#89D396]'
       if (count < 6) return 'bg-[#40C463] border-[#37AB56]'
       if (count < 10) return 'bg-[#30A14E] border-[#288E44]'
@@ -60,6 +130,25 @@ export const GitHubContributions: React.FC = () => {
   }
 
   const isDark = theme === 'dark'
+
+  // Render text description of latest live event
+  const renderEventDescription = (ev: GitHubEvent) => {
+    const repoShort = ev.repo.name.replace('MokuLakshithReddy/', '')
+    if (ev.type === 'PushEvent') {
+      const commitMsg = ev.payload.commits?.[0]?.message || 'commit'
+      return `Pushed commit "${commitMsg.slice(0, 45)}${commitMsg.length > 45 ? '...' : ''}" to ${repoShort}`
+    }
+    if (ev.type === 'PullRequestEvent') {
+      return `${ev.payload.action || 'Opened'} PR in ${repoShort}`
+    }
+    if (ev.type === 'IssueCommentEvent') {
+      return `Commented on issue in ${repoShort}`
+    }
+    if (ev.type === 'WatchEvent') {
+      return `Starred repository ${repoShort}`
+    }
+    return `Activity in ${repoShort}`
+  }
 
   return (
     <div className={`w-full rounded-[20px] transition-colors duration-300 p-6 md:p-8 border select-none relative overflow-hidden ${
@@ -73,9 +162,11 @@ export const GitHubContributions: React.FC = () => {
       )}
 
       {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-5 border-b ${isDark ? 'border-[#21262D]' : 'border-[#D5C9B7]/60'}">
+      <div className={`flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-5 border-b ${
+        isDark ? 'border-[#21262D]' : 'border-[#D5C9B7]/60'
+      }`}>
         <div className="flex items-center gap-3.5">
-          {/* GitHub Icon with pulsing active status */}
+          {/* GitHub Icon with pulsing live sync status */}
           <div className="relative">
             <div className={`w-10 h-10 rounded-full flex items-center justify-center border ${
               isDark ? 'bg-[#161B22] border-[#30363D]' : 'bg-[#EFE8DA] border-[#D0C4B0]'
@@ -84,9 +175,12 @@ export const GitHubContributions: React.FC = () => {
                 <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
               </svg>
             </div>
-            <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 border-2 rounded-full animate-pulse" 
-              style={{ borderColor: isDark ? '#0D1117' : '#FAF5EC' }} 
-              title="Active Contributor"
+            <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 border-2 rounded-full animate-ping opacity-75"
+              style={{ borderColor: isDark ? '#0D1117' : '#FAF5EC' }}
+            />
+            <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 border-2 rounded-full"
+              style={{ borderColor: isDark ? '#0D1117' : '#FAF5EC' }}
+              title="Live Synchronized with GitHub"
             />
           </div>
 
@@ -96,14 +190,37 @@ export const GitHubContributions: React.FC = () => {
                 {githubContributionData.totalContributions.toLocaleString()} contributions in the last year
               </h3>
             </div>
-            <p className={`text-[12.5px] font-mono-tech ${isDark ? 'text-[#8B949E]' : 'text-[#666666]'}`}>
-              Verified activity recorded on GitHub account <strong className={isDark ? 'text-[#58A6FF]' : 'text-[#0755F5]'}>@MokuLakshithReddy</strong>
-            </p>
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className={`inline-flex items-center gap-1 text-[11px] font-mono-tech px-2 py-0.5 rounded-full border ${
+                isDark ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' : 'bg-emerald-600/10 text-emerald-700 border-emerald-600/30'
+              }`}>
+                <Radio className="w-3 h-3 animate-pulse" />
+                <span>Live Activity Sync</span>
+              </span>
+              <p className={`text-[12px] font-mono-tech ${isDark ? 'text-[#8B949E]' : 'text-[#666666]'}`}>
+                Account <strong className={isDark ? 'text-[#58A6FF]' : 'text-[#0755F5]'}>@MokuLakshithReddy</strong>
+              </p>
+            </div>
           </div>
         </div>
 
         {/* Action Controls & Theme Toggle */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2.5 flex-wrap">
+          {/* Refresh Live Button */}
+          <button
+            onClick={fetchLiveGitHubEvents}
+            disabled={isFetchingLive}
+            title="Fetch latest GitHub live events"
+            className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-[11px] font-mono-tech font-semibold transition-all border ${
+              isDark 
+                ? 'bg-[#161B22] hover:bg-[#21262D] border-[#30363D] text-[#8B949E] hover:text-white' 
+                : 'bg-[#EAE2D2] hover:bg-[#DDD2C0] border-[#D0C4B0] text-[#555555]'
+            }`}
+          >
+            <RefreshCw className={`w-3 h-3 ${isFetchingLive ? 'animate-spin text-emerald-400' : ''}`} />
+            <span>{isFetchingLive ? 'Syncing...' : 'Sync Live'}</span>
+          </button>
+
           {/* Theme switcher */}
           <div className={`flex items-center p-0.5 rounded-full border text-[11px] font-mono-tech ${
             isDark ? 'bg-[#161B22] border-[#30363D] text-[#8B949E]' : 'bg-[#EAE2D2] border-[#D0C4B0] text-[#555555]'
@@ -142,6 +259,22 @@ export const GitHubContributions: React.FC = () => {
           </a>
         </div>
       </div>
+
+      {/* Latest Live Contribution Banner */}
+      {latestEvent && (
+        <div className={`mb-6 p-3 rounded-[12px] border flex items-center justify-between gap-3 text-[12px] font-mono-tech ${
+          isDark ? 'bg-[#161B22]/90 border-[#30363D] text-[#C9D1D9]' : 'bg-[#F2EBDE] border-[#D5C9B7]/80 text-[#333333]'
+        }`}>
+          <div className="flex items-center gap-2 overflow-hidden">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0 animate-pulse" />
+            <span className="font-bold text-emerald-400 shrink-0">Latest Event:</span>
+            <span className="truncate">{renderEventDescription(latestEvent)}</span>
+          </div>
+          <span className={`shrink-0 text-[11px] ${isDark ? 'text-[#8B949E]' : 'text-[#777777]'}`}>
+            {liveSyncedTime}
+          </span>
+        </div>
+      )}
 
       {/* Heatmap Container */}
       <div className="w-full overflow-x-auto pb-2 scrollbar-thin">
@@ -190,7 +323,8 @@ export const GitHubContributions: React.FC = () => {
                     )
                   }
 
-                  const colorClass = getCellColor(day.contributionCount)
+                  const isToday = day.date === todayIso
+                  const colorClass = getCellColor(day.contributionCount, isToday)
 
                   return (
                     <div
@@ -204,7 +338,9 @@ export const GitHubContributions: React.FC = () => {
                         })
                       }}
                       onMouseLeave={() => setHoveredDay(null)}
-                      className={`w-[11px] h-[11px] rounded-[2px] border-[0.5px] cursor-pointer transition-transform duration-100 hover:scale-135 hover:z-10 ${colorClass}`}
+                      className={`w-[11px] h-[11px] rounded-[2px] border-[0.5px] cursor-pointer transition-transform duration-100 hover:scale-135 hover:z-10 relative ${colorClass} ${
+                        isToday ? 'ring-1 ring-emerald-400 ring-offset-1' : ''
+                      }`}
                     />
                   )
                 })}
@@ -213,12 +349,9 @@ export const GitHubContributions: React.FC = () => {
           </div>
 
           {/* Heatmap Footer: Learn how we count contributions + Less/More Legend */}
-          <div className="flex items-center justify-between text-[11px] font-mono-tech mt-4 pt-3 border-t"
-            style={{ 
-              borderColor: isDark ? '#21262D' : '#D5C9B7]/60',
-              color: isDark ? '#8B949E' : '#666666'
-            }}
-          >
+          <div className={`flex items-center justify-between text-[11px] font-mono-tech mt-4 pt-3 border-t ${
+            isDark ? 'border-[#21262D] text-[#8B949E]' : 'border-[#D5C9B7]/60 text-[#666666]'
+          }`}>
             <a
               href="https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-profile/managing-contribution-settings-on-your-profile/why-are-my-contributions-not-showing-up-on-my-profile"
               target="_blank"
@@ -260,6 +393,7 @@ export const GitHubContributions: React.FC = () => {
           </div>
           <div className="text-[10px] text-[#8B949E]">
             {formatTooltipDate(hoveredDay.day.date)}
+            {hoveredDay.day.date === todayIso && ' (Today)'}
           </div>
         </div>
       )}
@@ -316,10 +450,10 @@ export const GitHubContributions: React.FC = () => {
           <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
           <div>
             <div className={`text-[13px] font-bold ${isDark ? 'text-white' : 'text-[#111111]'}`}>
-              Verified Evidence
+              Automated CI Sync
             </div>
             <div className={`text-[10.5px] ${isDark ? 'text-[#8B949E]' : 'text-[#666666]'}`}>
-              CI Runs &amp; Public PRs
+              Hourly &amp; Per Push
             </div>
           </div>
         </div>
