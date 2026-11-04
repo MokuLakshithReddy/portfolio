@@ -471,3 +471,4 @@ export const CaseStudyPage: React.FC = () => {
     </div>
   )
 }
+

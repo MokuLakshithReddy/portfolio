@@ -1,5 +1,6 @@
 import React from 'react'
 import { Trophy, GitPullRequest, Rocket, ExternalLink, Award, CheckCircle2 } from 'lucide-react'
+import { GitHubContributions } from './GitHubContributions'
 
 export const AchievementsSection: React.FC = () => {
   return (
@@ -17,7 +18,7 @@ export const AchievementsSection: React.FC = () => {
             </h2>
           </div>
           <p className="font-mono-tech text-[14px] text-[#555555] max-w-md mt-4 md:mt-0">
-            Verifiable hackathon podium finishes, upstream open-source contributions, and production developer tooling.
+            Verifiable hackathon podium finishes, upstream open-source contributions, production developer tooling, and GitHub activity.
           </p>
         </div>
 
@@ -167,8 +168,21 @@ export const AchievementsSection: React.FC = () => {
             </div>
           </div>
         </div>
+
+        {/* GitHub Contributions Interactive Heatmap */}
+        <div className="mt-12">
+          <div className="mb-4 flex items-center justify-between">
+            <div className="flex items-center gap-2 font-mono-tech text-[12px] font-bold text-[#555555] uppercase tracking-wider">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block animate-pulse" />
+              <span>Verifiable GitHub Activity &amp; Commit Cadence</span>
+            </div>
+            <span className="text-[12px] font-mono-tech text-[#888888] hidden sm:inline">
+              52-Week Contribution Timeline
+            </span>
+          </div>
+          <GitHubContributions />
+        </div>
       </div>
     </section>
   )
 }
-

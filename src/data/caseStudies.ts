@@ -734,3 +734,4 @@ Transaction Receipt & Cryptographic Audit Trail`,
     projectOutcome: 'A research-grade digital MRV prototype proving how cryptographic evidence provenance, geospatial validation, scientific formulas, and blockchain anchoring ensure transparent environmental accounting.'
   }
 ]
+
