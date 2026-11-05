@@ -1,5 +1,7 @@
 # Lakshith Reddy - Developer Portfolio
 
+[![XERJ Corpus Hub Contributor](https://hub.xerj.org/contributors/MokuLakshithReddy/badge.svg)](https://hub.xerj.org/contributors/MokuLakshithReddy)
+
 An illustrated, creative developer portfolio homepage for **Lakshith Reddy** (AI & ML Student · Software Developer). Built with React, TypeScript, Tailwind CSS v4, and Vite, featuring an anime/notebook hand-drawn aesthetic, interactive navigation, and responsive design across desktop and mobile devices.
 
 ---
