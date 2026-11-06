@@ -1,4 +1,5 @@
 import React from 'react'
+import { motion } from 'motion/react'
 import { Download } from 'lucide-react'
 import {
   EyebrowBadge,
@@ -73,7 +74,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreClick }) => {
       </div>
 
       {/* 4. Left Content Column (z-25) */}
-      <div className="relative lg:absolute left-0 lg:left-[clamp(28px,4.2vw,72px)] top-0 lg:top-[20px] z-25 flex flex-col justify-start max-w-[min(540px,44vw)] px-6 lg:px-0 pt-3 lg:pt-0">
+      <motion.div
+        initial={{ opacity: 0, x: -18 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.68, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+        className="relative lg:absolute left-0 lg:left-[clamp(28px,4.2vw,72px)] top-0 lg:top-[20px] z-25 flex flex-col justify-start max-w-[min(540px,44vw)] px-6 lg:px-0 pt-3 lg:pt-0"
+      >
         {/* Eyebrow Label with generous bottom margin to completely eliminate any touch with 'LAKSHITH' */}
         <div className="mb-5 sm:mb-7">
           <EyebrowBadge />
@@ -81,7 +87,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreClick }) => {
 
         {/* Main Headline */}
         <div>
-          <h1 
+          <motion.h1
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.64, delay: 0.28, ease: [0.22, 1, 0.36, 1] }}
             className="font-anton uppercase text-[#111111] text-[clamp(64px,8.2vw,148px)] leading-[0.96] select-none m-0"
             style={{
               letterSpacing: '0.01em',
@@ -91,12 +100,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreClick }) => {
           >
             <div className="pb-1.5 sm:pb-2">LAKSHITH</div>
             <div>REDDY.</div>
-          </h1>
+          </motion.h1>
           <BlueHeadlineUnderline />
         </div>
 
         {/* Main Tagline */}
-        <div className="text-[clamp(16px,1.5vw,25px)] font-sans font-bold text-[#111111] tracking-tight mt-2 sm:mt-3 mb-2">
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.52, delay: 0.48, ease: [0.22, 1, 0.36, 1] }}
+          className="text-[clamp(16px,1.5vw,25px)] font-sans font-bold text-[#111111] tracking-tight mt-2 sm:mt-3 mb-2"
+        >
           I build systems that{' '}
           <YellowMarkerUnderline>prove</YellowMarkerUnderline> they work.
         </div>
@@ -154,7 +168,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreClick }) => {
         <div className="mt-1">
           <PortfolioStats />
         </div>
-      </div>
+      </motion.div>
 
       {/* 5. Bottom Scroll Indicator */}
       <div className="relative lg:absolute left-6 lg:left-[32px] bottom-3 lg:bottom-[16px] z-25 mt-4 lg:mt-0">
