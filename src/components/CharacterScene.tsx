@@ -1,5 +1,5 @@
 import React from 'react'
-import { motion } from 'motion/react'
+import { motion, useReducedMotion } from 'motion/react'
 import { FloatingBrowser } from './FloatingBrowser'
 import {
   YellowCrown,
@@ -9,15 +9,17 @@ import {
 } from './DecorativeDoodles'
 
 export const CharacterScene: React.FC = () => {
+  const shouldReduceMotion = useReducedMotion()
+
   return (
     <div className="relative h-full aspect-[664/516] max-h-[820px] flex items-end justify-end pointer-events-none select-none">
       {/* 1. Blue Orbital Brush Stroke (z-5, sweeping behind head and character) */}
       <motion.div className="absolute inset-0 z-5 pointer-events-none overflow-visible">
         <svg viewBox="0 0 664 516" fill="none" className="w-full h-full overflow-visible">
           <motion.path
-            initial={{ pathLength: 0, opacity: 0.35 }}
+            initial={shouldReduceMotion ? false : { pathLength: 0, opacity: 0.35 }}
             animate={{ pathLength: 1, opacity: 0.92 }}
-            transition={{ duration: 1.35, delay: 0.55, ease: 'easeInOut' }}
+            transition={{ duration: shouldReduceMotion ? 0 : 1.35, delay: shouldReduceMotion ? 0 : 0.55, ease: 'easeInOut' }}
             d="M 110 270 C 85 145, 230 60, 385 58 C 495 55, 555 115, 550 200 C 545 285, 475 340, 365 350 C 240 365, 120 290, 150 400 C 170 450, 230 480, 330 480"
             stroke="#0755F5"
             strokeWidth="5"
