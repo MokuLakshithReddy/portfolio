@@ -1,4 +1,5 @@
 import React from 'react'
+import { HeroCinematicLayer } from './HeroCinematicLayer'
 import { motion } from 'motion/react'
 import { Download } from 'lucide-react'
 import {
@@ -39,6 +40,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreClick }) => {
     >
       {/* 1. Background Layer (z-0 to z-5) */}
       <div className="absolute inset-0 pointer-events-none z-0">
+        <HeroCinematicLayer />
         {/* Compass sketch behind heading */}
         <div className="absolute left-[clamp(200px,24vw,340px)] top-[135px] opacity-25 hidden sm:block">
           <CompassSketch />

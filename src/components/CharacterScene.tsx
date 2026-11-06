@@ -1,5 +1,5 @@
-import React from 'react'
-import { motion, useReducedMotion } from 'motion/react'
+import React, { useRef } from 'react'
+import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { FloatingBrowser } from './FloatingBrowser'
 import {
   YellowCrown,
@@ -9,10 +9,21 @@ import {
 } from './DecorativeDoodles'
 
 export const CharacterScene: React.FC = () => {
+  const sceneRef = useRef<HTMLDivElement>(null)
   const shouldReduceMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll({
+    target: sceneRef,
+    offset: ['start end', 'end start'],
+  })
+  const parallaxY = useTransform(scrollYProgress, [0, 1], [22, -28])
+  const parallaxRotate = useTransform(scrollYProgress, [0, 1], [1.1, -1.1])
 
   return (
-    <div className="relative h-full aspect-[664/516] max-h-[820px] flex items-end justify-end pointer-events-none select-none">
+    <motion.div
+      ref={sceneRef}
+      style={shouldReduceMotion ? undefined : { y: parallaxY, rotate: parallaxRotate }}
+      className="relative h-full aspect-[664/516] max-h-[820px] flex items-end justify-end pointer-events-none select-none"
+    >
       {/* 1. Blue Orbital Brush Stroke (z-5, sweeping behind head and character) */}
       <motion.div className="absolute inset-0 z-5 pointer-events-none overflow-visible">
         <svg viewBox="0 0 664 516" fill="none" className="w-full h-full overflow-visible">
@@ -33,7 +44,7 @@ export const CharacterScene: React.FC = () => {
       {/* 2. Floating Browser Window Doodle (z-10, sits right by his hair with zero drift) */}
       <motion.div
         className="absolute left-[8%] top-[12%] z-10 pointer-events-auto"
-        animate={{ y: [0, -7, 0], rotate: [-6, -4, -6] }}
+        animate={shouldReduceMotion ? undefined : { y: [0, -7, 0], rotate: [-6, -4, -6] }}
         transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
       >
         <FloatingBrowser />
@@ -59,14 +70,14 @@ export const CharacterScene: React.FC = () => {
         src="/images/character.png"
         alt="Lakshith Reddy - Developer Character Illustration"
         className="relative z-15 w-full h-full object-contain object-bottom drop-shadow-sm"
-        animate={{ y: [0, -4, 0] }}
+        animate={shouldReduceMotion ? undefined : { y: [0, -4, 0], rotate: [0, 0.25, 0] }}
         transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
       />
 
       {/* 7. Yellow Crown (z-25, locked directly above the character's head) */}
       <motion.div
         className="absolute left-[54%] top-[-3%] z-25 pointer-events-none"
-        animate={{ y: [0, -5, 0], rotate: [0, 3, 0] }}
+        animate={shouldReduceMotion ? undefined : { y: [0, -5, 0], rotate: [0, 3, 0] }}
         transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
       >
         <YellowCrown />
@@ -76,7 +87,6 @@ export const CharacterScene: React.FC = () => {
       <div className="absolute right-[13%] top-[42%] z-25 pointer-events-none hidden sm:block">
         <YellowZigzag />
       </div>
-    </div>
+    </motion.div>
   )
 }
-
