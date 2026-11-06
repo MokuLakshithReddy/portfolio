@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { ScrollReveal } from './MotionSystem'
 import { Mail, Send, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react'
 
 export const ContactSection: React.FC = () => {
