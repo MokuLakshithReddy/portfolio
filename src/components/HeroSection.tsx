@@ -113,7 +113,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreClick }) => {
         >
           I build systems that{' '}
           <YellowMarkerUnderline>prove</YellowMarkerUnderline> they work.
-        </div>
+        </motion.div>
 
         {/* Supporting Description */}
         <p className="font-mono-tech text-[clamp(13px,0.98vw,16px)] text-[#333333] leading-[1.46] max-w-[500px] mb-4 sm:mb-6">
