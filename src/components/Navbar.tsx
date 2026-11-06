@@ -117,72 +117,120 @@ export const Navbar: React.FC<NavbarProps> = ({
         <a
           href="#projects"
           onClick={(e) => handleNavClick('projects', e)}
-          className={`flex items-center gap-2 px-1 font-medium transition-colors cursor-pointer outline-none ${
+          className={`relative flex items-center gap-2 px-1 font-medium transition-colors cursor-pointer outline-none ${
             activeSection === 'projects' ? 'text-[#0755F5]' : 'text-[#111111] hover:text-[#0755F5]'
           }`}
         >
           <Folder className="w-4 h-4 stroke-[2]" />
           <span>Projects</span>
+          {activeSection === 'projects' && (
+            <motion.span
+              layoutId="active-nav-underline"
+              aria-hidden="true"
+              transition={{ type: 'spring', stiffness: 520, damping: 36 }}
+              className="absolute -bottom-2 left-0 right-0 h-[2px] rounded-full bg-[#0755F5]"
+            />
+          )}
         </a>
 
         {/* 3. Experience */}
         <a
           href="#experience"
           onClick={(e) => handleNavClick('experience', e)}
-          className={`flex items-center gap-1.5 xl:gap-2 px-1 font-medium transition-colors cursor-pointer outline-none ${
+          className={`relative flex items-center gap-1.5 xl:gap-2 px-1 font-medium transition-colors cursor-pointer outline-none ${
             activeSection === 'experience' ? 'text-[#0755F5]' : 'text-[#111111] hover:text-[#0755F5]'
           }`}
         >
           <Briefcase className="w-4 h-4 stroke-[2]" />
           <span>Experience</span>
+          {activeSection === 'experience' && (
+            <motion.span
+              layoutId="active-nav-underline"
+              aria-hidden="true"
+              transition={{ type: 'spring', stiffness: 520, damping: 36 }}
+              className="absolute -bottom-2 left-0 right-0 h-[2px] rounded-full bg-[#0755F5]"
+            />
+          )}
         </a>
 
         {/* 4. Achievements */}
         <a
           href="#achievements"
           onClick={(e) => handleNavClick('achievements', e)}
-          className={`flex items-center gap-1.5 xl:gap-2 px-1 font-medium transition-colors cursor-pointer outline-none ${
+          className={`relative flex items-center gap-1.5 xl:gap-2 px-1 font-medium transition-colors cursor-pointer outline-none ${
             activeSection === 'achievements' ? 'text-[#0755F5]' : 'text-[#111111] hover:text-[#0755F5]'
           }`}
         >
           <Award className="w-4 h-4 stroke-[2]" />
           <span>Achievements</span>
+          {activeSection === 'achievements' && (
+            <motion.span
+              layoutId="active-nav-underline"
+              aria-hidden="true"
+              transition={{ type: 'spring', stiffness: 520, damping: 36 }}
+              className="absolute -bottom-2 left-0 right-0 h-[2px] rounded-full bg-[#0755F5]"
+            />
+          )}
         </a>
 
         {/* 5. Skills */}
         <a
           href="#skills"
           onClick={(e) => handleNavClick('skills', e)}
-          className={`flex items-center gap-2 px-1 font-medium transition-colors cursor-pointer outline-none ${
+          className={`relative flex items-center gap-2 px-1 font-medium transition-colors cursor-pointer outline-none ${
             activeSection === 'skills' ? 'text-[#0755F5]' : 'text-[#111111] hover:text-[#0755F5]'
           }`}
         >
           <Code2 className="w-4 h-4 stroke-[2]" />
           <span>Skills</span>
+          {activeSection === 'skills' && (
+            <motion.span
+              layoutId="active-nav-underline"
+              aria-hidden="true"
+              transition={{ type: 'spring', stiffness: 520, damping: 36 }}
+              className="absolute -bottom-2 left-0 right-0 h-[2px] rounded-full bg-[#0755F5]"
+            />
+          )}
         </a>
 
         {/* 6. Blog */}
         <a
           href="#blog"
           onClick={(e) => handleNavClick('blog', e)}
-          className={`flex items-center gap-2 px-1 font-medium transition-colors cursor-pointer outline-none ${
+          className={`relative flex items-center gap-2 px-1 font-medium transition-colors cursor-pointer outline-none ${
             activeSection === 'blog' ? 'text-[#0755F5]' : 'text-[#111111] hover:text-[#0755F5]'
           }`}
         >
           <FileText className="w-4 h-4 stroke-[2]" />
           <span>Blog</span>
+          {activeSection === 'blog' && (
+            <motion.span
+              layoutId="active-nav-underline"
+              aria-hidden="true"
+              transition={{ type: 'spring', stiffness: 520, damping: 36 }}
+              className="absolute -bottom-2 left-0 right-0 h-[2px] rounded-full bg-[#0755F5]"
+            />
+          )}
         </a>
 
         {/* 7. Contact */}
         <a
           href="#contact"
           onClick={(e) => handleNavClick('contact', e)}
-          className={`flex items-center gap-2 px-1 font-medium transition-colors cursor-pointer outline-none ${
+          className={`relative flex items-center gap-2 px-1 font-medium transition-colors cursor-pointer outline-none ${
             activeSection === 'contact' ? 'text-[#0755F5]' : 'text-[#111111] hover:text-[#0755F5]'
           }`}
         >
           <Mail className="w-4 h-4 stroke-[2]" />
           <span>Contact</span>
+          {activeSection === 'contact' && (
+            <motion.span
+              layoutId="active-nav-underline"
+              aria-hidden="true"
+              transition={{ type: 'spring', stiffness: 520, damping: 36 }}
+              className="absolute -bottom-2 left-0 right-0 h-[2px] rounded-full bg-[#0755F5]"
+            />
+          )}
         </a>
 
         {/* 8. Download CV Pill */}
