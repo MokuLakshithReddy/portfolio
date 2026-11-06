@@ -33,15 +33,17 @@ export const ContactSection: React.FC = () => {
         }),
       })
 
-      if (response.ok) {
+      const result = await response.json().catch(() => ({}))
+      const serviceAccepted = result?.success !== false && result?.success !== 'false'
+
+      if (response.ok && serviceAccepted) {
         setStatus('success')
         setFormData({ name: '', email: '', message: '' })
         setTimeout(() => {
           setStatus('idle')
         }, 6000)
       } else {
-        const data = await response.json().catch(() => ({}))
-        throw new Error(data.message || `Server responded with status ${response.status}`)
+        throw new Error(result?.message || `Message service returned status ${response.status}`)
       }
     } catch (err) {
       console.error('Contact form submission error:', err)
@@ -110,7 +112,7 @@ export const ContactSection: React.FC = () => {
                 </a>
 
                 <a
-                  href="https://linkedin.com"
+                  href="https://www.linkedin.com/in/lakshith-reddy/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 text-[#333333] hover:text-[#0755F5] transition-colors group"

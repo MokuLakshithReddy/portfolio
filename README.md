@@ -70,4 +70,4 @@ npm run preview
 
 ## 📄 License
 
-This project is open source and available under the [MIT License](LICENSE).
+Copyright © 2026 Lakshith Reddy. All rights reserved. No license is granted to copy, modify, redistribute, or use this work without prior written permission. See [LICENSE](LICENSE) for the terms.

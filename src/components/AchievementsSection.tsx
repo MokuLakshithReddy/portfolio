@@ -99,7 +99,7 @@ export const AchievementsSection: React.FC = () => {
                 </li>
                 <li className="flex items-start gap-2 bg-[#F2EBDE] p-2 rounded-[8px] border border-[#D5C9B7]/50">
                   <span className="text-[#0755F5] font-bold mt-0.5">›</span>
-                  <span><strong className="text-[#111111]">XERJ</strong> — query operator parsing</span>
+                  <span><strong className="text-[#111111]"><a href="https://github.com/xerj-org/xerj/pull/1804" target="_blank" rel="noopener noreferrer" className="underline decoration-dotted underline-offset-2 hover:text-[#0755F5]">XERJ</a></strong> — query operator parsing</span>
                 </li>
                 <li className="flex items-start gap-2 bg-[#F2EBDE] p-2 rounded-[8px] border border-[#D5C9B7]/50">
                   <span className="text-[#0755F5] font-bold mt-0.5">›</span>
@@ -116,7 +116,7 @@ export const AchievementsSection: React.FC = () => {
                 <span>Four merged pull requests</span>
               </div>
               <a
-                href="https://github.com/MokuLakshithReddy"
+                href="https://github.com/search?q=author%3AMokuLakshithReddy+is%3Amerged&type=pullrequests"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-[13px] font-mono-tech font-bold text-[#0755F5] hover:text-[#0043D6] group-hover:translate-x-1 transition-transform"

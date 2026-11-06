@@ -75,7 +75,7 @@ export const caseStudies: CaseStudy[] = [
     links: [
       { label: 'Open VSX Registry', url: 'https://open-vsx.org/extension/MokuLakshithReddy/secret-leak-detector', type: 'primary' },
       { label: 'VS Code Marketplace', url: 'https://marketplace.visualstudio.com/items?itemName=MokuLakshithReddy.secret-leak-detector', type: 'external' },
-      { label: 'Latest CI Run (Run #41669747926)', url: 'https://github.com/MokuLakshithReddy/Secret_Leak_Detector/actions/runs/41669747926', type: 'ci' }
+      { label: 'Recorded CI Run (Run #41669747926)', url: 'https://github.com/MokuLakshithReddy/Secret_Leak_Detector/actions/runs/41669747926', type: 'ci' }
     ],
     problemStatement: {
       overview: 'Developers frequently handle API keys, access tokens, database credentials, and private cryptographic keys during modern software development. These credentials easily slip into source files, configuration manifests, or Git commits.',
@@ -193,7 +193,7 @@ export const caseStudies: CaseStudy[] = [
     sourceVisibility: 'Private Source',
     technologies: ['Python', 'FastAPI', 'React', 'Docker', 'SQLite', 'Ollama', 'Gemini', 'OpenAI', 'Anthropic'],
     links: [
-      { label: 'Latest CI Run (Run #41288154213)', url: 'https://github.com/MokuLakshithReddy/local-ai-execution-agent/actions/runs/41288154213', type: 'ci' },
+      { label: 'Recorded CI Run (Run #41288154213)', url: 'https://github.com/MokuLakshithReddy/local-ai-execution-agent/actions/runs/41288154213', type: 'ci' },
       { label: 'Verification Report (EVIDENCE.md)', url: 'https://github.com/MokuLakshithReddy/local-ai-execution-agent/blob/main/EVIDENCE.md', type: 'docs' },
       { label: 'End-to-End Demonstrations', url: 'https://github.com/MokuLakshithReddy/local-ai-execution-agent/blob/main/DEMO_RUN.md', type: 'docs' }
     ],
@@ -279,7 +279,7 @@ SQLite Persistence & React Dashboard`,
         'Privacy with cloud providers depends on local Ollama execution to prevent prompt transmission.'
       ],
       evidenceLinks: [
-        { label: 'Latest CI Run #41288154213', url: 'https://github.com/MokuLakshithReddy/local-ai-execution-agent/actions/runs/41288154213', type: 'ci' },
+        { label: 'Recorded CI Run #41288154213', url: 'https://github.com/MokuLakshithReddy/local-ai-execution-agent/actions/runs/41288154213', type: 'ci' },
         { label: 'Formal Verification Report (EVIDENCE.md)', url: 'https://github.com/MokuLakshithReddy/local-ai-execution-agent/blob/main/EVIDENCE.md', type: 'docs' },
         { label: 'Adversarial Test Suite', url: 'https://github.com/MokuLakshithReddy/local-ai-execution-agent/blob/main/tests/test_adversarial_benchmark.py', type: 'docs' }
       ]
@@ -302,8 +302,8 @@ SQLite Persistence & React Dashboard`,
     technologies: ['Next.js', 'TypeScript', 'Google GenAI', 'Supabase', 'PostgreSQL', 'Redis', 'Razorpay', 'MCP'],
     links: [
       { label: 'Repository Reference', url: 'https://github.com/MokuLakshithReddy/thinkmate', type: 'github' },
-      { label: 'Latest Staging DB Verification (Run #41814847202)', url: 'https://github.com/MokuLakshithReddy/thinkmate/actions/runs/41814847202', type: 'ci' },
-      { label: 'Latest Staging Browser E2E Report (Run #41838038580)', url: 'https://github.com/MokuLakshithReddy/thinkmate/actions/runs/41838038580', type: 'ci' },
+      { label: 'Staging DB Verification (Run #41814847202)', url: 'https://github.com/MokuLakshithReddy/thinkmate/actions/runs/41814847202', type: 'ci' },
+      { label: 'Staging Browser E2E Report (Run #41838038580)', url: 'https://github.com/MokuLakshithReddy/thinkmate/actions/runs/41838038580', type: 'ci' },
       { label: 'Operational Runbook', url: 'https://github.com/MokuLakshithReddy/thinkmate/blob/main/docs/OPERATIONAL_RUNBOOK.md', type: 'docs' }
     ],
     problemStatement: {
@@ -408,7 +408,7 @@ Model Context Protocol (MCP Server exposing 6 workspace tools)`,
     sourceVisibility: 'Private Source',
     technologies: ['Electron', 'React', 'TypeScript', 'Vite', 'AI APIs', 'Audio Processing', 'RAG'],
     links: [
-      { label: 'Latest CI Run (Run #41215464862)', url: 'https://github.com/MokuLakshithReddy/Cluely-AI-Desktop-Assistant/actions/runs/41215464862', type: 'ci' },
+      { label: 'Recorded CI Run (Run #41215464862)', url: 'https://github.com/MokuLakshithReddy/Cluely-AI-Desktop-Assistant/actions/runs/41215464862', type: 'ci' },
       { label: 'Architecture Specification', url: 'https://github.com/MokuLakshithReddy/Cluely-AI-Desktop-Assistant/blob/main/docs/architecture/ARCHITECTURE.md', type: 'docs' },
       { label: '89-Test Execution Report', url: 'https://github.com/MokuLakshithReddy/Cluely-AI-Desktop-Assistant/blob/main/docs/testing/TEST_RESULTS.md', type: 'docs' },
       { label: 'Quality Measurements', url: 'https://github.com/MokuLakshithReddy/Cluely-AI-Desktop-Assistant/blob/main/docs/benchmarks/QUALITY_MEASUREMENTS.md', type: 'docs' }
@@ -497,7 +497,7 @@ Screen Capture (Electron DesktopCapturer)     Audio Capture (Mic + System Loopba
         'Broader speech recognition benchmarking under varying acoustic noise conditions.'
       ],
       evidenceLinks: [
-        { label: 'Latest CI Run #41215464862', url: 'https://github.com/MokuLakshithReddy/Cluely-AI-Desktop-Assistant/actions/runs/41215464862', type: 'ci' },
+        { label: 'Recorded CI Run #41215464862', url: 'https://github.com/MokuLakshithReddy/Cluely-AI-Desktop-Assistant/actions/runs/41215464862', type: 'ci' },
         { label: 'Architecture Specification', url: 'https://github.com/MokuLakshithReddy/Cluely-AI-Desktop-Assistant/blob/main/docs/architecture/ARCHITECTURE.md', type: 'docs' },
         { label: 'Test Execution Results', url: 'https://github.com/MokuLakshithReddy/Cluely-AI-Desktop-Assistant/blob/main/docs/testing/TEST_RESULTS.md', type: 'docs' },
         { label: 'Security & Privacy Runbook', url: 'https://github.com/MokuLakshithReddy/Cluely-AI-Desktop-Assistant/blob/main/docs/security/SECURITY_AND_PRIVACY.md', type: 'docs' }
@@ -630,7 +630,7 @@ Independent Verification Engine
     technologies: ['TypeScript', 'React', 'Supabase', 'PostgreSQL', 'Solidity', 'EVM', 'GIS', 'Leaflet'],
     links: [
       { label: 'Public GitHub Repository', url: 'https://github.com/MokuLakshithReddy/bluecarbon-registry', type: 'github' },
-      { label: 'Latest CI Pipeline (Run #40334221068)', url: 'https://github.com/MokuLakshithReddy/bluecarbon-registry/actions/runs/40334221068', type: 'ci' },
+      { label: 'Recorded CI Pipeline (Run #40334221068)', url: 'https://github.com/MokuLakshithReddy/bluecarbon-registry/actions/runs/40334221068', type: 'ci' },
       { label: 'Scientific Validation Report', url: 'https://github.com/MokuLakshithReddy/bluecarbon-registry/blob/main/docs/SCIENTIFIC_VALIDATION_REPORT.md', type: 'docs' },
       { label: 'Carbon Methodology Specification', url: 'https://github.com/MokuLakshithReddy/bluecarbon-registry/blob/main/docs/CARBON_METHODOLOGY_SPEC.md', type: 'docs' },
       { label: 'Smart Contract Audit & Runbook', url: 'https://github.com/MokuLakshithReddy/bluecarbon-registry/blob/main/docs/SMART_CONTRACT_AUDIT.md', type: 'docs' }

@@ -1,30 +1,31 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { FileText, ArrowRight, Clock } from 'lucide-react'
 
 export const BlogSection: React.FC = () => {
   const posts = [
     {
-      articleNo: 'Article 01',
+      articleNo: 'Case Study 01',
       title: 'Beyond AI Responses: Building Agents That Prove Their Work',
       snippet: "Why an AI agent claiming task completion isn't enough, and how independent verification, isolated execution, and machine-readable evidence can make autonomous systems more trustworthy.",
-      date: 'Add actual publication date',
-      readTime: '7 min read',
+      caseStudySlug: 'local-ai-execution-agent',
+      cardLabel: 'Execution & verification',
       tag: 'AI Agents',
     },
     {
-      articleNo: 'Article 02',
+      articleNo: 'Case Study 02',
       title: 'Fail-Closed Security: Designing Systems That Refuse to Guess',
       snippet: 'Exploring how secret detection, Git hook enforcement, staged-diff analysis, and safe failure handling help prevent sensitive credentials from entering version control.',
-      date: 'Add actual publication date',
-      readTime: '6 min read',
+      caseStudySlug: 'secret-leak-detector',
+      cardLabel: 'Security engineering',
       tag: 'Security Engineering',
     },
     {
-      articleNo: 'Article 03',
+      articleNo: 'Case Study 03',
       title: 'The Architecture Behind a Reliable Autonomous Coding Agent',
       snippet: 'A technical breakdown of connecting an LLM planner, coding agent, and independent verifier through controlled execution, persistent state, and iterative repair workflows.',
-      date: 'Add actual publication date',
-      readTime: '8 min read',
+      caseStudySlug: 'autonomous-ai-coding-orchestrator',
+      cardLabel: 'System architecture',
       tag: 'System Architecture',
     },
   ]
@@ -37,14 +38,14 @@ export const BlogSection: React.FC = () => {
           <div>
             <div className="font-mono-tech text-[13px] text-[#0755F5] font-bold tracking-wider uppercase mb-2 flex items-center gap-2">
               <FileText className="w-4 h-4" />
-              <span>// 04. Technical Writings &amp; Insights</span>
+              <span>// 04. Engineering Notes &amp; Case Studies</span>
             </div>
             <h2 className="font-anton text-[42px] md:text-[56px] text-[#111111] uppercase tracking-tight leading-none">
               Notes &amp; Articles
             </h2>
           </div>
           <p className="font-mono-tech text-[14px] text-[#555555] max-w-md mt-4 md:mt-0">
-            Documenting engineering challenges, architectural decisions, security research, and experiments from building practical AI systems.
+            Selected engineering questions and the detailed project case studies behind the systems I build.
           </p>
         </div>
 
@@ -53,7 +54,7 @@ export const BlogSection: React.FC = () => {
           {posts.map((post, idx) => (
             <article
               key={idx}
-              className="bg-[#FAF5EC] border border-[#222222]/80 rounded-[18px] p-6 flex flex-col justify-between hover:-translate-y-1 transition-transform shadow-sm hover:shadow-md cursor-pointer group relative"
+              className="bg-[#FAF5EC] border border-[#222222]/80 rounded-[18px] p-6 flex flex-col justify-between hover:-translate-y-1 transition-transform shadow-sm hover:shadow-md group relative"
             >
               <div>
                 {/* Meta Row: Article No + Category Tag + Read Time */}
@@ -68,7 +69,7 @@ export const BlogSection: React.FC = () => {
                   </div>
                   <span className="flex items-center gap-1 shrink-0 text-[11px] sm:text-[12px]">
                     <Clock className="w-3.5 h-3.5 text-[#0755F5]" />
-                    {post.readTime}
+                    {post.cardLabel}
                   </span>
                 </div>
 
@@ -83,12 +84,11 @@ export const BlogSection: React.FC = () => {
 
               {/* Bottom Footer */}
               <div className="flex items-center justify-between pt-4 border-t border-[#D5C9B7]/60 text-[13px] font-mono-tech">
-                <span className="text-[#777777] text-[11.5px] italic">
-                  {post.date}
-                </span>
-                <span className="text-[#0755F5] font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                  Read article <ArrowRight className="w-3.5 h-3.5" />
-                </span>
+                <span className="text-[#777777] text-[11.5px] italic">Detailed project breakdown</span>
+                <Link to={`/projects/${post.caseStudySlug}`}
+                  className="text-[#0755F5] font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0755F5]">
+                  Read case study <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
               </div>
             </article>
           ))}

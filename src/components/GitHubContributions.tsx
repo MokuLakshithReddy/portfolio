@@ -71,7 +71,8 @@ export const GitHubContributions: React.FC = () => {
   const [todayHasActivity, setTodayHasActivity] = useState(false)
 
   const monthPositions = getMonthPositions()
-  const todayIso = new Date().toISOString().split('T')[0]
+  const today = new Date()
+  const todayIso = [today.getFullYear(), String(today.getMonth() + 1).padStart(2, '0'), String(today.getDate()).padStart(2, '0')].join('-')
 
   const fetchLiveGitHubEvents = async () => {
     setIsFetchingLive(true)
@@ -98,7 +99,7 @@ export const GitHubContributions: React.FC = () => {
   useEffect(() => {
     fetchLiveGitHubEvents()
     // Poll live activity every 60 seconds
-    const interval = setInterval(fetchLiveGitHubEvents, 60000)
+    const interval = setInterval(fetchLiveGitHubEvents, 15 * 60 * 1000)
     return () => clearInterval(interval)
   }, [todayIso])
 
@@ -180,7 +181,7 @@ export const GitHubContributions: React.FC = () => {
             />
             <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 border-2 rounded-full"
               style={{ borderColor: isDark ? '#0D1117' : '#FAF5EC' }}
-              title="Live Synchronized with GitHub"
+              title="Recent public GitHub activity; automatic refresh every 15 minutes"
             />
           </div>
 
@@ -190,12 +191,15 @@ export const GitHubContributions: React.FC = () => {
                 {githubContributionData.totalContributions.toLocaleString()} contributions in the last year
               </h3>
             </div>
+            <p className={`text-[11px] font-mono-tech mt-1 ${isDark ? 'text-[#8B949E]' : 'text-[#777777]'}`}>
+              Calendar snapshot synced {new Date(githubContributionData.lastSyncedAt).toLocaleString()}
+            </p>
             <div className="flex items-center gap-2 flex-wrap">
               <span className={`inline-flex items-center gap-1 text-[11px] font-mono-tech px-2 py-0.5 rounded-full border ${
                 isDark ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' : 'bg-emerald-600/10 text-emerald-700 border-emerald-600/30'
               }`}>
                 <Radio className="w-3 h-3 animate-pulse" />
-                <span>Live Activity Sync</span>
+                <span>Recent Public Activity · 15 min refresh</span>
               </span>
               <p className={`text-[12px] font-mono-tech ${isDark ? 'text-[#8B949E]' : 'text-[#666666]'}`}>
                 Account <strong className={isDark ? 'text-[#58A6FF]' : 'text-[#0755F5]'}>@MokuLakshithReddy</strong>
@@ -210,7 +214,7 @@ export const GitHubContributions: React.FC = () => {
           <button
             onClick={fetchLiveGitHubEvents}
             disabled={isFetchingLive}
-            title="Fetch latest GitHub live events"
+            title="Refresh recent public GitHub activity"
             className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-[11px] font-mono-tech font-semibold transition-all border ${
               isDark 
                 ? 'bg-[#161B22] hover:bg-[#21262D] border-[#30363D] text-[#8B949E] hover:text-white' 
@@ -218,7 +222,7 @@ export const GitHubContributions: React.FC = () => {
             }`}
           >
             <RefreshCw className={`w-3 h-3 ${isFetchingLive ? 'animate-spin text-emerald-400' : ''}`} />
-            <span>{isFetchingLive ? 'Syncing...' : 'Sync Live'}</span>
+            <span>{isFetchingLive ? 'Refreshing...' : 'Refresh Activity'}</span>
           </button>
 
           {/* Theme switcher */}
