@@ -21,6 +21,7 @@ export const ProjectWorkflowPreview: React.FC<ProjectWorkflowPreviewProps> = ({ 
 
   return (
     <div
+      role="img"
       aria-label={`Project ${number} workflow: ${visibleSteps.map((item) => item.title).join(', ')}`}
       className="relative -mx-6 -mt-6 mb-5 overflow-hidden rounded-t-[17px] border-b border-[#D5C9B7]/80 bg-[#F0E9DD] px-4 pb-3 pt-3"
     >
