@@ -16,41 +16,53 @@ export const HomePage: React.FC = () => {
   const [isImageModalOpen, setIsImageModalOpen] = useState(false)
 
   useEffect(() => {
-    // If there is a hash like #projects, scroll to it
+    // Honor direct section links after the first layout pass.
+    let hashTimer: number | undefined
     if (window.location.hash) {
-      const id = window.location.hash.replace('#', '')
-      setTimeout(() => {
-        const el = document.getElementById(id)
-        if (el) el.scrollIntoView({ behavior: 'smooth' })
-      }, 100)
+      hashTimer = window.setTimeout(() => {
+        const id = window.location.hash.slice(1)
+        document.getElementById(id)?.scrollIntoView({
+          behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+          block: 'start',
+        })
+      }, 120)
     }
 
-    const handleScroll = () => {
-      const sections = ['home', 'projects', 'experience', 'achievements', 'skills', 'blog', 'contact']
-      const scrollPos = window.scrollY + 120
+    // Observe sections instead of reading every section's layout on every scroll event.
+    const sectionIds = ['home', 'projects', 'experience', 'achievements', 'skills', 'blog', 'contact']
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((element): element is HTMLElement => element !== null)
 
-      for (const section of sections) {
-        const el = document.getElementById(section)
-        if (el) {
-          const top = el.offsetTop
-          const height = el.offsetHeight
-          if (scrollPos >= top && scrollPos < top + height) {
-            setActiveSection(section)
-            break
-          }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleSection = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
+
+        if (visibleSection) {
+          setActiveSection(visibleSection.target.id)
         }
-      }
-    }
+      },
+      {
+        rootMargin: '-22% 0px -62% 0px',
+        threshold: [0, 0.15, 0.35],
+      },
+    )
 
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    sections.forEach((section) => observer.observe(section))
+
+    return () => {
+      if (hashTimer !== undefined) window.clearTimeout(hashTimer)
+      observer.disconnect()
+    }
   }, [])
 
   const handleNavigate = (id: string) => {
     setActiveSection(id)
     const el = document.getElementById(id)
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth' })
+      el.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' })
     }
   }
 

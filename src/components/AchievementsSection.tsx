@@ -1,11 +1,12 @@
 import React from 'react'
+import { ScrollReveal } from './MotionSystem'
 import { Trophy, GitPullRequest, Rocket, ExternalLink, Award, CheckCircle2, Database } from 'lucide-react'
 import { GitHubContributions } from './GitHubContributions'
 
 export const AchievementsSection: React.FC = () => {
   return (
     <section id="achievements" className="w-full py-20 px-6 md:px-12 lg:px-16 border-t border-[#D8CEBD] relative">
-      <div className="max-w-6xl mx-auto">
+      <ScrollReveal className="max-w-6xl mx-auto" amount={0.04}>
         {/* Section Heading */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
           <div>
@@ -293,7 +294,7 @@ export const AchievementsSection: React.FC = () => {
           </div>
           <GitHubContributions />
         </div>
-      </div>
+      </ScrollReveal>
     </section>
   )
 }

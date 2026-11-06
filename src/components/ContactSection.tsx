@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { ScrollReveal } from './MotionSystem'
 import { Mail, Send, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react'
 
 export const ContactSection: React.FC = () => {
@@ -64,7 +65,7 @@ export const ContactSection: React.FC = () => {
 
   return (
     <section id="contact" className="w-full py-20 px-6 md:px-12 lg:px-16 border-t border-[#D8CEBD] relative">
-      <div className="max-w-4xl mx-auto">
+      <ScrollReveal className="max-w-4xl mx-auto" amount={0.06}>
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 font-mono-tech text-[13px] text-[#0755F5] font-bold tracking-wider uppercase mb-2">
             <Mail className="w-4 h-4" />
@@ -239,7 +240,7 @@ export const ContactSection: React.FC = () => {
             </form>
           </div>
         </div>
-      </div>
+      </ScrollReveal>
     </section>
   )
 }

@@ -127,7 +127,7 @@ export const YellowCrown: React.FC = () => {
 
 export const BlueGlobeSketch: React.FC = () => {
   return (
-    <div className="relative w-52 sm:w-64 h-52 sm:h-64 pointer-events-none select-none opacity-85">
+    <div className="relative w-52 sm:w-64 h-52 sm:h-64 pointer-events-none select-none opacity-85 animate-sketch-float">
       <svg viewBox="0 0 200 200" fill="none" className="w-full h-full overflow-visible">
         {/* Outer sphere */}
         <circle

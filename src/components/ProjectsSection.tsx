@@ -1,4 +1,5 @@
 import React from 'react'
+import { motion } from 'motion/react'
 import { Link } from 'react-router-dom'
 import { FolderGit2, ArrowRight } from 'lucide-react'
 import { caseStudies } from '../data/caseStudies'
@@ -26,9 +27,15 @@ export const ProjectsSection: React.FC = () => {
         {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {caseStudies.map((proj, idx) => (
-            <div 
-              key={idx}
-              className="bg-[#FAF5EC] border border-[#222222]/80 rounded-[18px] p-6 flex flex-col justify-between hover:-translate-y-1 transition-transform duration-200 shadow-sm hover:shadow-md relative group"
+            <motion.div
+              key={proj.slug}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.14 }}
+              transition={{ duration: 0.54, delay: Math.min(idx * 0.07, 0.28), ease: [0.22, 1, 0.36, 1] }}
+              whileHover={{ y: -5 }}
+              whileTap={{ scale: 0.99 }}
+              className="bg-[#FAF5EC] border border-[#222222]/80 rounded-[18px] p-6 flex flex-col justify-between transition-shadow duration-200 shadow-sm hover:shadow-md relative group"
             >
               {/* Corner fold doodle on published / featured */}
               {proj.number === '01' && (
@@ -100,7 +107,7 @@ export const ProjectsSection: React.FC = () => {
                   <ArrowRight className="w-4 h-4 text-[#0755F5] group-hover/btn:text-white group-hover/btn:translate-x-1 transition-transform" />
                 </Link>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
