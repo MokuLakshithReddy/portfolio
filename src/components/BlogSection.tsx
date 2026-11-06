@@ -1,4 +1,5 @@
 import React from 'react'
+import { motion } from 'motion/react'
 import { Link } from 'react-router-dom'
 import { FileText, ArrowRight, Layers } from 'lucide-react'
 
@@ -52,9 +53,14 @@ export const BlogSection: React.FC = () => {
         {/* Articles Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {posts.map((post, idx) => (
-            <article
-              key={idx}
-              className="bg-[#FAF5EC] border border-[#222222]/80 rounded-[18px] p-6 flex flex-col justify-between hover:-translate-y-1 transition-transform shadow-sm hover:shadow-md group relative"
+            <motion.article
+              key={post.caseStudySlug}
+              initial={{ opacity: 0, y: 22 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.16 }}
+              transition={{ duration: 0.52, delay: idx * 0.08, ease: [0.22, 1, 0.36, 1] }}
+              whileHover={{ y: -5 }}
+              className="bg-[#FAF5EC] border border-[#222222]/80 rounded-[18px] p-6 flex flex-col justify-between transition-shadow shadow-sm hover:shadow-md group relative"
             >
               <div>
                 {/* Meta Row: Article No + Category Tag + Read Time */}
@@ -90,7 +96,7 @@ export const BlogSection: React.FC = () => {
                   Read case study <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
-            </article>
+            </motion.article>
           ))}
         </div>
       </div>
