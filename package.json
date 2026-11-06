@@ -1,7 +1,8 @@
 {
-  "name": "temp-app",
+  "name": "lakshith-reddy-portfolio",
   "private": true,
-  "version": "0.0.0",
+  "license": "SEE LICENSE IN LICENSE",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",

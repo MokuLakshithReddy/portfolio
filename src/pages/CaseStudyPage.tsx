@@ -279,7 +279,8 @@ export const CaseStudyPage: React.FC = () => {
             Benchmark &amp; CI Verification
           </h2>
           <p className="font-mono-tech text-[12.5px] text-[#666666] mb-6">
-            Latest inspected CI execution: <strong className="text-[#111111]">{caseStudy.evidence.ciDate}</strong> — Status: <span className="text-[#0755F5] font-semibold">{caseStudy.evidence.ciStatus}</span>
+            Recorded verification snapshot: <strong className="text-[#111111]">{caseStudy.evidence.ciDate}</strong> — Status: <span className="text-[#0755F5] font-semibold">{caseStudy.evidence.ciStatus}</span>
+            <span className="block mt-1 text-[11px] text-[#777777]">Historical evidence snapshot; newer workflow runs may exist.</span>
           </p>
 
           {/* Metric Cards Grid */}

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { 
   Home, 
   Folder, 
@@ -7,7 +7,9 @@ import {
   Code2, 
   FileText, 
   Mail,
-  Download 
+  Download,
+  Menu,
+  X
 } from 'lucide-react'
 
 interface NavbarProps {
@@ -21,8 +23,11 @@ export const Navbar: React.FC<NavbarProps> = ({
   onNavigate,
   onOpenFolder
 }) => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
   const handleNavClick = (id: string, e: React.MouseEvent) => {
     e.preventDefault()
+    setIsMobileMenuOpen(false)
     if (onNavigate) {
       onNavigate(id)
     } else {
@@ -90,9 +95,9 @@ export const Navbar: React.FC<NavbarProps> = ({
         <a
           href="#home"
           onClick={(e) => handleNavClick('home', e)}
-          className="flex items-center gap-2 px-4 xl:px-5 py-1.5 xl:py-2 rounded-full font-semibold transition-all duration-200 cursor-pointer shadow-sm outline-none bg-[#0755F5] text-white hover:bg-[#0043D6]"
+          className={`flex items-center gap-2 px-4 xl:px-5 py-1.5 xl:py-2 rounded-full font-semibold transition-all duration-200 cursor-pointer shadow-sm outline-none ${activeSection === 'home' ? 'bg-[#0755F5] text-white hover:bg-[#0043D6]' : 'text-[#111111] hover:text-[#0755F5]'}`}
         >
-          <Home className="w-4 h-4 stroke-[2.2] text-white" />
+          <Home className={`w-4 h-4 stroke-[2.2] ${activeSection === 'home' ? 'text-white' : 'text-[#0755F5]'}`} />
           <span>Home</span>
         </a>
 
@@ -182,25 +187,44 @@ export const Navbar: React.FC<NavbarProps> = ({
         </a>
       </div>
 
-      {/* Mobile nav pill */}
+      {/* Accessible mobile navigation */}
       <div className="lg:hidden flex items-center gap-2">
-        <a
-          href="/Lakshith_Reddy_CV.pdf"
-          download="Lakshith_Reddy_CV.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="border border-[#222222]/80 bg-[#FAF5EC] text-[#111111] text-xs px-3 py-1.5 rounded-full font-semibold flex items-center gap-1"
-        >
+        <a href="/Lakshith_Reddy_CV.pdf" download="Lakshith_Reddy_CV.pdf"
+          className="border border-[#222222]/80 bg-[#FAF5EC] text-[#111111] text-xs px-3 py-1.5 rounded-full font-semibold flex items-center gap-1">
           <Download className="w-3 h-3 text-[#0755F5]" />
           <span>CV</span>
         </a>
-        <a
-          href="#projects"
-          className="bg-[#0755F5] text-white text-xs px-3.5 py-1.5 rounded-full font-medium"
-        >
-          Menu
-        </a>
+        <button type="button" aria-expanded={isMobileMenuOpen} aria-controls="mobile-navigation"
+          aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+          onClick={() => setIsMobileMenuOpen((open) => !open)}
+          className="bg-[#0755F5] text-white text-xs px-3.5 py-1.5 rounded-full font-semibold inline-flex items-center gap-1.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0755F5]">
+          {isMobileMenuOpen ? <X className="w-3.5 h-3.5" /> : <Menu className="w-3.5 h-3.5" />}
+          <span>{isMobileMenuOpen ? "Close" : "Menu"}</span>
+        </button>
       </div>
+
+      {isMobileMenuOpen && (
+        <div id="mobile-navigation"
+          className="absolute top-[calc(100%+8px)] left-4 right-4 z-50 lg:hidden rounded-2xl border border-[#222222]/80 bg-[#FAF5EC] p-3 shadow-xl">
+          <div className="grid grid-cols-2 gap-2">
+            {[
+              ["home", "Home"], ["projects", "Projects"], ["experience", "Experience"],
+              ["achievements", "Achievements"], ["skills", "Skills"], ["blog", "Engineering Notes"],
+              ["contact", "Contact"],
+            ].map(([id, label]) => (
+              <a key={id} href={`#${id}`} aria-current={activeSection === id ? "location" : undefined}
+                onClick={(e) => handleNavClick(id, e)}
+                className={`rounded-xl border px-3 py-3 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0755F5] ${
+                  activeSection === id
+                    ? "border-[#0755F5] bg-[#0755F5]/10 text-[#0755F5]"
+                    : "border-[#D8CEBD] text-[#222222] hover:border-[#0755F5] hover:text-[#0755F5]"
+                }`}>
+                {label}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
     </nav>
   )
 }
