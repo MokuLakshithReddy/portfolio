@@ -85,7 +85,15 @@ export const GitHubContributions: React.FC = () => {
           setLiveSyncedTime(formatRelativeTime(events[0].created_at))
 
           // Check if any event is from today
-          const hasToday = events.some(e => e.created_at.startsWith(todayIso))
+          const hasToday = events.some((event) => {
+            const eventDate = new Date(event.created_at)
+            const eventLocalDate = [
+              eventDate.getFullYear(),
+              String(eventDate.getMonth() + 1).padStart(2, '0'),
+              String(eventDate.getDate()).padStart(2, '0')
+            ].join('-')
+            return eventLocalDate === todayIso
+          })
           setTodayHasActivity(hasToday)
         }
       }
@@ -198,7 +206,7 @@ export const GitHubContributions: React.FC = () => {
               <span className={`inline-flex items-center gap-1 text-[11px] font-mono-tech px-2 py-0.5 rounded-full border ${
                 isDark ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' : 'bg-emerald-600/10 text-emerald-700 border-emerald-600/30'
               }`}>
-                <Radio className="w-3 h-3 animate-pulse" />
+                <Radio className="w-3 h-3" />
                 <span>Recent Public Activity · 15 min refresh</span>
               </span>
               <p className={`text-[12px] font-mono-tech ${isDark ? 'text-[#8B949E]' : 'text-[#666666]'}`}>

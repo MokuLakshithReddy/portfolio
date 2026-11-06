@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { FileText, ArrowRight, Clock } from 'lucide-react'
+import { FileText, ArrowRight, Layers } from 'lucide-react'
 
 export const BlogSection: React.FC = () => {
   const posts = [
@@ -68,7 +68,7 @@ export const BlogSection: React.FC = () => {
                     </span>
                   </div>
                   <span className="flex items-center gap-1 shrink-0 text-[11px] sm:text-[12px]">
-                    <Clock className="w-3.5 h-3.5 text-[#0755F5]" />
+                    <Layers className="w-3.5 h-3.5 text-[#0755F5]" />
                     {post.cardLabel}
                   </span>
                 </div>
