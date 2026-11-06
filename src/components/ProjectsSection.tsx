@@ -3,6 +3,7 @@ import { motion } from 'motion/react'
 import { Link } from 'react-router-dom'
 import { FolderGit2, ArrowRight } from 'lucide-react'
 import { caseStudies } from '../data/caseStudies'
+import { ProjectWorkflowPreview } from './ProjectWorkflowPreview'
 
 export const ProjectsSection: React.FC = () => {
   return (
@@ -47,6 +48,7 @@ export const ProjectsSection: React.FC = () => {
               )}
 
               <div>
+                <ProjectWorkflowPreview steps={proj.workflow} number={proj.number} />
                 <div className="flex items-center justify-between mb-3">
                   <span className="font-mono-tech text-[12px] font-bold text-[#0755F5] bg-[#0755F5]/10 px-2.5 py-0.5 rounded-full">
                     Project {proj.number}
