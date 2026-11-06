@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { AnimatePresence, motion } from 'motion/react'
 import { 
   Home, 
   Folder, 
@@ -25,6 +26,17 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
+  useEffect(() => {
+    if (!isMobileMenuOpen) return
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setIsMobileMenuOpen(false)
+    }
+
+    window.addEventListener('keydown', handleEscape)
+    return () => window.removeEventListener('keydown', handleEscape)
+  }, [isMobileMenuOpen])
+
   const handleNavClick = (id: string, e: React.MouseEvent) => {
     e.preventDefault()
     setIsMobileMenuOpen(false)
@@ -47,7 +59,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   }
 
   return (
-    <nav className="w-full h-[58px] px-6 sm:px-8 lg:px-[48px] flex items-center justify-between text-[#111111] z-30 relative select-none">
+    <nav aria-label="Primary navigation" className="sticky top-0 w-full h-[58px] px-6 sm:px-8 lg:px-[48px] flex items-center justify-between text-[#111111] z-40 relative select-none bg-[#F5EFEB]/90 backdrop-blur-sm border-b border-[#D8CEBD]/80 shadow-[0_2px_10px_rgba(17,17,17,0.035)]">
       {/* Brand on the left */}
       <div className="flex items-center gap-3 shrink-0">
         {/* Interactive Blue and Yellow Folder Icon: Click opens image modal */}
@@ -203,9 +215,16 @@ export const Navbar: React.FC<NavbarProps> = ({
         </button>
       </div>
 
-      {isMobileMenuOpen && (
-        <div id="mobile-navigation"
-          className="absolute top-[calc(100%+8px)] left-4 right-4 z-50 lg:hidden rounded-2xl border border-[#222222]/80 bg-[#FAF5EC] p-3 shadow-xl">
+      <AnimatePresence initial={false}>
+        {isMobileMenuOpen && (
+          <motion.div
+            id="mobile-navigation"
+            initial={{ opacity: 0, y: -10, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -8, scale: 0.985 }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute top-[calc(100%+8px)] left-4 right-4 z-50 lg:hidden rounded-2xl border border-[#222222]/80 bg-[#FAF5EC] p-3 shadow-xl"
+          >
           <div className="grid grid-cols-2 gap-2">
             {[
               ["home", "Home"], ["projects", "Projects"], ["experience", "Experience"],
@@ -223,8 +242,9 @@ export const Navbar: React.FC<NavbarProps> = ({
               </a>
             ))}
           </div>
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   )
 }
