@@ -66,7 +66,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreClick }) => {
       </div>
 
       {/* 2. Character Scene Composition (z-15): Unified Character + Floating Browser + Crown + Orbit + Splash */}
-      <div className="absolute right-0 bottom-0 h-[88%] sm:h-[92%] lg:h-[96%] max-h-[820px] flex items-end justify-end pointer-events-none select-none z-15">
+      <div className="absolute right-[-22%] sm:right-0 bottom-0 h-[50%] sm:h-[76%] lg:h-[96%] max-h-[820px] flex items-end justify-end pointer-events-none select-none z-15 opacity-25 sm:opacity-100">
         <CharacterScene />
       </div>
 
@@ -80,7 +80,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreClick }) => {
         initial={{ opacity: 0, x: -18 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.68, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
-        className="relative lg:absolute left-0 lg:left-[clamp(28px,4.2vw,72px)] top-0 lg:top-[20px] z-25 flex flex-col justify-start max-w-[min(540px,44vw)] px-6 lg:px-0 pt-3 lg:pt-0"
+        className="relative lg:absolute left-0 lg:left-[clamp(28px,4.2vw,72px)] top-0 lg:top-[20px] z-25 flex w-full flex-col justify-start max-w-[calc(100vw-3rem)] md:max-w-[min(540px,52vw)] lg:max-w-[min(540px,44vw)] px-6 lg:px-0 pt-3 lg:pt-0"
       >
         {/* Eyebrow Label with generous bottom margin to completely eliminate any touch with 'LAKSHITH' */}
         <div className="mb-5 sm:mb-7">
