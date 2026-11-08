@@ -143,6 +143,7 @@ test('homepage does not introduce document-level horizontal scrolling on phone w
           body: document.body.scrollWidth,
           horizontalScrollX: window.scrollX,
           bodyOverflowX: getComputedStyle(document.body).overflowX,
+          rootOverflowX: getComputedStyle(document.documentElement).overflowX,
           overflowing,
         })))
       })
@@ -150,6 +151,11 @@ test('homepage does not introduce document-level horizontal scrolling on phone w
         dimensions.horizontalScrollX,
         0,
         `The page itself should not scroll horizontally at ${width}px: ${JSON.stringify(dimensions)}`,
+      )
+      assert.equal(
+        dimensions.rootOverflowX,
+        'clip',
+        `The document root must clip horizontal overflow at ${width}px: ${JSON.stringify(dimensions)}`,
       )
       const heatmapScrollport = await page.evaluate(() => {
         const grid = [...document.querySelectorAll('div')]
