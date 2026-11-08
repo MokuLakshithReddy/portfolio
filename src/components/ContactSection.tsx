@@ -141,10 +141,13 @@ export const ContactSection: React.FC = () => {
               className="bg-[#FAF5EC] border border-[#222222]/80 rounded-[18px] p-6 sm:p-8 shadow-sm space-y-4"
             >
               <div>
-                <label className="block text-[13px] font-mono-tech font-semibold text-[#333333] mb-1.5">
+                <label htmlFor="contact-name" className="block text-[13px] font-mono-tech font-semibold text-[#333333] mb-1.5">
                   Your Name
                 </label>
                 <input
+                  id="contact-name"
+                  name="name"
+                  autoComplete="name"
                   type="text"
                   required
                   disabled={status === 'submitting'}
@@ -156,10 +159,13 @@ export const ContactSection: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-[13px] font-mono-tech font-semibold text-[#333333] mb-1.5">
+                <label htmlFor="contact-email" className="block text-[13px] font-mono-tech font-semibold text-[#333333] mb-1.5">
                   Email Address
                 </label>
                 <input
+                  id="contact-email"
+                  name="email"
+                  autoComplete="email"
                   type="email"
                   required
                   disabled={status === 'submitting'}
@@ -171,10 +177,12 @@ export const ContactSection: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-[13px] font-mono-tech font-semibold text-[#333333] mb-1.5">
+                <label htmlFor="contact-message" className="block text-[13px] font-mono-tech font-semibold text-[#333333] mb-1.5">
                   Message
                 </label>
                 <textarea
+                  id="contact-message"
+                  name="message"
                   required
                   rows={4}
                   disabled={status === 'submitting'}
@@ -187,6 +195,7 @@ export const ContactSection: React.FC = () => {
 
               {/* Status feedback alerts */}
               {status === 'success' && (
+                <div role="status" aria-live="polite" className="sr-only">Your message was sent successfully.</div>
                 <div className="p-3.5 bg-emerald-50 border border-emerald-300 rounded-[10px] flex items-start gap-2.5 text-emerald-800 text-[13.5px]">
                   <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                   <div>
@@ -197,6 +206,7 @@ export const ContactSection: React.FC = () => {
               )}
 
               {status === 'error' && (
+                <div role="alert" aria-live="assertive" className="sr-only">Your message could not be sent.</div>
                 <div className="p-3.5 bg-rose-50 border border-rose-300 rounded-[10px] flex flex-col gap-2 text-rose-800 text-[13px]">
                   <div className="flex items-start gap-2">
                     <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
