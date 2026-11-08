@@ -14,9 +14,12 @@ export const ContactSection: React.FC = () => {
     setStatus('submitting')
     setErrorMessage('')
 
+    const controller = new AbortController()
+    const timeoutId = window.setTimeout(() => controller.abort(), 20_000)
+
     try {
-      // Endpoint can be configured via environment variable or default to formsubmit.co
-      const endpoint = (import.meta as { env?: { VITE_CONTACT_ENDPOINT?: string } }).env?.VITE_CONTACT_ENDPOINT 
+      // Endpoint can be configured via environment variable or default to formsubmit.co.
+      const endpoint = (import.meta as { env?: { VITE_CONTACT_ENDPOINT?: string } }).env?.VITE_CONTACT_ENDPOINT
         || 'https://formsubmit.co/ajax/contact@lakshithreddy.dev'
 
       const response = await fetch(endpoint, {
@@ -25,35 +28,47 @@ export const ContactSection: React.FC = () => {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         },
+        signal: controller.signal,
         body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          message: formData.message,
-          _subject: `Portfolio Message from ${formData.name}`,
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          message: formData.message.trim(),
+          _subject: `Portfolio Message from ${formData.name.trim()}`,
           _template: 'table',
         }),
       })
 
-      const result = await response.json().catch(() => ({}))
-      const serviceAccepted = result?.success !== false && result?.success !== 'false'
-
-      if (response.ok && serviceAccepted) {
-        setStatus('success')
-        setFormData({ name: '', email: '', message: '' })
-        setTimeout(() => {
-          setStatus('idle')
-        }, 6000)
-      } else {
-        throw new Error(result?.message || `Message service returned status ${response.status}`)
+      if (!response.ok) {
+        throw new Error('The message service did not accept the submission.')
       }
+
+      const result: unknown = await response.json().catch(() => null)
+      const serviceAccepted = (
+        typeof result === 'object'
+        && result !== null
+        && 'success' in result
+        && (result.success === true || result.success === 'true')
+      )
+
+      if (!serviceAccepted) {
+        throw new Error('The message service returned an invalid confirmation.')
+      }
+
+      setStatus('success')
+      setFormData({ name: '', email: '', message: '' })
+      window.setTimeout(() => {
+        setStatus('idle')
+      }, 6000)
     } catch (err) {
       console.error('Contact form submission error:', err)
       setStatus('error')
       setErrorMessage(
-        err instanceof Error 
-          ? err.message 
-          : 'Could not send message over network. Please use direct email.'
+        err instanceof Error && err.name === 'AbortError'
+          ? 'The request timed out. Please try again or use direct email.'
+          : 'Your message could not be confirmed as sent. Please try again or use direct email.'
       )
+    } finally {
+      window.clearTimeout(timeoutId)
     }
   }
 
