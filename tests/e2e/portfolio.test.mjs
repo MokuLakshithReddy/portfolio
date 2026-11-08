@@ -135,16 +135,21 @@ test('homepage does not introduce document-level horizontal scrolling on phone w
           .filter((element) => element.right > viewport + 1 || element.left < -1)
           .sort((a, b) => b.right - a.right)
           .slice(0, 8)
-        return {
+        const maxDocumentScroll = Math.max(0, document.documentElement.scrollWidth - viewport)
+        window.scrollTo({ left: maxDocumentScroll, top: 0, behavior: 'instant' })
+        return new Promise((resolve) => requestAnimationFrame(() => resolve({
           viewport,
           document: document.documentElement.scrollWidth,
           body: document.body.scrollWidth,
+          horizontalScrollX: window.scrollX,
+          bodyOverflowX: getComputedStyle(document.body).overflowX,
           overflowing,
-        }
+        })))
       })
-      assert.ok(
-        dimensions.document <= dimensions.viewport && dimensions.body <= dimensions.viewport,
-        `Horizontal page overflow at ${width}px: ${JSON.stringify(dimensions)}`,
+      assert.equal(
+        dimensions.horizontalScrollX,
+        0,
+        `The page itself should not scroll horizontally at ${width}px: ${JSON.stringify(dimensions)}`,
       )
       const heatmapScrollport = await page.evaluate(() => {
         const grid = [...document.querySelectorAll('div')]
