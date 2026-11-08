@@ -23,12 +23,23 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.CONTRIBUTIONS_PAT }}
+          # The repository token is sufficient for checkout and pushing updates.
+          # Keep the user-scoped PAT isolated to the contribution GraphQL query.
+          token: ${{ github.token }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
+
+      - name: Validate contribution API credential
+        env:
+          CONTRIBUTIONS_PAT: ${{ secrets.CONTRIBUTIONS_PAT }}
+        run: |
+          if [ -z "$CONTRIBUTIONS_PAT" ]; then
+            echo "::error::CONTRIBUTIONS_PAT is not configured. Add a user-scoped GitHub token that can read the account contribution calendar."
+            exit 1
+          fi
 
       - name: Sync Contributions Calendar
         env:
@@ -37,14 +48,13 @@ jobs:
 
       - name: Commit and Push if Changed
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git add src/data/githubData.ts
           if git diff --staged --quiet; then
             echo "No contribution changes detected."
           else
             echo "New contributions detected! Committing and pushing..."
             git commit -m "chore(contributions): sync latest GitHub contribution activity [skip ci]"
-            git push origin main
+            git push origin HEAD:main
           fi
-
