@@ -8,7 +8,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build && node scripts/prerender-routes.mjs",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "node --test tests/unit/*.test.mjs tests/e2e/*.test.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.68.0",
