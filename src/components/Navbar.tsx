@@ -250,7 +250,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       {/* Accessible mobile navigation */}
       <div className="lg:hidden flex items-center gap-2">
         <a href="/Lakshith_Reddy_CV.pdf" download="Lakshith_Reddy_CV.pdf"
-          className="border border-[#222222]/80 bg-[#FAF5EC] text-[#111111] text-xs px-3 py-1.5 rounded-full font-semibold flex items-center gap-1">
+          className="hidden min-[360px]:flex border border-[#222222]/80 bg-[#FAF5EC] text-[#111111] text-xs px-3 py-1.5 rounded-full font-semibold items-center gap-1">
           <Download className="w-3 h-3 text-[#0755F5]" />
           <span>CV</span>
         </a>
