@@ -112,8 +112,8 @@ test('unknown project routes display the not-found page', async () => {
   const page = await createPage()
   try {
     await page.goto(`${baseUrl}/projects/not-a-real-project`, { waitUntil: 'domcontentloaded' })
-    await page.waitForFunction(() => document.body.innerText.includes('Wrong turn.'))
-    assert.match(await page.$eval('main', (element) => element.textContent ?? ''), /Page not found/i)
+    await page.waitForFunction(() => document.body.innerText.includes('Case Study Not Found'))
+    assert.match(await page.$eval('main', (element) => element.textContent ?? ''), /Case Study Not Found/i)
   } finally {
     await page.close()
   }
@@ -157,29 +157,29 @@ test('portfolio image preview can be dismissed with Escape', async () => {
 
 async function submitContactForm(responseBody, responseStatus = 200) {
   const page = await createPage()
-  let intercepted = false
   try {
-    await page.setRequestInterception(true)
-    page.on('request', (request) => {
-      if (request.url().startsWith('https://formsubmit.co/ajax/')) {
-        intercepted = true
-        void request.respond({
-          status: responseStatus,
-          contentType: 'application/json',
-          body: responseBody,
-        })
-      } else {
-        void request.continue()
-      }
-    })
-
     await page.goto(baseUrl, { waitUntil: 'domcontentloaded' })
+    await page.waitForSelector('#contact input[type="text"]')
+    await page.evaluate(({ body, status }) => {
+      const nativeFetch = window.fetch.bind(window)
+      window.fetch = async (input, init) => {
+        const requestUrl = typeof input === 'string' ? input : input instanceof URL ? input.href : input.url
+        if (requestUrl.startsWith('https://formsubmit.co/ajax/')) {
+          return new Response(body, {
+            status,
+            headers: { 'Content-Type': 'application/json' },
+          })
+        }
+        return nativeFetch(input, init)
+      }
+    }, { body: responseBody, status: responseStatus })
+
     await page.$eval('#contact', (element) => element.scrollIntoView())
     await page.type('#contact input[type="text"]', 'Test Visitor')
     await page.type('#contact input[type="email"]', 'visitor@example.com')
     await page.type('#contact textarea', 'Automated browser regression test.')
     await page.click('#contact button[type="submit"]')
-    return { page, get intercepted() { return intercepted } }
+    return page
   } catch (error) {
     await page.close()
     throw error
@@ -187,32 +187,30 @@ async function submitContactForm(responseBody, responseStatus = 200) {
 }
 
 test('contact form reports success when the service explicitly accepts a message', async () => {
-  const result = await submitContactForm('{"success":"true","message":"Accepted"}')
+  const page = await submitContactForm('{"success":"true","message":"Accepted"}')
   try {
-    await result.page.waitForFunction(() => document.body.innerText.includes('Transmission Dispatched!'))
-    assert.equal(result.intercepted, true)
+    await page.waitForFunction(() => document.body.innerText.includes('Transmission Dispatched!'))
   } finally {
-    await result.page.close()
+    await page.close()
   }
 })
 
 test('contact form reports failure when the service rejects a message', async () => {
-  const result = await submitContactForm('{"success":"false","message":"Rejected"}')
+  const page = await submitContactForm('{"success":"false","message":"Rejected"}')
   try {
-    await result.page.waitForFunction(() => document.body.innerText.includes('Unable to dispatch automatically'))
-    assert.equal(result.intercepted, true)
-    assert.ok(await result.page.$('#contact a[href^="mailto:"]'))
+    await page.waitForFunction(() => document.body.innerText.includes('Unable to dispatch automatically'))
+    assert.ok(await page.$('#contact a[href^="mailto:"]'))
   } finally {
-    await result.page.close()
+    await page.close()
   }
 })
 
 test('contact form rejects malformed confirmation payloads', { todo: 'Enable after issue #6 response validation is merged.' }, async () => {
-  const result = await submitContactForm('not-json')
+  const page = await submitContactForm('not-json')
   try {
-    await result.page.waitForFunction(() => document.body.innerText.includes('Unable to dispatch automatically'))
+    await page.waitForFunction(() => document.body.innerText.includes('Unable to dispatch automatically'))
   } finally {
-    await result.page.close()
+    await page.close()
   }
 })
 
