@@ -10,10 +10,19 @@ import { BlogSection } from '../components/BlogSection'
 import { ContactSection } from '../components/ContactSection'
 import { Footer } from '../components/Footer'
 import { ImageModal } from '../components/ImageModal'
+import { updatePageMetadata } from '../utils/seo'
 
 export const HomePage: React.FC = () => {
   const [activeSection, setActiveSection] = useState('home')
   const [isImageModalOpen, setIsImageModalOpen] = useState(false)
+
+  useEffect(() => {
+    updatePageMetadata({
+      title: 'Lakshith Reddy — AI/ML & Software Engineering',
+      description: 'AI & ML student building intelligent systems, autonomous agents, developer tools, and reliable software.',
+      canonicalPath: '/',
+    })
+  }, [])
 
   useEffect(() => {
     // Honor direct section links after the first layout pass.
