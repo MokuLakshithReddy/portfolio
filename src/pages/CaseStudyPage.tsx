@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { caseStudies } from '../data/caseStudies'
+import { updatePageMetadata } from '../utils/seo'
 import { 
   ArrowLeft, 
   ExternalLink, 
@@ -24,6 +25,21 @@ export const CaseStudyPage: React.FC = () => {
 
   const currentIndex = caseStudies.findIndex((cs) => cs.slug === slug)
   const caseStudy = caseStudies[currentIndex]
+
+  useEffect(() => {
+    const title = caseStudy
+      ? `${caseStudy.title} — Lakshith Reddy`
+      : 'Project Not Found — Lakshith Reddy'
+    const description = caseStudy
+      ? `${caseStudy.subtitle} ${caseStudy.problemStatement.overview}`.slice(0, 155)
+      : 'The requested portfolio project case study could not be found.'
+
+    updatePageMetadata({
+      title,
+      description,
+      canonicalPath: slug ? `/projects/${slug}` : '/projects',
+    })
+  }, [caseStudy, slug])
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' })
