@@ -66,7 +66,8 @@ export const Navbar: React.FC<NavbarProps> = ({
         <button
           type="button"
           onClick={handleFolderClick}
-          className="relative w-8 h-7 flex items-center justify-center cursor-pointer transition-transform hover:scale-110 active:scale-95 focus:outline-none group border-none bg-transparent p-0"
+          aria-label="Open portfolio illustration preview"
+          className="relative w-8 h-7 flex items-center justify-center cursor-pointer transition-transform hover:scale-110 active:scale-95 group border-none bg-transparent p-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0755F5]"
           title="Click to open portfolio image preview"
         >
           <svg className="w-8 h-7 drop-shadow-xs" viewBox="0 0 32 26" fill="none">
@@ -92,7 +93,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         <a 
           href="#home" 
           onClick={(e) => handleNavClick('home', e)}
-          className="font-bold text-[18px] sm:text-[19px] tracking-tight text-[#111111] cursor-pointer outline-none focus:outline-none ring-0 border-none no-underline flex items-center"
+          className="font-bold text-[18px] sm:text-[19px] tracking-tight text-[#111111] cursor-pointer border-none no-underline flex items-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0755F5]"
         >
           <span>Lakshith Reddy</span>
           <span className="text-[#888888] font-normal text-[22px] ml-0.5 -top-[1px] relative select-none animate-pulse">
