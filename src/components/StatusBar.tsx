@@ -15,9 +15,20 @@ const formatDateTime = (date: Date): string => {
   return `${weekday}, ${month} ${day}, ${year} ${displayHours}:${displayMinutes} ${ampm}`
 }
 
+interface BatteryManagerLike {
+  level: number
+  charging: boolean
+  addEventListener: (event: 'levelchange' | 'chargingchange', listener: () => void) => void
+  removeEventListener: (event: 'levelchange' | 'chargingchange', listener: () => void) => void
+}
+
+interface NavigatorWithBattery extends Navigator {
+  getBattery?: () => Promise<BatteryManagerLike>
+}
+
 export const StatusBar: React.FC = () => {
   const [currentDateTime, setCurrentDateTime] = useState<string>(() => formatDateTime(new Date()))
-  const [batteryLevel, setBatteryLevel] = useState<number>(85)
+  const [batteryLevel, setBatteryLevel] = useState<number | null>(null)
   const [isCharging, setIsCharging] = useState<boolean>(false)
   const [isOnline, setIsOnline] = useState<boolean>(() => typeof navigator !== 'undefined' ? navigator.onLine : true)
 
@@ -33,27 +44,40 @@ export const StatusBar: React.FC = () => {
     window.addEventListener('online', handleOnline)
     window.addEventListener('offline', handleOffline)
 
-    // 3. Battery API (if supported by browser)
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const nav = navigator as any
-    if (nav && typeof nav.getBattery === 'function') {
-      nav.getBattery().then((battery: {
-        level: number
-        charging: boolean
-        addEventListener: (event: string, fn: () => void) => void
-        removeEventListener: (event: string, fn: () => void) => void
-      }) => {
-        const updateBattery = () => {
-          setBatteryLevel(Math.round(battery.level * 100))
-          setIsCharging(battery.charging)
-        }
+    // 3. Battery API (progressively enhanced; omit the indicator when unavailable)
+    const batteryNavigator = navigator as NavigatorWithBattery
+    let battery: BatteryManagerLike | null = null
+    let isMounted = true
+
+    const updateBattery = () => {
+      if (!battery || !isMounted) return
+      setBatteryLevel(Math.round(battery.level * 100))
+      setIsCharging(battery.charging)
+    }
+
+    const connectBattery = async () => {
+      if (typeof batteryNavigator.getBattery !== 'function') return
+
+      try {
+        battery = await batteryNavigator.getBattery()
+        if (!isMounted) return
+
         updateBattery()
         battery.addEventListener('levelchange', updateBattery)
         battery.addEventListener('chargingchange', updateBattery)
-      }).catch(() => {})
+      } catch {
+        // Battery information is optional. Do not invent a fallback percentage.
+      }
     }
 
+    void connectBattery()
+
     return () => {
+      isMounted = false
+      if (battery) {
+        battery.removeEventListener('levelchange', updateBattery)
+        battery.removeEventListener('chargingchange', updateBattery)
+      }
       clearInterval(timer)
       window.removeEventListener('online', handleOnline)
       window.removeEventListener('offline', handleOffline)
@@ -103,21 +127,27 @@ export const StatusBar: React.FC = () => {
           )}
         </span>
 
-        {/* Battery */}
-        <div className="flex items-center gap-1" title={`${batteryLevel}% ${isCharging ? '(Charging)' : ''}`}>
-          <div className="flex items-center gap-0.5">
-            <div className="w-[21px] h-[11px] border-[1.2px] border-[#111111] rounded-[2.5px] p-[1.5px] flex items-center relative">
-              <div 
-                className="h-full bg-[#111111] rounded-[1px] transition-all duration-300"
-                style={{ width: `${Math.max(10, Math.min(100, batteryLevel))}%` }}
-              />
-              {isCharging && (
-                <Zap className="w-2.5 h-2.5 text-[#FFBD2E] fill-[#FFBD2E] absolute inset-0 m-auto" />
-              )}
+        {/* Battery: render only when the browser provides a real battery reading */}
+        {batteryLevel !== null && (
+          <div
+            className="flex items-center gap-1"
+            title={`${batteryLevel}% ${isCharging ? '(Charging)' : ''}`}
+            aria-label={`${batteryLevel}% battery ${isCharging ? 'and charging' : ''}`}
+          >
+            <div className="flex items-center gap-0.5">
+              <div className="w-[21px] h-[11px] border-[1.2px] border-[#111111] rounded-[2.5px] p-[1.5px] flex items-center relative">
+                <div
+                  className="h-full bg-[#111111] rounded-[1px] transition-all duration-300"
+                  style={{ width: `${Math.max(0, Math.min(100, batteryLevel))}%` }}
+                />
+                {isCharging && (
+                  <Zap className="w-2.5 h-2.5 text-[#FFBD2E] fill-[#FFBD2E] absolute inset-0 m-auto" />
+                )}
+              </div>
+              <div className="w-[1.5px] h-[4px] bg-[#111111] rounded-r-[1px]" />
             </div>
-            <div className="w-[1.5px] h-[4px] bg-[#111111] rounded-r-[1px]" />
           </div>
-        </div>
+        )}
       </div>
     </header>
   )
