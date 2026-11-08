@@ -303,10 +303,12 @@ test('contact form reports network failures without clearing the message', async
   }
 })
 
-test('contact form rejects malformed success payloads', { todo: 'Enable after contact confirmation fix in PR #26 reaches main.' }, async () => {
+test('contact form rejects malformed success payloads', async () => {
   const page = await submitContactForm({ responseBody: 'not-json' })
   try {
     await page.waitForFunction(() => document.body.innerText.includes('Unable to dispatch automatically'))
+    assert.ok(await page.$('#contact a[href^="mailto:"]'))
+    assert.equal(await page.$eval('#contact input[type="text"]', (input) => input.value), 'Test Visitor')
   } finally {
     await page.close()
   }
