@@ -314,42 +314,52 @@ test('contact form rejects malformed success payloads', async () => {
   }
 })
 
-test('contact form fields have programmatic labels', { todo: 'Enable after accessibility fix in PR #27 reaches main.' }, async () => {
+test('contact form fields have programmatic labels', async () => {
   const page = await createPage()
   try {
     await page.goto(baseUrl, { waitUntil: 'domcontentloaded' })
     for (const fieldId of ['contact-name', 'contact-email', 'contact-message']) {
-      assert.ok(await page.$(`label[for="${fieldId}"]`))
-      assert.ok(await page.$(`#${fieldId}`))
+      const label = await page.$(`label[for="${fieldId}"]`)
+      const field = await page.$(`#${fieldId}`)
+      assert.ok(label, `Missing accessible label for ${fieldId}`)
+      assert.ok(field, `Missing field ${fieldId}`)
+      assert.equal(
+        await field.evaluate((element) => element.getAttribute('aria-label') || element.getAttribute('id')),
+        fieldId,
+      )
     }
   } finally {
     await page.close()
   }
 })
 
-test('image preview traps and restores keyboard focus', { todo: 'Enable after accessibility fix in PR #27 reaches main.' }, async () => {
+test('image preview traps keyboard focus and restores focus to its trigger', async () => {
   const page = await createPage()
   try {
     await page.goto(baseUrl, { waitUntil: 'domcontentloaded' })
-    const trigger = await page.$('nav button[title="Click to open portfolio image preview"]')
+    const trigger = await page.$('nav button[aria-label="Open portfolio illustration preview"]')
     assert.ok(trigger)
     await trigger.focus()
     await page.keyboard.press('Enter')
     await page.waitForSelector('[role="dialog"][aria-modal="true"]')
-
-    const initialFocusInside = await page.evaluate(() => {
-      const dialog = document.querySelector('[role="dialog"]')
-      return dialog?.contains(document.activeElement) ?? false
-    })
-    assert.equal(initialFocusInside, true)
+    await page.waitForFunction(() => document.activeElement?.getAttribute('aria-label') === 'Close image preview')
 
     await page.keyboard.press('Tab')
+    assert.equal(
+      await page.evaluate(() => document.activeElement?.getAttribute('aria-label')),
+      'Open full-size image in a new tab',
+    )
+
     await page.keyboard.down('Shift')
     await page.keyboard.press('Tab')
     await page.keyboard.up('Shift')
+    assert.equal(
+      await page.evaluate(() => document.activeElement?.getAttribute('aria-label')),
+      'Close image preview',
+    )
+
     await page.keyboard.press('Escape')
     await page.waitForFunction(() => !document.querySelector('[role="dialog"]'))
-
     assert.equal(
       await page.evaluate(() => document.activeElement?.getAttribute('aria-label')),
       'Open portfolio illustration preview',
