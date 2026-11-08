@@ -5,8 +5,8 @@ import { GitHubContributions } from './GitHubContributions'
 
 export const AchievementsSection: React.FC = () => {
   return (
-    <section id="achievements" className="w-full py-20 px-6 md:px-12 lg:px-16 border-t border-[#D8CEBD] relative">
-      <ScrollReveal className="max-w-6xl mx-auto" amount={0.04}>
+    <section id="achievements" className="w-full min-w-0 overflow-x-clip py-20 px-6 md:px-12 lg:px-16 border-t border-[#D8CEBD] relative">
+      <ScrollReveal className="max-w-6xl min-w-0 mx-auto" amount={0.04}>
         {/* Section Heading */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
           <div>
