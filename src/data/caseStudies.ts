@@ -171,7 +171,13 @@ export const caseStudies: CaseStudy[] = [
         'Multi-language AST support for languages outside TypeScript/JavaScript.'
       ],
       evidenceLinks: [
-      { label: 'Public engineering evidence summary', url: '/evidence/secret-leak-detector.md', type: 'docs' },
+        { label: 'Public engineering evidence summary', url: '/evidence/secret-leak-detector.md', type: 'docs' },
+      ]
+    },
+    limitations: [
+      'Validates credential structure locally; does not actively ping provider APIs to establish whether discovered keys are live or revoked.',
+      'Generic tokens without recognizable provider signatures remain challenging when contextual clues are scarce.',
+      'Historical documentation requires test-count reconciliation between the README and newer evaluation reports.'
     ],
     projectOutcome: 'A published, production-grade developer security extension combining multi-layer detection, explainable findings, Git history investigation, automated remediation, and commit-level protection.'
   },
@@ -269,7 +275,13 @@ SQLite Persistence & React Dashboard`,
         'Privacy with cloud providers depends on local Ollama execution to prevent prompt transmission.'
       ],
       evidenceLinks: [
-      { label: 'Public engineering evidence summary', url: '/evidence/local-ai-execution-agent.md', type: 'docs' },
+        { label: 'Public engineering evidence summary', url: '/evidence/local-ai-execution-agent.md', type: 'docs' },
+      ]
+    },
+    limitations: [
+      'An execution record proves designated checks passed under documented conditions; it does not guarantee code is free of all defects.',
+      'Windows containment requires dedicated virtual machine isolation for untrusted repository cloning.',
+      'Cloud models transmit prompts to vendor servers; local-only privacy mandates local weights (e.g. Ollama).'
     ],
     projectOutcome: 'A local-first AI execution framework that turns LLM reasoning into bounded, authorized, and independently verified software modifications.'
   },
@@ -365,7 +377,13 @@ Model Context Protocol (MCP Server exposing 6 workspace tools)`,
         'Live multi-user concurrent session stress testing requires deployment verification.'
       ],
       evidenceLinks: [
-      { label: 'Public engineering evidence summary', url: '/evidence/thinkmate.md', type: 'docs' },
+        { label: 'Public engineering evidence summary', url: '/evidence/thinkmate.md', type: 'docs' },
+      ]
+    },
+    limitations: [
+      'The onboarding redirect bug between /consent and /thinkmate must be reconciled before claiming fully verified public production status.',
+      'Relies on cloud LLM availability (Gemini); offline operation is not currently supported.',
+      'Team collaborative editing currently relies on polling rather than real-time CRDT synchronization.'
     ],
     projectOutcome: 'A stateful AI reasoning platform that transforms vague problems into structured, evidence-backed architectural decisions and actionable roadmaps.'
   },
@@ -465,7 +483,13 @@ Screen Capture (Electron DesktopCapturer)     Audio Capture (Mic + System Loopba
         'Broader speech recognition benchmarking under varying acoustic noise conditions.'
       ],
       evidenceLinks: [
-      { label: 'Public engineering evidence summary', url: '/evidence/cluely-copilot.md', type: 'docs' },
+        { label: 'Public engineering evidence summary', url: '/evidence/cluely-copilot.md', type: 'docs' },
+      ]
+    },
+    limitations: [
+      'Documented verification was performed primarily on Windows 11; multi-platform parity requires testing macOS entitlements.',
+      'Audio capture and screen perception require explicit participant consent; must not be operated covertly.',
+      'Vision token cost can be substantial during prolonged continuous screen streaming.'
     ],
     projectOutcome: 'An independent multimodal desktop AI copilot that bridges real-time screen understanding, dual-stream conversation audio, and document knowledge retrieval.'
   },
@@ -563,7 +587,13 @@ Independent Verification Engine
         'Multi-file architectural refactoring requires more sophisticated context window management.'
       ],
       evidenceLinks: [
-      { label: 'Public engineering evidence summary', url: '/evidence/autonomous-ai-coding-orchestrator.md', type: 'docs' },
+        { label: 'Public engineering evidence summary', url: '/evidence/autonomous-ai-coding-orchestrator.md', type: 'docs' },
+      ]
+    },
+    limitations: [
+      'Deterministic benchmarks prove orchestrator safety and control flow, but live models still struggle with unfamiliar multi-file tasks.',
+      'Git worktree isolation isolates the repository checkout, but full untrusted execution requires Docker container sandboxing.',
+      'Complex multi-file dependency cycles can trigger timeout limits during iterative repair loops.'
     ],
     projectOutcome: 'An experimental closed-loop AI engineering platform that enforces independent verification and acceptance criteria over autonomous code generation.'
   },
