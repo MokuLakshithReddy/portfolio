@@ -80,11 +80,18 @@ export const StatusBar: React.FC = () => {
 
       {/* Right status items: realtime clock, wifi, battery */}
       <div className="flex items-center gap-3.5 font-normal text-[12.5px] text-[#111111]">
-        <span 
-          className="tabular-nums font-sans tracking-[-0.01em] text-[#111111]"
+        <span
+          className="hidden sm:inline tabular-nums font-sans tracking-[-0.01em] text-[#111111]"
           style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif' }}
         >
           {currentDateTime}
+        </span>
+        <span
+          className="sm:hidden tabular-nums font-sans tracking-[-0.01em] text-[#111111]"
+          aria-label={currentDateTime}
+          title={currentDateTime}
+        >
+          {currentDateTime.split(' ').slice(-2).join(' ')}
         </span>
         
         {/* Wifi */}
