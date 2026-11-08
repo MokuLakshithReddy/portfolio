@@ -146,6 +146,19 @@ test('homepage does not introduce document-level horizontal scrolling on phone w
         dimensions.document <= dimensions.viewport && dimensions.body <= dimensions.viewport,
         `Horizontal page overflow at ${width}px: ${JSON.stringify(dimensions)}`,
       )
+      const heatmapScrollport = await page.evaluate(() => {
+        const grid = [...document.querySelectorAll('div')]
+          .find((element) => element.classList.contains('min-w-[760px]'))
+        const scrollport = grid?.parentElement
+        return scrollport
+          ? { clientWidth: scrollport.clientWidth, scrollWidth: scrollport.scrollWidth, overflowX: getComputedStyle(scrollport).overflowX }
+          : null
+      })
+      assert.ok(heatmapScrollport, 'Expected the contribution heatmap to have a dedicated scroll container')
+      assert.ok(
+        heatmapScrollport.scrollWidth > heatmapScrollport.clientWidth && heatmapScrollport.overflowX === 'auto',
+        `Expected the heatmap to remain independently scrollable: ${JSON.stringify(heatmapScrollport)}`,
+      )
     }
   } finally {
     await page.close()
