@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   validate:
-    name: Lint and production build
+    name: Lint, build, and browser regression tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -36,3 +36,15 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Set up Chrome
+        id: chrome
+        uses: browser-actions/setup-chrome@v2
+        with:
+          chrome-version: stable
+          install-dependencies: true
+
+      - name: Run browser regression tests
+        run: npm test
+        env:
+          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
