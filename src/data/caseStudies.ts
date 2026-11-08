@@ -75,7 +75,7 @@ export const caseStudies: CaseStudy[] = [
     links: [
       { label: 'Open VSX Registry', url: 'https://open-vsx.org/extension/MokuLakshithReddy/secret-leak-detector', type: 'primary' },
       { label: 'VS Code Marketplace', url: 'https://marketplace.visualstudio.com/items?itemName=MokuLakshithReddy.secret-leak-detector', type: 'external' },
-      { label: 'Recorded CI Run (Run #41669747926)', url: 'https://github.com/MokuLakshithReddy/Secret_Leak_Detector/actions/runs/41669747926', type: 'ci' }
+      { label: 'Public engineering evidence summary', url: '/evidence/secret-leak-detector.md', type: 'docs' },
     ],
     problemStatement: {
       overview: 'Developers frequently handle API keys, access tokens, database credentials, and private cryptographic keys during modern software development. These credentials easily slip into source files, configuration manifests, or Git commits.',
@@ -171,9 +171,7 @@ export const caseStudies: CaseStudy[] = [
         'Multi-language AST support for languages outside TypeScript/JavaScript.'
       ],
       evidenceLinks: [
-        { label: 'GitHub Actions Run #41669747926', url: 'https://github.com/MokuLakshithReddy/Secret_Leak_Detector/actions/runs/41669747926', type: 'ci' },
-        { label: 'Validation Methodology Specification', url: 'https://github.com/MokuLakshithReddy/Secret_Leak_Detector/blob/main/docs/VALIDATION.md', type: 'docs' },
-        { label: 'Architecture Documentation', url: 'https://github.com/MokuLakshithReddy/Secret_Leak_Detector/blob/main/docs/architecture.md', type: 'docs' }
+        { label: 'Public engineering evidence summary', url: '/evidence/secret-leak-detector.md', type: 'docs' },
       ]
     },
     limitations: [
@@ -193,9 +191,7 @@ export const caseStudies: CaseStudy[] = [
     sourceVisibility: 'Private Source',
     technologies: ['Python', 'FastAPI', 'React', 'Docker', 'SQLite', 'Ollama', 'Gemini', 'OpenAI', 'Anthropic'],
     links: [
-      { label: 'Recorded CI Run (Run #41288154213)', url: 'https://github.com/MokuLakshithReddy/local-ai-execution-agent/actions/runs/41288154213', type: 'ci' },
-      { label: 'Verification Report (EVIDENCE.md)', url: 'https://github.com/MokuLakshithReddy/local-ai-execution-agent/blob/main/EVIDENCE.md', type: 'docs' },
-      { label: 'End-to-End Demonstrations', url: 'https://github.com/MokuLakshithReddy/local-ai-execution-agent/blob/main/DEMO_RUN.md', type: 'docs' }
+      { label: 'Public engineering evidence summary', url: '/evidence/local-ai-execution-agent.md', type: 'docs' },
     ],
     problemStatement: {
       overview: 'Large Language Models frequently produce plausible responses claiming a development task is complete without modifying the correct files, executing unit tests, or verifying correctness. Giving an autonomous agent unrestricted shell access creates critical risks including path traversal, destructive filesystem operations, credential leakage, and untrusted network access.',
@@ -279,9 +275,7 @@ SQLite Persistence & React Dashboard`,
         'Privacy with cloud providers depends on local Ollama execution to prevent prompt transmission.'
       ],
       evidenceLinks: [
-        { label: 'Recorded CI Run #41288154213', url: 'https://github.com/MokuLakshithReddy/local-ai-execution-agent/actions/runs/41288154213', type: 'ci' },
-        { label: 'Formal Verification Report (EVIDENCE.md)', url: 'https://github.com/MokuLakshithReddy/local-ai-execution-agent/blob/main/EVIDENCE.md', type: 'docs' },
-        { label: 'Adversarial Test Suite', url: 'https://github.com/MokuLakshithReddy/local-ai-execution-agent/blob/main/tests/test_adversarial_benchmark.py', type: 'docs' }
+        { label: 'Public engineering evidence summary', url: '/evidence/local-ai-execution-agent.md', type: 'docs' },
       ]
     },
     limitations: [
@@ -301,10 +295,7 @@ SQLite Persistence & React Dashboard`,
     sourceVisibility: 'Private Source',
     technologies: ['Next.js', 'TypeScript', 'Google GenAI', 'Supabase', 'PostgreSQL', 'Redis', 'Razorpay', 'MCP'],
     links: [
-      { label: 'Repository Reference', url: 'https://github.com/MokuLakshithReddy/thinkmate', type: 'github' },
-      { label: 'Staging DB Verification (Run #41814847202)', url: 'https://github.com/MokuLakshithReddy/thinkmate/actions/runs/41814847202', type: 'ci' },
-      { label: 'Staging Browser E2E Report (Run #41838038580)', url: 'https://github.com/MokuLakshithReddy/thinkmate/actions/runs/41838038580', type: 'ci' },
-      { label: 'Operational Runbook', url: 'https://github.com/MokuLakshithReddy/thinkmate/blob/main/docs/OPERATIONAL_RUNBOOK.md', type: 'docs' }
+      { label: 'Public engineering evidence summary', url: '/evidence/thinkmate.md', type: 'docs' },
     ],
     problemStatement: {
       overview: 'Most conversational AI interfaces are optimized for generating immediate answers. However, complex architectural, strategic, and technical challenges require structured exploration: understanding root constraints, surfacing alternatives, challenging unstated assumptions, and testing trade-offs before committing to decisions.',
@@ -386,9 +377,7 @@ Model Context Protocol (MCP Server exposing 6 workspace tools)`,
         'Live multi-user concurrent session stress testing requires deployment verification.'
       ],
       evidenceLinks: [
-        { label: 'Staging Database Verification #41814847202', url: 'https://github.com/MokuLakshithReddy/thinkmate/actions/runs/41814847202', type: 'ci' },
-        { label: 'Staging Browser E2E Report #41838038580', url: 'https://github.com/MokuLakshithReddy/thinkmate/actions/runs/41838038580', type: 'ci' },
-        { label: 'Operational Runbook', url: 'https://github.com/MokuLakshithReddy/thinkmate/blob/main/docs/OPERATIONAL_RUNBOOK.md', type: 'docs' }
+        { label: 'Public engineering evidence summary', url: '/evidence/thinkmate.md', type: 'docs' },
       ]
     },
     limitations: [
@@ -408,10 +397,7 @@ Model Context Protocol (MCP Server exposing 6 workspace tools)`,
     sourceVisibility: 'Private Source',
     technologies: ['Electron', 'React', 'TypeScript', 'Vite', 'AI APIs', 'Audio Processing', 'RAG'],
     links: [
-      { label: 'Recorded CI Run (Run #41215464862)', url: 'https://github.com/MokuLakshithReddy/Cluely-AI-Desktop-Assistant/actions/runs/41215464862', type: 'ci' },
-      { label: 'Architecture Specification', url: 'https://github.com/MokuLakshithReddy/Cluely-AI-Desktop-Assistant/blob/main/docs/architecture/ARCHITECTURE.md', type: 'docs' },
-      { label: '89-Test Execution Report', url: 'https://github.com/MokuLakshithReddy/Cluely-AI-Desktop-Assistant/blob/main/docs/testing/TEST_RESULTS.md', type: 'docs' },
-      { label: 'Quality Measurements', url: 'https://github.com/MokuLakshithReddy/Cluely-AI-Desktop-Assistant/blob/main/docs/benchmarks/QUALITY_MEASUREMENTS.md', type: 'docs' }
+      { label: 'Public engineering evidence summary', url: '/evidence/cluely-copilot.md', type: 'docs' },
     ],
     problemStatement: {
       overview: 'Traditional AI chat assistants force users to manually copy-paste window contents, transcribe meeting notes, and provide background context. In active desktop workflows, critical information is fragmented across application windows, code editors, and spoken discussions.',
@@ -497,10 +483,7 @@ Screen Capture (Electron DesktopCapturer)     Audio Capture (Mic + System Loopba
         'Broader speech recognition benchmarking under varying acoustic noise conditions.'
       ],
       evidenceLinks: [
-        { label: 'Recorded CI Run #41215464862', url: 'https://github.com/MokuLakshithReddy/Cluely-AI-Desktop-Assistant/actions/runs/41215464862', type: 'ci' },
-        { label: 'Architecture Specification', url: 'https://github.com/MokuLakshithReddy/Cluely-AI-Desktop-Assistant/blob/main/docs/architecture/ARCHITECTURE.md', type: 'docs' },
-        { label: 'Test Execution Results', url: 'https://github.com/MokuLakshithReddy/Cluely-AI-Desktop-Assistant/blob/main/docs/testing/TEST_RESULTS.md', type: 'docs' },
-        { label: 'Security & Privacy Runbook', url: 'https://github.com/MokuLakshithReddy/Cluely-AI-Desktop-Assistant/blob/main/docs/security/SECURITY_AND_PRIVACY.md', type: 'docs' }
+        { label: 'Public engineering evidence summary', url: '/evidence/cluely-copilot.md', type: 'docs' },
       ]
     },
     limitations: [
@@ -520,10 +503,7 @@ Screen Capture (Electron DesktopCapturer)     Audio Capture (Mic + System Loopba
     sourceVisibility: 'Private Source',
     technologies: ['TypeScript', 'Node.js', 'Fastify', 'React', 'Gemini', 'SQLite', 'Git Worktrees', 'Docker'],
     links: [
-      { label: 'Deterministic CI Verification (Run #41294524981)', url: 'https://github.com/MokuLakshithReddy/autonomous-ai-coding-orchestrator/actions/runs/41294524981', type: 'ci' },
-      { label: 'Live-Model Benchmark (Run #41774740945)', url: 'https://github.com/MokuLakshithReddy/autonomous-ai-coding-orchestrator/actions/runs/41774740945', type: 'ci' },
-      { label: 'Production Metrics Document', url: 'https://github.com/MokuLakshithReddy/autonomous-ai-coding-orchestrator/blob/main/PRODUCTION_METRICS.md', type: 'docs' },
-      { label: 'Benchmark Methodology', url: 'https://github.com/MokuLakshithReddy/autonomous-ai-coding-orchestrator/blob/main/docs/BENCHMARKS.md', type: 'docs' }
+      { label: 'Public engineering evidence summary', url: '/evidence/autonomous-ai-coding-orchestrator.md', type: 'docs' },
     ],
     problemStatement: {
       overview: 'Autonomous coding agents can search codebases, draft changes, and run shell commands. However, generating a code diff does not mean a task was solved correctly. Agents frequently introduce regressions, skip required tests, modify incorrect files, or prematurely declare completion.',
@@ -607,9 +587,7 @@ Independent Verification Engine
         'Multi-file architectural refactoring requires more sophisticated context window management.'
       ],
       evidenceLinks: [
-        { label: 'Deterministic CI Verification #41294524981', url: 'https://github.com/MokuLakshithReddy/autonomous-ai-coding-orchestrator/actions/runs/41294524981', type: 'ci' },
-        { label: 'Live-Model Benchmark Run #41774740945', url: 'https://github.com/MokuLakshithReddy/autonomous-ai-coding-orchestrator/actions/runs/41774740945', type: 'ci' },
-        { label: 'Production Verification Report', url: 'https://github.com/MokuLakshithReddy/autonomous-ai-coding-orchestrator/blob/main/PRODUCTION_METRICS.md', type: 'docs' }
+        { label: 'Public engineering evidence summary', url: '/evidence/autonomous-ai-coding-orchestrator.md', type: 'docs' },
       ]
     },
     limitations: [
