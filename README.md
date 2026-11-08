@@ -68,6 +68,39 @@ npm run preview
 
 ---
 
+## 🧪 Testing
+
+The project uses Node.js's built-in test runner and the existing `puppeteer-core` dependency. No production credentials or real contact submissions are required.
+
+After installing dependencies, run:
+
+```bash
+# Type-check and build the production site
+npm run build
+
+# Run unit and browser regression tests
+npm test
+```
+
+The browser tests launch the built site with Vite Preview and require a Chrome/Chromium executable. Set `CHROME_PATH` when Chrome is not available on the system PATH.
+
+**PowerShell (Windows):**
+
+```powershell
+$env:CHROME_PATH = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+npm test
+```
+
+**Linux:**
+
+```bash
+CHROME_PATH=/usr/bin/google-chrome npm test
+```
+
+CI installs stable Chrome automatically and runs lint, production build, unit tests, and browser tests on every pull request targeting `main`.
+
+---
+
 ## 📄 License
 
 Copyright © 2026 Lakshith Reddy. All rights reserved. No license is granted to copy, modify, redistribute, or use this work without prior written permission. See [LICENSE](LICENSE) for the terms.
