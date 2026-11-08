@@ -163,53 +163,61 @@ export const ContactSection: React.FC = () => {
               className="bg-[#FAF5EC] border border-[#222222]/80 rounded-[18px] p-6 sm:p-8 shadow-sm space-y-4"
             >
               <div>
-                <label className="block text-[13px] font-mono-tech font-semibold text-[#333333] mb-1.5">
+                <label htmlFor="contact-name" className="block text-[13px] font-mono-tech font-semibold text-[#333333] mb-1.5">
                   Your Name
                 </label>
                 <input
+                  id="contact-name"
+                  name="name"
+                  autoComplete="name"
                   type="text"
                   required
                   disabled={status === 'submitting'}
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="Ada Lovelace"
-                  className="w-full bg-[#F4ECE1] border border-[#C9BEAE] rounded-[10px] px-4 py-2.5 text-[14px] font-sans focus:outline-none focus:border-[#0755F5] transition-colors disabled:opacity-60"
+                  className="w-full bg-[#F4ECE1] border border-[#C9BEAE] rounded-[10px] px-4 py-2.5 text-[14px] font-sans focus:border-[#0755F5] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#0755F5] transition-colors disabled:opacity-60"
                 />
               </div>
 
               <div>
-                <label className="block text-[13px] font-mono-tech font-semibold text-[#333333] mb-1.5">
+                <label htmlFor="contact-email" className="block text-[13px] font-mono-tech font-semibold text-[#333333] mb-1.5">
                   Email Address
                 </label>
                 <input
+                  id="contact-email"
+                  name="email"
+                  autoComplete="email"
                   type="email"
                   required
                   disabled={status === 'submitting'}
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder="ada@computing.org"
-                  className="w-full bg-[#F4ECE1] border border-[#C9BEAE] rounded-[10px] px-4 py-2.5 text-[14px] font-sans focus:outline-none focus:border-[#0755F5] transition-colors disabled:opacity-60"
+                  className="w-full bg-[#F4ECE1] border border-[#C9BEAE] rounded-[10px] px-4 py-2.5 text-[14px] font-sans focus:border-[#0755F5] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#0755F5] transition-colors disabled:opacity-60"
                 />
               </div>
 
               <div>
-                <label className="block text-[13px] font-mono-tech font-semibold text-[#333333] mb-1.5">
+                <label htmlFor="contact-message" className="block text-[13px] font-mono-tech font-semibold text-[#333333] mb-1.5">
                   Message
                 </label>
                 <textarea
+                  id="contact-message"
+                  name="message"
                   required
                   rows={4}
                   disabled={status === 'submitting'}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   placeholder="Let's build intelligent systems..."
-                  className="w-full bg-[#F4ECE1] border border-[#C9BEAE] rounded-[10px] px-4 py-2.5 text-[14px] font-sans focus:outline-none focus:border-[#0755F5] transition-colors resize-none disabled:opacity-60"
+                  className="w-full bg-[#F4ECE1] border border-[#C9BEAE] rounded-[10px] px-4 py-2.5 text-[14px] font-sans focus:border-[#0755F5] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#0755F5] transition-colors resize-none disabled:opacity-60"
                 />
               </div>
 
               {/* Status feedback alerts */}
               {status === 'success' && (
-                <div className="p-3.5 bg-emerald-50 border border-emerald-300 rounded-[10px] flex items-start gap-2.5 text-emerald-800 text-[13.5px]">
+                <div role="status" aria-live="polite" className="p-3.5 bg-emerald-50 border border-emerald-300 rounded-[10px] flex items-start gap-2.5 text-emerald-800 text-[13.5px]">
                   <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                   <div>
                     <div className="font-semibold">Transmission Dispatched!</div>
@@ -219,7 +227,7 @@ export const ContactSection: React.FC = () => {
               )}
 
               {status === 'error' && (
-                <div className="p-3.5 bg-rose-50 border border-rose-300 rounded-[10px] flex flex-col gap-2 text-rose-800 text-[13px]">
+                <div role="alert" aria-live="assertive" className="p-3.5 bg-rose-50 border border-rose-300 rounded-[10px] flex flex-col gap-2 text-rose-800 text-[13px]">
                   <div className="flex items-start gap-2">
                     <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
                     <div>
