@@ -160,7 +160,7 @@ test('status bar shows a compact clock on phones and a full date on desktop', as
     await page.goto(baseUrl, { waitUntil: 'domcontentloaded' })
     const mobileClock = await page.evaluate(() => {
       const clocks = [...document.querySelectorAll('header span')]
-        .filter((element) => /\\d{1,2}:\\d{2}\\s[AP]M/.test(element.textContent ?? ''))
+        .filter((element) => /\d{1,2}:\d{2}\s[AP]M/.test(element.textContent ?? ''))
       return clocks.filter((element) => element.getBoundingClientRect().width > 0)
         .map((element) => element.textContent?.trim() ?? '')
     })
@@ -171,7 +171,7 @@ test('status bar shows a compact clock on phones and a full date on desktop', as
     await page.reload({ waitUntil: 'domcontentloaded' })
     const desktopClock = await page.evaluate(() => {
       const clocks = [...document.querySelectorAll('header span')]
-        .filter((element) => /\\d{1,2}:\\d{2}\\s[AP]M/.test(element.textContent ?? ''))
+        .filter((element) => /\d{1,2}:\d{2}\s[AP]M/.test(element.textContent ?? ''))
       return clocks.filter((element) => element.getBoundingClientRect().width > 0)
         .map((element) => element.textContent?.trim() ?? '')
     })
