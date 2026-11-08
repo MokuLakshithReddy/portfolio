@@ -235,15 +235,51 @@ test('contact form reports failure when the service rejects a message', async ()
   }
 })
 
-test('contact form rejects malformed confirmation payloads', { todo: 'Enable after issue #6 response validation is merged.' }, async () => {
+test('contact form rejects malformed confirmation payloads', async () => {
   const page = await submitContactForm('not-json')
   try {
     await page.waitForFunction(() => document.body.innerText.includes('Unable to dispatch automatically'))
+    assert.ok(await page.$('#contact a[href^="mailto:"]'))
   } finally {
     await page.close()
   }
 })
 
-test('image preview traps keyboard focus and restores it to its trigger', { todo: 'Enable after issue #7 modal focus management is merged.' }, async () => {
-  // This regression test is intentionally staged with the dialog focus-management fix.
+test('image preview traps keyboard focus and restores it to its trigger', async () => {
+  const page = await createPage()
+  try {
+    await page.goto(baseUrl, { waitUntil: 'domcontentloaded' })
+    const trigger = await page.$('nav button[aria-label="Open portfolio illustration preview"]')
+    assert.ok(trigger, 'Expected the accessible image preview trigger in the primary navigation')
+
+    await trigger.click()
+    await page.waitForSelector('[role="dialog"][aria-modal="true"]')
+
+    const initialFocusInside = await page.evaluate(() => {
+      const dialog = document.querySelector('[role="dialog"]')
+      return dialog?.contains(document.activeElement) ?? false
+    })
+    assert.equal(initialFocusInside, true)
+
+    await page.keyboard.press('Tab')
+    assert.equal(
+      await page.evaluate(() => document.activeElement?.getAttribute('aria-label')),
+      'Open full-size image in a new tab',
+    )
+
+    await page.keyboard.press('Shift+Tab')
+    assert.equal(
+      await page.evaluate(() => document.activeElement?.getAttribute('aria-label')),
+      'Close image preview',
+    )
+
+    await page.keyboard.press('Escape')
+    await page.waitForFunction(() => !document.querySelector('[role="dialog"]'))
+    assert.equal(
+      await page.evaluate(() => document.activeElement?.getAttribute('aria-label')),
+      'Open portfolio illustration preview',
+    )
+  } finally {
+    await page.close()
+  }
 })
