@@ -37,7 +37,7 @@ An illustrated, creative developer portfolio homepage for **Lakshith Reddy** (AI
 
 ### Prerequisites
 
-- Node.js (v18+)
+- Node.js 20.19+ or 22.12+ (Vite 8 supported versions)
 - npm or yarn / pnpm
 
 ### Installation
