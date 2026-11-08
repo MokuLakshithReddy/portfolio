@@ -140,6 +140,36 @@ test('homepage does not introduce document-level horizontal scrolling on phone w
   }
 })
 
+
+test('status bar shows a compact clock on phones and a full date on desktop', async () => {
+  const page = await createPage()
+  try {
+    await page.setViewport({ width: 320, height: 844 })
+    await page.goto(baseUrl, { waitUntil: 'domcontentloaded' })
+    const mobileClock = await page.evaluate(() => {
+      const clocks = [...document.querySelectorAll('header span')]
+        .filter((element) => /\\d{1,2}:\\d{2}\\s[AP]M/.test(element.textContent ?? ''))
+      return clocks.filter((element) => element.getBoundingClientRect().width > 0)
+        .map((element) => element.textContent?.trim() ?? '')
+    })
+    assert.equal(mobileClock.length, 1)
+    assert.match(mobileClock[0], /^\\d{1,2}:\\d{2}\\s[AP]M$/)
+
+    await page.setViewport({ width: 1280, height: 900 })
+    await page.reload({ waitUntil: 'domcontentloaded' })
+    const desktopClock = await page.evaluate(() => {
+      const clocks = [...document.querySelectorAll('header span')]
+        .filter((element) => /\\d{1,2}:\\d{2}\\s[AP]M/.test(element.textContent ?? ''))
+      return clocks.filter((element) => element.getBoundingClientRect().width > 0)
+        .map((element) => element.textContent?.trim() ?? '')
+    })
+    assert.equal(desktopClock.length, 1)
+    assert.match(desktopClock[0], /,\\s[A-Z][a-z]{2}\\s\\d{1,2},\\s\\d{4}/)
+  } finally {
+    await page.close()
+  }
+})
+
 test('portfolio image preview can be dismissed with Escape', async () => {
   const page = await createPage()
   try {
