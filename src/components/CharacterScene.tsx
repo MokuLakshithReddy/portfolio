@@ -1,92 +1,68 @@
-import React, { useRef } from 'react'
-import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
-import { FloatingBrowser } from './FloatingBrowser'
-import {
-  YellowCrown,
-  YellowZigzag,
-  FourPointStar,
-  BottomBlueSplash
-} from './DecorativeDoodles'
+import React from 'react'
+import { motion, useReducedMotion } from 'motion/react'
 
+/**
+ * The portfolio character is deliberately kept as the one hero illustration.
+ * Supporting doodles and floating windows live elsewhere so they cannot compete
+ * with the headline or cover the artwork.
+ */
 export const CharacterScene: React.FC = () => {
-  const sceneRef = useRef<HTMLDivElement>(null)
   const shouldReduceMotion = useReducedMotion()
-  const { scrollYProgress } = useScroll({
-    target: sceneRef,
-    offset: ['start end', 'end start'],
-  })
-  const parallaxY = useTransform(scrollYProgress, [0, 1], [22, -28])
-  const parallaxRotate = useTransform(scrollYProgress, [0, 1], [1.1, -1.1])
 
   return (
-    <motion.div
-      ref={sceneRef}
-      style={shouldReduceMotion ? undefined : { y: parallaxY, rotate: parallaxRotate }}
-      className="relative h-full aspect-[664/516] max-h-[820px] flex items-end justify-end pointer-events-none select-none"
-    >
-      {/* 1. Blue Orbital Brush Stroke (z-5, sweeping behind head and character) */}
-      <motion.div className="absolute inset-0 z-5 pointer-events-none overflow-visible">
-        <svg viewBox="0 0 664 516" fill="none" className="w-full h-full overflow-visible">
-          <motion.path
-            initial={shouldReduceMotion ? false : { pathLength: 0, opacity: 0.35 }}
-            animate={{ pathLength: 1, opacity: 0.92 }}
-            transition={{ duration: shouldReduceMotion ? 0 : 1.35, delay: shouldReduceMotion ? 0 : 0.55, ease: 'easeInOut' }}
-            d="M 110 270 C 85 145, 230 60, 385 58 C 495 55, 555 115, 550 200 C 545 285, 475 340, 365 350 C 240 365, 120 290, 150 400 C 170 450, 230 480, 330 480"
-            stroke="#0755F5"
-            strokeWidth="5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            opacity="0.92"
-          />
-        </svg>
-      </motion.div>
-
-      {/* 2. Floating Browser Window Doodle (z-10, sits right by his hair with zero drift) */}
-      <motion.div
-        className="absolute left-[8%] top-[12%] z-10 pointer-events-auto"
-        animate={shouldReduceMotion ? undefined : { y: [0, -7, 0], rotate: [-6, -4, -6] }}
-        transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
-      >
-        <FloatingBrowser />
-      </motion.div>
-
-      {/* 3. Yellow 4-Point Star (z-12, positioned right between the browser and the hair) */}
-      <div className="absolute left-[33%] top-[8%] z-12">
-        <FourPointStar color="#FFB600" size={28} />
-      </div>
-
-      {/* 4. Small Black Sparkle (z-12, above the laptop) */}
-      <div className="absolute left-[20%] top-[48%] z-12 hidden sm:block">
-        <FourPointStar color="#111111" size={14} />
-      </div>
-
-      {/* 5. Blue Brush Splash (z-12, under the laptop) */}
-      <div className="absolute left-[0%] bottom-[0%] z-12 hidden sm:block">
-        <BottomBlueSplash />
-      </div>
-
-      {/* 6. The Character Illustration (z-15, foreground artwork) */}
-      <motion.img
-        src="/images/character.png"
-        alt="Lakshith Reddy - Developer Character Illustration"
-        className="relative z-15 w-full h-full object-contain object-bottom drop-shadow-sm"
-        animate={shouldReduceMotion ? undefined : { y: [0, -4, 0], rotate: [0, 0.25, 0] }}
-        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+    <div className="relative h-full w-full select-none">
+      <div
+        aria-hidden="true"
+        className="absolute left-[14%] top-[9%] h-[78%] w-[78%] rounded-full bg-[radial-gradient(circle,rgba(7,85,245,0.14)_0%,rgba(7,85,245,0.065)_46%,transparent_72%)] blur-[2px]"
       />
 
-      {/* 7. Yellow Crown (z-25, locked directly above the character's head) */}
-      <motion.div
-        className="absolute left-[54%] top-[-3%] z-25 pointer-events-none"
-        animate={shouldReduceMotion ? undefined : { y: [0, -5, 0], rotate: [0, 3, 0] }}
-        transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 700 680"
+        fill="none"
+        className="absolute inset-0 h-full w-full overflow-visible"
       >
-        <YellowCrown />
-      </motion.div>
+        <motion.ellipse
+          cx="382"
+          cy="352"
+          rx="286"
+          ry="224"
+          stroke="#0755F5"
+          strokeOpacity="0.24"
+          strokeWidth="1.4"
+          strokeDasharray="3 11"
+          animate={shouldReduceMotion ? undefined : { rotate: [0, 360] }}
+          transition={{ duration: 100, repeat: Infinity, ease: 'linear' }}
+          style={{ transformOrigin: '382px 352px' }}
+        />
+        <ellipse
+          cx="382"
+          cy="352"
+          rx="246"
+          ry="190"
+          stroke="#0755F5"
+          strokeOpacity="0.16"
+          strokeWidth="1"
+        />
+        <path
+          d="M106 399C120 221 244 93 404 88C512 84 596 130 640 207"
+          stroke="#0755F5"
+          strokeOpacity="0.7"
+          strokeWidth="4"
+          strokeLinecap="round"
+        />
+        <circle cx="640" cy="207" r="5" fill="#0755F5" />
+        <circle cx="110" cy="399" r="4" fill="#FFB600" />
+      </svg>
 
-      {/* 8. Yellow Zigzag (z-25, locked next to the character's arm) */}
-      <div className="absolute right-[13%] top-[42%] z-25 pointer-events-none hidden sm:block">
-        <YellowZigzag />
-      </div>
-    </motion.div>
+      <motion.img
+        src="/images/character.png"
+        alt="Lakshith Reddy illustrated as a developer with a laptop"
+        draggable={false}
+        className="absolute inset-0 z-10 h-full w-full object-contain object-bottom drop-shadow-[0_22px_32px_rgba(38,30,20,0.14)]"
+        animate={shouldReduceMotion ? undefined : { y: [0, -5, 0] }}
+        transition={{ duration: 7.5, repeat: Infinity, ease: 'easeInOut' }}
+      />
+    </div>
   )
 }
