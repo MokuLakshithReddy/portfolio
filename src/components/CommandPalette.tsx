@@ -60,7 +60,7 @@ export function CommandPalette() {
 
   useEffect(() => {
     const handleGlobalKeyDown = (event: KeyboardEvent) => {
-      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+      if (((event.metaKey || event.ctrlKey) || event.altKey) && event.key.toLowerCase() === 'k') {
         event.preventDefault()
         setIsOpen((current) => !current)
       } else if (event.key === 'Escape') {
@@ -158,11 +158,11 @@ export function CommandPalette() {
         whileHover={{ y: -2 }}
         whileTap={{ scale: 0.97 }}
         className="fixed bottom-5 left-5 z-[80] hidden items-center gap-2 rounded-full border border-[#222222]/20 bg-[#FAF5EC]/95 px-3.5 py-2 font-mono-tech text-[11px] font-semibold text-[#333333] shadow-lg backdrop-blur-sm transition-colors hover:border-[#0755F5]/50 hover:text-[#0755F5] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#0755F5] sm:inline-flex"
-        aria-label="Open portfolio command palette (Control or Command K)"
+        aria-label="Open portfolio command palette (Alt K or Control or Command K)"
       >
         <Command className="h-3.5 w-3.5 text-[#0755F5]" />
         Explore
-        <span className="rounded border border-[#D5C9B7] px-1.5 py-0.5 text-[9px] text-[#777777]">⌘ K</span>
+        <span className="rounded border border-[#D5C9B7] px-1.5 py-0.5 text-[9px] text-[#777777]">Alt K</span>
       </motion.button>
 
       <AnimatePresence>
