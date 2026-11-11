@@ -370,7 +370,7 @@ test('image preview traps keyboard focus and restores focus to its trigger', asy
 })
 
 
-test('hero presents a clear identity, focus areas, and project action without overlapping widgets', async () => {
+test('hero uses the animated build engine instead of the old character image', async () => {
   const page = await createPage()
   try {
     await page.setViewport({ width: 1440, height: 960 })
@@ -379,10 +379,11 @@ test('hero presents a clear identity, focus areas, and project action without ov
     await page.waitForSelector('#home h1')
     const heading = await page.$eval('#home h1', (element) => (element.textContent ?? '').replace(/\s+/g, ''))
     assert.match(heading, /LAKSHITHREDDY\./)
+    assert.ok(await page.$('#home [data-testid="hero-build-engine"]'))
     assert.ok(await page.$('#home a[href="#projects"]'))
     assert.ok(await page.$('#home a[href="https://github.com/MokuLakshithReddy"]'))
     assert.ok(await page.$('#home [aria-label="Areas of focus"]'))
-    assert.equal(await page.$('#home input[aria-label="Portfolio terminal command"]'), null)
+    assert.equal(await page.$('#home img[src="/images/character.png"]'), null)
   } finally {
     await page.close()
   }
