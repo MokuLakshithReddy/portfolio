@@ -390,9 +390,9 @@ test('command palette filters and opens a project using keyboard navigation', as
   const page = await createPage()
   try {
     await page.goto(baseUrl, { waitUntil: 'domcontentloaded' })
-    await page.keyboard.down('Control')
+    await page.keyboard.down('Alt')
     await page.keyboard.press('k')
-    await page.keyboard.up('Control')
+    await page.keyboard.up('Alt')
     await page.waitForSelector('[role="dialog"][aria-label="Portfolio command palette"]')
 
     const search = await page.$('input[aria-label="Search portfolio commands"]')
@@ -400,7 +400,8 @@ test('command palette filters and opens a project using keyboard navigation', as
     await search.type('secret leak detector')
     const result = await page.waitForSelector('button[data-command-id="project-secret-leak-detector"]')
     assert.ok(result)
-    await result.click()
+    await page.keyboard.press('ArrowDown')
+    await page.keyboard.press('Enter')
 
     await page.waitForFunction(() =>
       document.querySelector('main h1')?.textContent?.includes('Secret Leak Detector'),
