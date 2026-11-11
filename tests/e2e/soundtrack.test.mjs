@@ -64,13 +64,11 @@ browserTest('soundtrack is opt-in and exposes playback and volume controls', asy
     await playButton.click()
     await page.waitForSelector('button[aria-label="Pause portfolio soundtrack"]')
 
-    await page.click('button[aria-label="Show soundtrack settings"]')
     const volume = await page.$('input[aria-label="Soundtrack volume"]')
     assert.ok(volume, 'The volume slider should be available')
     await volume.evaluate((element) => {
       element.value = '0.5'
       element.dispatchEvent(new Event('input', { bubbles: true }))
-      element.dispatchEvent(new Event('change', { bubbles: true }))
     })
     assert.equal(await volume.evaluate((element) => element.value), '0.5')
 
