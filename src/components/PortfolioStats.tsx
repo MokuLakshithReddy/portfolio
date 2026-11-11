@@ -1,5 +1,5 @@
 import React from 'react'
-import { Code2, Lightbulb, Laptop } from 'lucide-react'
+import { Code2, Lightbulb } from 'lucide-react'
 
 export const PortfolioStats: React.FC = () => {
   return (
