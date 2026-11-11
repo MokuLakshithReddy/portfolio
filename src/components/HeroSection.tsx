@@ -1,7 +1,7 @@
 import React from 'react'
 import { HeroCinematicLayer } from './HeroCinematicLayer'
 import { motion } from 'motion/react'
-import { ArrowUpRight, Download, Github } from 'lucide-react'
+import { ArrowUpRight, Code2, Download } from 'lucide-react'
 import {
   EyebrowBadge,
   BlueHeadlineUnderline,
@@ -186,7 +186,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreClick, onNavi
             rel="noopener noreferrer"
             className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-[#333333]/75 bg-[#FAF5EC]/45 px-4 py-2.5 text-[13px] font-semibold text-[#111111] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#0755F5] hover:bg-[#0755F5]/5 hover:text-[#0755F5] active:translate-y-0 active:scale-[0.98] sm:px-4.5 sm:py-3 sm:text-[13.5px]"
           >
-            <Github className="h-4 w-4" />
+            <Code2 className="h-4 w-4" />
             <span>GitHub</span>
           </a>
 
