@@ -1,8 +1,7 @@
 import React from 'react'
 import { motion } from 'motion/react'
 import { ArrowDownRight, ArrowUpRight, Code2, Download } from 'lucide-react'
-import { HeroCinematicLayer } from './HeroCinematicLayer'
-import { CharacterScene } from './CharacterScene'
+import { HeroBuildEngine } from './HeroBuildEngine'
 import { PortfolioStats } from './PortfolioStats'
 import { ScrollIndicator } from './ScrollIndicator'
 import { CursorSpotlight } from './CursorSpotlight'
@@ -39,19 +38,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreClick }) => {
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_76%_48%,rgba(7,85,245,0.11)_0%,rgba(7,85,245,0.045)_28%,transparent_62%)]" />
         <div className="absolute inset-0 opacity-[0.2] [background-image:linear-gradient(rgba(35,48,77,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(35,48,77,0.1)_1px,transparent_1px)] [background-size:64px_64px] [mask-image:linear-gradient(90deg,transparent_0%,#000_45%,#000_100%)]" />
-        <div className="absolute -right-[12%] top-[9%] h-[min(74vw,900px)] w-[min(74vw,900px)] rounded-full border border-[#0755F5]/10" />
-        <div className="absolute -right-[7%] top-[15%] h-[min(62vw,760px)] w-[min(62vw,760px)] rounded-full border border-[#0755F5]/[0.14]" />
-        <HeroCinematicLayer />
+
       </div>
 
       <CursorSpotlight />
 
-      {/* Character is the single hero visual — no floating widgets over the artwork. */}
-      <div className="pointer-events-none absolute bottom-0 right-[-5%] z-10 hidden h-[98%] w-[66%] items-end justify-end lg:flex">
-        <CharacterScene />
-      </div>
-      <div className="pointer-events-none absolute bottom-[-2%] right-[-34%] z-10 flex h-[53%] w-[108%] items-end justify-end opacity-[0.22] sm:right-[-22%] sm:h-[63%] sm:opacity-[0.26] lg:hidden">
-        <CharacterScene />
+      {/* An original, image-free animated build engine replaces the character artwork. */}
+      <div className="pointer-events-none absolute bottom-0 right-[-11%] z-10 h-[72%] w-[118%] opacity-[0.2] sm:right-[-4%] sm:h-[78%] sm:w-[100%] sm:opacity-[0.3] lg:right-[-3%] lg:h-[96%] lg:w-[64%] lg:opacity-100">
+        <HeroBuildEngine />
       </div>
 
       <div className="relative z-20 mx-auto flex h-full w-full max-w-[1720px] items-center px-[clamp(24px,5.2vw,88px)] py-12 sm:px-[clamp(32px,5.2vw,88px)] lg:py-10">
