@@ -112,7 +112,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreClick, onNavi
             initial={{ opacity: 0, y: 24, clipPath: 'inset(18% 0 0 0)' }}
             animate={{ opacity: 1, y: 0, clipPath: 'inset(0% 0 0 0)' }}
             transition={{ duration: 0.82, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="m-0 select-none font-anton text-[clamp(68px,8.45vw,154px)] uppercase leading-[0.88] text-[#111111]"
+            className="m-0 select-none font-anton text-[clamp(58px,8vw,138px)] uppercase leading-[0.88] text-[#111111]"
             style={{ letterSpacing: '-0.012em', transform: 'scaleX(1.035)', transformOrigin: 'left center' }}
           >
             <div className="pb-2 sm:pb-3">LAKSHITH</div>
