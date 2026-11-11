@@ -4,6 +4,7 @@ import { HomePage } from './pages/HomePage'
 import { CaseStudyPage } from './pages/CaseStudyPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { ScrollProgress } from './components/MotionSystem'
+import { CommandPalette } from './components/CommandPalette'
 
 function AnimatedRoutes() {
   const location = useLocation()
@@ -11,6 +12,7 @@ function AnimatedRoutes() {
   return (
     <>
       <ScrollProgress />
+      <CommandPalette />
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={location.pathname}
