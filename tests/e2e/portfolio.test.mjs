@@ -368,3 +368,45 @@ test('image preview traps keyboard focus and restores focus to its trigger', asy
     await page.close()
   }
 })
+
+
+test('interactive hero terminal runs portfolio navigation commands', async () => {
+  const page = await createPage()
+  try {
+    await page.setViewport({ width: 1440, height: 960 })
+    await page.goto(baseUrl, { waitUntil: 'domcontentloaded' })
+    const terminalInput = await page.waitForSelector('input[aria-label="Portfolio terminal command"]')
+    assert.ok(terminalInput)
+    await terminalInput.type('projects')
+    await page.keyboard.press('Enter')
+    await page.waitForFunction(() => document.querySelector('#projects') !== null)
+    await page.waitForFunction(() => document.body.innerText.includes('Opening the engineering case studies'))
+  } finally {
+    await page.close()
+  }
+})
+
+test('command palette filters and opens a project using keyboard navigation', async () => {
+  const page = await createPage()
+  try {
+    await page.goto(baseUrl, { waitUntil: 'domcontentloaded' })
+    await page.keyboard.down('Alt')
+    await page.keyboard.press('k')
+    await page.keyboard.up('Alt')
+    await page.waitForSelector('[role="dialog"][aria-label="Portfolio command palette"]')
+
+    const search = await page.$('input[aria-label="Search portfolio commands"]')
+    assert.ok(search)
+    await search.type('secret leak detector')
+    const result = await page.waitForSelector('button[data-command-id="project-secret-leak-detector"]')
+    assert.ok(result)
+    await page.keyboard.press('ArrowDown')
+    await page.keyboard.press('Enter')
+
+    await page.waitForFunction(() =>
+      document.querySelector('main h1')?.textContent?.includes('Secret Leak Detector'),
+    )
+  } finally {
+    await page.close()
+  }
+})

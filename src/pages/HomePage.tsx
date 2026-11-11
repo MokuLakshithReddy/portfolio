@@ -25,7 +25,6 @@ export const HomePage: React.FC = () => {
   }, [])
 
   useEffect(() => {
-    // Honor direct section links after the first layout pass.
     let hashTimer: number | undefined
     if (window.location.hash) {
       hashTimer = window.setTimeout(() => {
@@ -37,7 +36,6 @@ export const HomePage: React.FC = () => {
       }, 120)
     }
 
-    // Observe sections instead of reading every section's layout on every scroll event.
     const sectionIds = ['home', 'projects', 'experience', 'achievements', 'skills', 'blog', 'contact']
     const sections = sectionIds
       .map((id) => document.getElementById(id))
@@ -77,19 +75,15 @@ export const HomePage: React.FC = () => {
 
   return (
     <div className="min-h-screen w-full bg-[#F5EFEB] text-[#111111] flex flex-col paper-texture font-sans antialiased">
-      {/* Top macOS-style Status Bar */}
       <StatusBar />
-
-      {/* Main Navigation Bar with clickable Folder Icon */}
-      <Navbar 
-        activeSection={activeSection} 
-        onNavigate={handleNavigate} 
+      <Navbar
+        activeSection={activeSection}
+        onNavigate={handleNavigate}
         onOpenFolder={() => setIsImageModalOpen(true)}
       />
 
-      {/* Primary Hero Section (1650x930 Desktop Reference Target) */}
       <main className="flex-1">
-        <HeroSection onExploreClick={() => handleNavigate('projects')} />
+        <HeroSection onExploreClick={() => handleNavigate('projects')} onNavigate={handleNavigate} />
         <ProjectsSection />
         <ExperienceSection />
         <AchievementsSection />
@@ -98,10 +92,8 @@ export const HomePage: React.FC = () => {
         <ContactSection />
       </main>
 
-      {/* Footer */}
       <Footer />
 
-      {/* Interactive Image Preview Modal triggered by clicking the Folder Icon */}
       <ImageModal
         isOpen={isImageModalOpen}
         onClose={() => setIsImageModalOpen(false)}
@@ -111,4 +103,3 @@ export const HomePage: React.FC = () => {
     </div>
   )
 }
-
