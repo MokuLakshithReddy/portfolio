@@ -203,15 +203,6 @@ export const HeroBuildEngine: React.FC = () => {
         </div>
       </motion.div>
 
-      <motion.div
-        initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.88 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.7, delay: 0.92, ease: [0.22, 1, 0.36, 1] }}
-        className="absolute bottom-[20%] left-[8%] hidden items-center gap-2 rounded-full border border-[#CFC4B3]/80 bg-[#FAF5EC]/80 px-3 py-2 shadow-[0_8px_25px_rgba(30,25,15,0.07)] backdrop-blur-lg xl:flex"
-      >
-        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#0755F5] font-mono-tech text-[9px] font-bold text-white">01</span>
-        <span className="font-mono-tech text-[9px] font-bold uppercase tracking-[0.1em] text-[#514B42]">Design / Engineer / Iterate</span>
-      </motion.div>
     </div>
   )
 }
