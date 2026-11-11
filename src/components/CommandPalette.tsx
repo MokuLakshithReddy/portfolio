@@ -7,7 +7,6 @@ import {
   Command,
   FileText,
   FolderGit2,
-  Github,
   Mail,
   Search,
   ShieldCheck,
@@ -39,7 +38,7 @@ const commandItems: CommandItem[] = [
   { id: 'project-cluely-copilot', label: 'Cluely Copilot', description: 'Multimodal desktop AI assistant', group: 'Projects', keywords: 'desktop ai assistant audio screen', icon: Command, action: 'route', target: '/projects/cluely-copilot' },
   { id: 'project-coding-orchestrator', label: 'Autonomous AI Coding Orchestrator', description: 'Planner, coding agent and verifier', group: 'Projects', keywords: 'agent coding automation orchestration', icon: FolderGit2, action: 'route', target: '/projects/autonomous-ai-coding-orchestrator' },
   { id: 'resume', label: 'Download my resume', description: 'Open the latest CV PDF', group: 'More', keywords: 'cv resume pdf download', icon: FileText, action: 'resume', target: '/Lakshith_Reddy_CV.pdf' },
-  { id: 'github', label: 'GitHub profile', description: 'Explore repositories and contributions', group: 'More', keywords: 'github source code open source', icon: Github, action: 'external', target: 'https://github.com/MokuLakshithReddy' },
+  { id: 'github', label: 'GitHub profile', description: 'Explore repositories and contributions', group: 'More', keywords: 'github source code open source', icon: FolderGit2, action: 'external', target: 'https://github.com/MokuLakshithReddy' },
 ]
 
 export function CommandPalette() {
