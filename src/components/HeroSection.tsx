@@ -87,7 +87,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreClick }) => {
             initial={{ opacity: 0, y: 34, rotate: -1.5 }}
             animate={{ opacity: 1, y: 0, rotate: 0 }}
             transition={{ duration: 0.95, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="pointer-events-none absolute bottom-[-1%] right-[-7%] z-20 h-[51%] w-auto max-w-none object-contain object-bottom drop-shadow-[0_18px_24px_rgba(31,24,18,0.14)] sm:right-[-2%] sm:h-[58%] md:bottom-[-5%] md:right-[6%] md:h-[112%] md:max-h-[920px]"
+            className="pointer-events-none absolute bottom-[-1%] right-[-7%] z-20 h-[51%] w-auto max-w-none object-contain object-bottom drop-shadow-[0_18px_24px_rgba(31,24,18,0.14)] sm:right-[-2%] sm:h-[58%] md:bottom-[-5%] md:right-[6%] md:h-[105%] md:max-h-[920px]"
           />
 
           <motion.div
@@ -108,7 +108,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreClick }) => {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.72, delay: 0.38, ease: [0.22, 1, 0.36, 1] }}
-            className="relative z-30 mt-[clamp(250px,49vw,390px)] max-w-[620px] sm:mt-[clamp(300px,43vw,430px)] md:absolute md:left-0 md:top-[55%] md:mt-0 md:w-[58%] md:max-w-[650px] md:-translate-y-[3%]"
+            className="relative z-30 mt-[clamp(250px,49vw,390px)] w-[82%] max-w-[620px] sm:w-[72%] sm:mt-[clamp(300px,43vw,430px)] md:absolute md:left-0 md:top-[55%] md:mt-0 md:w-[58%] md:max-w-[650px] md:-translate-y-[3%]"
           >
             <div className="mb-4 flex items-center gap-3 font-mono-tech text-[9px] font-bold uppercase tracking-[0.18em] text-[#746C60] sm:mb-5 sm:text-[10px]">
               <span className="h-[2px] w-8 bg-[#0755F5]" />
