@@ -370,17 +370,19 @@ test('image preview traps keyboard focus and restores focus to its trigger', asy
 })
 
 
-test('interactive hero terminal runs portfolio navigation commands', async () => {
+test('hero presents a clear identity, focus areas, and project action without overlapping widgets', async () => {
   const page = await createPage()
   try {
     await page.setViewport({ width: 1440, height: 960 })
     await page.goto(baseUrl, { waitUntil: 'domcontentloaded' })
-    const terminalInput = await page.waitForSelector('input[aria-label="Portfolio terminal command"]')
-    assert.ok(terminalInput)
-    await terminalInput.type('projects')
-    await page.keyboard.press('Enter')
-    await page.waitForFunction(() => document.querySelector('#projects') !== null)
-    await page.waitForFunction(() => document.body.innerText.includes('Opening the engineering case studies'))
+
+    await page.waitForSelector('#home h1')
+    const heading = await page.$eval('#home h1', (element) => (element.textContent ?? '').replace(/\\s+/g, ''))
+    assert.match(heading, /LAKSHITHREDDY\\./)
+    assert.ok(await page.$('#home a[href="#projects"]'))
+    assert.ok(await page.$('#home a[href="https://github.com/MokuLakshithReddy"]'))
+    assert.ok(await page.$('#home [aria-label="Areas of focus"]'))
+    assert.equal(await page.$('#home input[aria-label="Portfolio terminal command"]'), null)
   } finally {
     await page.close()
   }
