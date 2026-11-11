@@ -5,6 +5,7 @@ import { CaseStudyPage } from './pages/CaseStudyPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { ScrollProgress } from './components/MotionSystem'
 import { CommandPalette } from './components/CommandPalette'
+import { SoundtrackPlayer } from './components/SoundtrackPlayer'
 
 function AnimatedRoutes() {
   const location = useLocation()
@@ -29,6 +30,7 @@ function AnimatedRoutes() {
           </Routes>
         </motion.div>
       </AnimatePresence>
+      <SoundtrackPlayer />
     </>
   )
 }
