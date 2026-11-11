@@ -1,7 +1,6 @@
 import React from 'react'
 import { motion } from 'motion/react'
 import { ArrowDownRight, ArrowUpRight, Code2, Download } from 'lucide-react'
-import { HeroCinematicVisual } from './HeroCinematicVisual'
 import { PortfolioStats } from './PortfolioStats'
 import { ScrollIndicator } from './ScrollIndicator'
 import { CursorSpotlight } from './CursorSpotlight'
@@ -42,11 +41,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreClick }) => {
       </div>
 
       <CursorSpotlight />
-
-      {/* Full-bleed cinematic motion graphics — atmospheric, image-free, and intentionally non-dashboard. */}
-      <div className="pointer-events-none absolute inset-y-0 right-[-16%] z-10 h-full w-[112%] opacity-[0.24] sm:right-[-10%] sm:w-[96%] sm:opacity-[0.38] lg:right-[-9%] lg:w-[80%] lg:opacity-100">
-        <HeroCinematicVisual />
-      </div>
 
       <div className="relative z-20 mx-auto flex h-full w-full max-w-[1720px] items-center px-[clamp(24px,5.2vw,88px)] py-12 sm:px-[clamp(32px,5.2vw,88px)] lg:py-10">
         <motion.div
