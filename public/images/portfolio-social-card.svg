@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="140" y1="40" x2="1040" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FBF7F0"/>
+      <stop offset="1" stop-color="#E9EFFF"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientTransform="translate(850 300) rotate(90) scale(320)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6D98FF" stop-opacity=".38"/>
+      <stop offset="1" stop-color="#0755F5" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="core" x1="740" y1="175" x2="960" y2="500" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C7D8FF"/>
+      <stop offset=".45" stop-color="#3978FF"/>
+      <stop offset="1" stop-color="#0A245E"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <g opacity=".22" stroke="#0755F5">
+    <path d="M0 80H1200M0 160H1200M0 240H1200M0 320H1200M0 400H1200M0 480H1200M0 560H1200"/>
+    <path d="M80 0V630M160 0V630M240 0V630M320 0V630M400 0V630M480 0V630M560 0V630M640 0V630M720 0V630M800 0V630M880 0V630M960 0V630M1040 0V630M1120 0V630"/>
+  </g>
+  <g transform="translate(840 306)">
+    <ellipse rx="250" ry="166" stroke="#0755F5" stroke-opacity=".24" stroke-width="2"/>
+    <ellipse rx="215" ry="132" transform="rotate(-28)" stroke="#0755F5" stroke-opacity=".5" stroke-width="2" stroke-dasharray="6 12"/>
+    <path d="M0-150L176-48L0 54L-176-48L0-150Z" fill="#EDF3FF" stroke="#557FD6" stroke-width="3"/>
+    <path d="M-176-48L0 54V255L-176 153V-48Z" fill="#1A2B50" stroke="#89A9F6" stroke-width="3"/>
+    <path d="M0 54L176-48V153L0 255V54Z" fill="url(#core)" stroke="#8CAEFF" stroke-width="3"/>
+    <circle r="52" fill="#0755F5" fill-opacity=".22"/>
+    <circle r="34" fill="#0755F5" stroke="#D7E4FF" stroke-width="4"/>
+    <circle r="9" fill="white"/>
+  </g>
+  <path d="M80 86H132" stroke="#0755F5" stroke-width="4"/>
+  <text x="80" y="130" fill="#5F594F" font-family="monospace" font-size="18" letter-spacing="4">AI / ML · SOFTWARE ENGINEERING</text>
+  <text x="74" y="280" fill="#111111" font-family="Arial, Helvetica, sans-serif" font-size="100" font-weight="900" letter-spacing="-5">LAKSHITH</text>
+  <text x="74" y="386" fill="#111111" font-family="Arial, Helvetica, sans-serif" font-size="100" font-weight="900" letter-spacing="-5">REDDY<tspan fill="#0755F5">.</tspan></text>
+  <text x="82" y="462" fill="#111111" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700">Think disruptive.</text>
+  <text x="82" y="507" fill="#0755F5" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700">Build relentlessly.</text>
+  <text x="82" y="580" fill="#5F594F" font-family="monospace" font-size="15" letter-spacing="3">IDEAS INTO SYSTEMS</text>
+</svg>
