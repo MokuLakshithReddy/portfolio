@@ -1,5 +1,5 @@
 const SITE_URL = 'https://portfolio-beta-roan-97.vercel.app'
-const SOCIAL_IMAGE = `${SITE_URL}/images/character.png`
+const SOCIAL_IMAGE = `${SITE_URL}/images/portfolio-social-card.svg`
 
 interface PageMetadata {
   title: string
@@ -27,7 +27,7 @@ export function updatePageMetadata({ title, description, canonicalPath }: PageMe
   setMeta('property', 'og:description', description)
   setMeta('property', 'og:url', canonicalUrl)
   setMeta('property', 'og:image', SOCIAL_IMAGE)
-  setMeta('property', 'og:image:alt', 'Lakshith Reddy portfolio character illustration')
+  setMeta('property', 'og:image:alt', 'Lakshith Reddy portfolio identity card')
   setMeta('name', 'twitter:card', 'summary_large_image')
   setMeta('name', 'twitter:title', title)
   setMeta('name', 'twitter:description', description)
