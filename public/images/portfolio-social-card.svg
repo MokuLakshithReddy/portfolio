@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="80" y1="30" x2="1100" y2="600" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FBF7F0"/>
+      <stop offset=".48" stop-color="#EAEFF9"/>
+      <stop offset="1" stop-color="#071329"/>
+    </linearGradient>
+    <radialGradient id="flare" cx="0" cy="0" r="1" gradientTransform="translate(890 330) rotate(90) scale(340)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#73A8FF" stop-opacity=".85"/>
+      <stop offset="1" stop-color="#0755F5" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="trail" x1="560" y1="590" x2="1120" y2="50" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#00C8FF" stop-opacity="0"/>
+      <stop offset=".5" stop-color="#D5E9FF"/>
+      <stop offset="1" stop-color="#0755F5" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#flare)"/>
+  <g opacity=".2" stroke="#75A6FF">
+    <ellipse cx="900" cy="330" rx="360" ry="210"/>
+    <ellipse cx="900" cy="330" rx="300" ry="155" transform="rotate(-24 900 330)"/>
+    <ellipse cx="900" cy="330" rx="235" ry="295" transform="rotate(20 900 330)"/>
+  </g>
+  <path d="M480 610C620 460 650 240 810 190C960 144 1020 390 1205 54" stroke="url(#trail)" stroke-width="24" stroke-linecap="round"/>
+  <path d="M490 620C630 470 670 252 825 204C980 158 1040 390 1210 85" stroke="#D9ECFF" stroke-opacity=".8" stroke-width="2" stroke-linecap="round"/>
+  <path d="M650 100C820 20 1040 80 1160 230" stroke="#7DB7FF" stroke-opacity=".58" stroke-width="3"/>
+  <circle cx="905" cy="332" r="100" fill="#0755F5" fill-opacity=".14"/>
+  <circle cx="905" cy="332" r="55" stroke="#B8D7FF" stroke-opacity=".7" stroke-width="2"/>
+  <circle cx="905" cy="332" r="9" fill="#FFFFFF"/>
+  <path d="M78 82H132" stroke="#0755F5" stroke-width="4"/>
+  <text x="78" y="126" fill="#5F594F" font-family="monospace" font-size="18" letter-spacing="4">AI / ML · SOFTWARE ENGINEERING</text>
+  <text x="72" y="278" fill="#111111" font-family="Arial, Helvetica, sans-serif" font-size="104" font-weight="900" letter-spacing="-6">LAKSHITH</text>
+  <text x="72" y="388" fill="#111111" font-family="Arial, Helvetica, sans-serif" font-size="104" font-weight="900" letter-spacing="-6">REDDY<tspan fill="#0755F5">.</tspan></text>
+  <text x="80" y="466" fill="#111111" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700">Think disruptive.</text>
+  <text x="80" y="512" fill="#0755F5" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700">Build relentlessly.</text>
+  <text x="80" y="580" fill="#5F594F" font-family="monospace" font-size="15" letter-spacing="3">A CINEMATIC ENGINEERING PORTFOLIO</text>
+</svg>

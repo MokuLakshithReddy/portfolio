@@ -370,7 +370,7 @@ test('image preview traps keyboard focus and restores focus to its trigger', asy
 })
 
 
-test('hero presents a clear identity, focus areas, and project action without overlapping widgets', async () => {
+test('hero keeps its content without a hero illustration or cinematic visual', async () => {
   const page = await createPage()
   try {
     await page.setViewport({ width: 1440, height: 960 })
@@ -379,10 +379,11 @@ test('hero presents a clear identity, focus areas, and project action without ov
     await page.waitForSelector('#home h1')
     const heading = await page.$eval('#home h1', (element) => (element.textContent ?? '').replace(/\s+/g, ''))
     assert.match(heading, /LAKSHITHREDDY\./)
+    assert.equal(await page.$('#home [data-testid="hero-cinematic-visual"]'), null)
     assert.ok(await page.$('#home a[href="#projects"]'))
     assert.ok(await page.$('#home a[href="https://github.com/MokuLakshithReddy"]'))
     assert.ok(await page.$('#home [aria-label="Areas of focus"]'))
-    assert.equal(await page.$('#home input[aria-label="Portfolio terminal command"]'), null)
+    assert.equal(await page.$('#home img[src="/images/character.png"]'), null)
   } finally {
     await page.close()
   }
@@ -392,9 +393,9 @@ test('command palette filters and opens a project using keyboard navigation', as
   const page = await createPage()
   try {
     await page.goto(baseUrl, { waitUntil: 'domcontentloaded' })
-    await page.keyboard.down('Alt')
-    await page.keyboard.press('k')
-    await page.keyboard.up('Alt')
+    const paletteTrigger = await page.$('button[aria-label="Open portfolio command palette (Alt K or Control or Command K)"]')
+    assert.ok(paletteTrigger)
+    await paletteTrigger.click()
     await page.waitForSelector('[role="dialog"][aria-label="Portfolio command palette"]')
 
     const search = await page.$('input[aria-label="Search portfolio commands"]')

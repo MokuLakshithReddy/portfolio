@@ -3,7 +3,7 @@ import { join, resolve } from 'node:path'
 import { buildRouteHtml } from './prerender-utils.mjs'
 
 const siteUrl = 'https://portfolio-beta-roan-97.vercel.app'
-const socialImage = `${siteUrl}/images/character.png`
+const socialImage = `${siteUrl}/images/portfolio-social-card.svg`
 const root = process.cwd()
 const distDirectory = resolve(root, 'dist')
 const template = readFileSync(join(distDirectory, 'index.html'), 'utf8')
