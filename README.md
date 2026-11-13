@@ -1,5 +1,8 @@
 # Lakshith Reddy - Developer Portfolio
 
+[![Stars](https://img.shields.io/github/stars/MokuLakshithReddy/portfolio?style=flat-square)](https://github.com/MokuLakshithReddy/portfolio/stargazers) [![Forks](https://img.shields.io/github/forks/MokuLakshithReddy/portfolio?style=flat-square)](https://github.com/MokuLakshithReddy/portfolio/forks) [![Open Issues](https://img.shields.io/github/issues/MokuLakshithReddy/portfolio?style=flat-square)](https://github.com/MokuLakshithReddy/portfolio/issues) [![Last Commit](https://img.shields.io/github/last-commit/MokuLakshithReddy/portfolio?style=flat-square)](https://github.com/MokuLakshithReddy/portfolio/commits/main)
+
+
 [![XERJ Corpus Hub Contributor](https://hub.xerj.org/contributors/MokuLakshithReddy/badge.svg)](https://hub.xerj.org/contributors/MokuLakshithReddy)
 
 An illustrated, creative developer portfolio homepage for **Lakshith Reddy** (AI & ML Student · Software Developer). Built with React, TypeScript, Tailwind CSS v4, and Vite, featuring an anime/notebook hand-drawn aesthetic, interactive navigation, and responsive design across desktop and mobile devices.
