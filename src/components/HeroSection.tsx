@@ -4,6 +4,7 @@ import { ArrowDownRight, ArrowUpRight, Code2, Download } from 'lucide-react'
 import { PortfolioStats } from './PortfolioStats'
 import { ScrollIndicator } from './ScrollIndicator'
 import { CursorSpotlight } from './CursorSpotlight'
+import { HeroShowcase } from './HeroShowcase'
 
 interface HeroSectionProps {
   onExploreClick?: () => void
@@ -12,7 +13,7 @@ interface HeroSectionProps {
 
 const focusAreas = ['AI agents', 'RAG systems', 'Developer tools', 'Full-stack engineering']
 
-export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreClick }) => {
+export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreClick, onNavigate }) => {
   const handleExplore = (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault()
 
@@ -42,12 +43,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreClick }) => {
 
       <CursorSpotlight />
 
-      <div className="relative z-20 mx-auto flex h-full w-full max-w-[1720px] items-center px-[clamp(24px,5.2vw,88px)] py-12 sm:px-[clamp(32px,5.2vw,88px)] lg:py-10">
+      <div className="relative z-20 mx-auto flex h-full w-full max-w-[1720px] items-center justify-between gap-8 px-[clamp(24px,5.2vw,88px)] py-12 sm:px-[clamp(32px,5.2vw,88px)] lg:py-10">
         <motion.div
           initial={{ opacity: 0, y: 22 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
-          className="w-full max-w-[700px] lg:w-[57%] xl:w-[55%]"
+          className="w-full max-w-[680px] lg:w-[53%] xl:w-[50%] shrink-0"
         >
           <div className="mb-7 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono-tech text-[9px] font-bold uppercase tracking-[0.2em] text-[#756D60] sm:mb-8 sm:text-[10px]">
             <span className="inline-block h-[2px] w-8 bg-[#0755F5]" />
@@ -155,6 +156,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreClick }) => {
             <PortfolioStats />
           </motion.div>
         </motion.div>
+
+        {/* Right Column: Interactive Developer Showcase & Notebook Doodles */}
+        <div className="hidden lg:flex flex-1 items-center justify-center pl-4 max-w-[560px] xl:max-w-[620px] h-full">
+          <HeroShowcase onNavigate={onNavigate} />
+        </div>
       </div>
 
       <div className="absolute bottom-5 left-[clamp(24px,5.2vw,88px)] z-30 hidden lg:block">
