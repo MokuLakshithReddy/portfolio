@@ -1,8 +1,42 @@
 # Lakshith Reddy - Developer Portfolio
 
+[![Stars](https://img.shields.io/github/stars/MokuLakshithReddy/portfolio?style=flat-square)](https://github.com/MokuLakshithReddy/portfolio/stargazers) [![Forks](https://img.shields.io/github/forks/MokuLakshithReddy/portfolio?style=flat-square)](https://github.com/MokuLakshithReddy/portfolio/forks) [![Open Issues](https://img.shields.io/github/issues/MokuLakshithReddy/portfolio?style=flat-square)](https://github.com/MokuLakshithReddy/portfolio/issues) [![Last Commit](https://img.shields.io/github/last-commit/MokuLakshithReddy/portfolio?style=flat-square)](https://github.com/MokuLakshithReddy/portfolio/commits/main)
+
+
 [![XERJ Corpus Hub Contributor](https://hub.xerj.org/contributors/MokuLakshithReddy/badge.svg)](https://hub.xerj.org/contributors/MokuLakshithReddy)
 
 An illustrated, creative developer portfolio homepage for **Lakshith Reddy** (AI & ML Student · Software Developer). Built with React, TypeScript, Tailwind CSS v4, and Vite, featuring an anime/notebook hand-drawn aesthetic, interactive navigation, and responsive design across desktop and mobile devices.
+
+
+## Site structure and proof of work
+
+~~~mermaid
+flowchart TD
+    A["Portfolio home route"] --> B["Featured projects"]
+    A --> C["Experience and leadership"]
+    A --> D["Skills and writing"]
+    B --> E["Project case-study pages"]
+    E --> F["Problem, approach and evidence"]
+    A --> G["Contact and social links"]
+    H["Build pipeline"] --> I["TypeScript + Vite production build"]
+    I --> J["Route prerendering"]
+    J --> K["Browser and unit regression tests"]
+~~~
+
+### Case-study evidence
+
+This repository includes dedicated evidence notes for:
+- [Secret Leak Detector](public/evidence/secret-leak-detector.md)
+- [Local AI Execution Agent](public/evidence/local-ai-execution-agent.md)
+- [Autonomous AI Coding Orchestrator](public/evidence/autonomous-ai-coding-orchestrator.md)
+- [Cluely Copilot](public/evidence/cluely-copilot.md)
+- [ThinkMate](public/evidence/thinkmate.md)
+
+The portfolio also tracks GitHub contribution data and contains unit and browser regression tests. Run the build and tests using the commands in the sections below; CI is the source of truth for the latest verified state.
+
+**Why it matters:** recruiters and collaborators need evidence of what a project does, not only a list of technologies. The case-study pages connect selected projects to their technical scope and verification material.
+
+---
 
 ---
 
