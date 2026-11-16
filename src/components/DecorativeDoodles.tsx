@@ -305,3 +305,85 @@ export const SkylineDoodle: React.FC<{ side: 'left' | 'right' }> = ({ side }) =>
     </div>
   )
 }
+
+export const HeroEyebrowPill: React.FC = () => {
+  return (
+    <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-[#222222] bg-[#FAF5EC]/85 shadow-[1px_1px_0px_rgba(0,0,0,0.1)] select-none">
+      <span className="w-2.5 h-2.5 rounded-full bg-[#0755F5] inline-block shadow-[0_0_8px_rgba(7,85,245,0.7)]" />
+      <span className="text-[12px] sm:text-[13px] font-mono-tech font-bold text-[#111111] tracking-wider uppercase">
+        AI / ML · SOFTWARE ENGINEERING
+      </span>
+    </div>
+  )
+}
+
+export const BlueTaglineUnderline: React.FC = () => {
+  return (
+    <div className="relative w-full max-w-[420px] h-[16px] sm:h-[20px] -mt-1 sm:-mt-0.5 mb-2 select-none pointer-events-none">
+      <svg
+        viewBox="0 0 420 20"
+        fill="none"
+        className="w-full h-full overflow-visible"
+        preserveAspectRatio="none"
+      >
+        <path
+          d="M 2 9 C 65 4, 140 14, 230 7 C 300 2, 355 11, 412 8 C 390 16, 310 18, 220 13 C 130 9, 50 16, 2 9 Z"
+          fill="#0755F5"
+        />
+        <path
+          d="M 12 12 C 85 8, 175 14, 270 8 C 330 5, 385 11, 410 9"
+          stroke="#0755F5"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          opacity="0.95"
+        />
+      </svg>
+    </div>
+  )
+}
+
+export const BlueCheckerPattern: React.FC<{ className?: string }> = ({ className = '' }) => {
+  return (
+    <div className={`pointer-events-none select-none ${className}`}>
+      <svg width="76" height="60" viewBox="0 0 76 60" fill="none" className="overflow-visible">
+        {/* Row 1 */}
+        <rect x="0" y="0" width="15" height="15" fill="#0755F5" />
+        <rect x="30" y="0" width="15" height="15" fill="#0755F5" />
+        <rect x="60" y="0" width="15" height="15" fill="#0755F5" />
+        {/* Row 2 */}
+        <rect x="15" y="15" width="15" height="15" fill="#0755F5" />
+        <rect x="45" y="15" width="15" height="15" fill="#0755F5" />
+        {/* Row 3 */}
+        <rect x="0" y="30" width="15" height="15" fill="#0755F5" />
+        <rect x="30" y="30" width="15" height="15" fill="#0755F5" />
+        <rect x="60" y="30" width="15" height="15" fill="#0755F5" />
+        {/* Row 4 */}
+        <rect x="15" y="45" width="15" height="15" fill="#0755F5" />
+        <rect x="45" y="45" width="15" height="15" fill="#0755F5" />
+      </svg>
+    </div>
+  )
+}
+
+export const BlueArrowDoodle: React.FC<{ className?: string }> = ({ className = '' }) => {
+  return (
+    <div className={`pointer-events-none select-none ${className}`}>
+      <svg width="60" height="28" viewBox="0 0 60 28" fill="none" className="overflow-visible">
+        <path
+          d="M 4 18 C 20 14, 38 17, 52 14"
+          stroke="#0755F5"
+          strokeWidth="2.2"
+          strokeLinecap="round"
+        />
+        <path
+          d="M 42 7 L 54 14 L 43 23"
+          stroke="#0755F5"
+          strokeWidth="2.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </div>
+  )
+}
+
