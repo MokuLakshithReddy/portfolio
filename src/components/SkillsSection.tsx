@@ -1,4 +1,5 @@
 import React from 'react'
+import { motion } from 'motion/react'
 import { Brain, Layout, Database, Wrench, Palette, Sparkles } from 'lucide-react'
 
 export const SkillsSection: React.FC = () => {
@@ -89,8 +90,13 @@ export const SkillsSection: React.FC = () => {
         {/* Categories Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {skillCategories.map((cat, idx) => (
-            <div
-              key={idx}
+            <motion.div
+              key={cat.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.18 }}
+              transition={{ duration: 0.5, delay: Math.min(idx * 0.07, 0.28), ease: [0.22, 1, 0.36, 1] }}
+              whileHover={{ y: -4 }}
               className={`bg-[#FAF5EC] border border-[#222222]/80 rounded-[18px] p-6 shadow-sm hover:shadow-md transition-shadow relative flex flex-col justify-between ${
                 idx === 4 ? 'md:col-span-2 lg:col-span-1' : ''
               }`}
@@ -133,7 +139,7 @@ export const SkillsSection: React.FC = () => {
                 <span>{cat.skills.length} competencies</span>
                 <span className="text-[#0755F5]">● Active Practice</span>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

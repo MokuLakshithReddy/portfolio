@@ -10,13 +10,16 @@ import { PortfolioStats } from './PortfolioStats'
 
 interface HeroSectionProps {
   onExploreClick?: () => void
+  onNavigate?: (sectionId: string) => void
 }
 
-export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreClick }) => {
-  const handleExplore = (e: React.MouseEvent) => {
+export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreClick, onNavigate }) => {
+  const handleExplore = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
     if (onExploreClick) {
       onExploreClick()
+    } else if (onNavigate) {
+      onNavigate('projects')
     } else {
       const el = document.getElementById('projects')
       if (el) {
@@ -83,7 +86,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreClick }) => {
             </p>
 
             {/* Focus Tags */}
-            <div className="flex flex-wrap items-center gap-2 mb-5 sm:mb-6">
+            <div aria-label="Areas of focus" className="flex flex-wrap items-center gap-2 mb-5 sm:mb-6">
               {focusTags.map((tag) => (
                 <span
                   key={tag}

@@ -1,0 +1,32 @@
+[
+  {
+    "slug": "secret-leak-detector",
+    "title": "Secret Leak Detector — Lakshith Reddy",
+    "description": "A developer security tool for context-aware credential detection, Git exposure analysis, and controlled remediation."
+  },
+  {
+    "slug": "local-ai-execution-agent",
+    "title": "Local AI Execution Agent — Lakshith Reddy",
+    "description": "A local-first AI execution framework with bounded tools, human approval, isolated execution, and independent verification."
+  },
+  {
+    "slug": "thinkmate",
+    "title": "ThinkMate — AI Thinking Partner | Lakshith Reddy",
+    "description": "A structured AI thinking workspace for framing complex problems, exploring alternatives, and preserving evidence-backed decisions."
+  },
+  {
+    "slug": "cluely-copilot",
+    "title": "Cluely Copilot — Desktop AI Assistant | Lakshith Reddy",
+    "description": "A desktop AI assistant combining screen perception, conversation intelligence, speech transcription, and knowledge retrieval."
+  },
+  {
+    "slug": "autonomous-ai-coding-orchestrator",
+    "title": "Autonomous AI Coding Orchestrator — Lakshith Reddy",
+    "description": "An experimental closed-loop coding system connecting an LLM planner, coding agent, isolated worktree, and independent verifier."
+  },
+  {
+    "slug": "bluecarbon-registry",
+    "title": "BlueCarbon Registry — Lakshith Reddy",
+    "description": "A research prototype for blue-carbon monitoring, reporting, and verification with geospatial validation and cryptographic evidence."
+  }
+]

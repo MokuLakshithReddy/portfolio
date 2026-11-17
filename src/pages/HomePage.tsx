@@ -10,65 +10,80 @@ import { BlogSection } from '../components/BlogSection'
 import { ContactSection } from '../components/ContactSection'
 import { Footer } from '../components/Footer'
 import { ImageModal } from '../components/ImageModal'
+import { updatePageMetadata } from '../utils/seo'
 
 export const HomePage: React.FC = () => {
   const [activeSection, setActiveSection] = useState('home')
   const [isImageModalOpen, setIsImageModalOpen] = useState(false)
 
   useEffect(() => {
-    // If there is a hash like #projects, scroll to it
+    updatePageMetadata({
+      title: 'Lakshith Reddy — AI/ML & Software Engineering',
+      description: 'AI & ML student building intelligent systems, autonomous agents, developer tools, and reliable software.',
+      canonicalPath: '/',
+    })
+  }, [])
+
+  useEffect(() => {
+    let hashTimer: number | undefined
     if (window.location.hash) {
-      const id = window.location.hash.replace('#', '')
-      setTimeout(() => {
-        const el = document.getElementById(id)
-        if (el) el.scrollIntoView({ behavior: 'smooth' })
-      }, 100)
+      hashTimer = window.setTimeout(() => {
+        const id = window.location.hash.slice(1)
+        document.getElementById(id)?.scrollIntoView({
+          behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+          block: 'start',
+        })
+      }, 120)
     }
 
-    const handleScroll = () => {
-      const sections = ['home', 'projects', 'experience', 'achievements', 'skills', 'blog', 'contact']
-      const scrollPos = window.scrollY + 120
+    const sectionIds = ['home', 'projects', 'experience', 'achievements', 'skills', 'blog', 'contact']
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((element): element is HTMLElement => element !== null)
 
-      for (const section of sections) {
-        const el = document.getElementById(section)
-        if (el) {
-          const top = el.offsetTop
-          const height = el.offsetHeight
-          if (scrollPos >= top && scrollPos < top + height) {
-            setActiveSection(section)
-            break
-          }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleSection = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
+
+        if (visibleSection) {
+          setActiveSection(visibleSection.target.id)
         }
-      }
-    }
+      },
+      {
+        rootMargin: '-22% 0px -62% 0px',
+        threshold: [0, 0.15, 0.35],
+      },
+    )
 
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    sections.forEach((section) => observer.observe(section))
+
+    return () => {
+      if (hashTimer !== undefined) window.clearTimeout(hashTimer)
+      observer.disconnect()
+    }
   }, [])
 
   const handleNavigate = (id: string) => {
     setActiveSection(id)
     const el = document.getElementById(id)
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth' })
+      el.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' })
     }
   }
 
   return (
     <div className="min-h-screen w-full bg-[#F5EFEB] text-[#111111] flex flex-col paper-texture font-sans antialiased">
-      {/* Top macOS-style Status Bar */}
       <StatusBar />
-
-      {/* Main Navigation Bar with clickable Folder Icon */}
-      <Navbar 
-        activeSection={activeSection} 
-        onNavigate={handleNavigate} 
+      <Navbar
+        activeSection={activeSection}
+        onNavigate={handleNavigate}
         onOpenFolder={() => setIsImageModalOpen(true)}
       />
 
-      {/* Primary Hero Section (1650x930 Desktop Reference Target) */}
       <main className="flex-1">
-        <HeroSection onExploreClick={() => handleNavigate('projects')} />
+        <HeroSection onExploreClick={() => handleNavigate('projects')} onNavigate={handleNavigate} />
         <ProjectsSection />
         <ExperienceSection />
         <AchievementsSection />
@@ -77,10 +92,8 @@ export const HomePage: React.FC = () => {
         <ContactSection />
       </main>
 
-      {/* Footer */}
       <Footer />
 
-      {/* Interactive Image Preview Modal triggered by clicking the Folder Icon */}
       <ImageModal
         isOpen={isImageModalOpen}
         onClose={() => setIsImageModalOpen(false)}
@@ -90,4 +103,3 @@ export const HomePage: React.FC = () => {
     </div>
   )
 }
-

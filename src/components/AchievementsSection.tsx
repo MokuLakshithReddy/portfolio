@@ -1,11 +1,12 @@
 import React from 'react'
+import { ScrollReveal } from './MotionSystem'
 import { Trophy, GitPullRequest, Rocket, ExternalLink, Award, CheckCircle2, Database } from 'lucide-react'
 import { GitHubContributions } from './GitHubContributions'
 
 export const AchievementsSection: React.FC = () => {
   return (
     <section id="achievements" className="w-full py-20 px-6 md:px-12 lg:px-16 border-t border-[#D8CEBD] relative">
-      <div className="max-w-6xl mx-auto">
+      <ScrollReveal className="max-w-6xl mx-auto" amount={0.04}>
         {/* Section Heading */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
           <div>
@@ -99,7 +100,7 @@ export const AchievementsSection: React.FC = () => {
                 </li>
                 <li className="flex items-start gap-2 bg-[#F2EBDE] p-2 rounded-[8px] border border-[#D5C9B7]/50">
                   <span className="text-[#0755F5] font-bold mt-0.5">›</span>
-                  <span><strong className="text-[#111111]">XERJ</strong> — query operator parsing</span>
+                  <span><strong className="text-[#111111]"><a href="https://github.com/xerj-org/xerj/pull/1804" target="_blank" rel="noopener noreferrer" className="underline decoration-dotted underline-offset-2 hover:text-[#0755F5]">XERJ</a></strong> — query operator parsing</span>
                 </li>
                 <li className="flex items-start gap-2 bg-[#F2EBDE] p-2 rounded-[8px] border border-[#D5C9B7]/50">
                   <span className="text-[#0755F5] font-bold mt-0.5">›</span>
@@ -116,7 +117,7 @@ export const AchievementsSection: React.FC = () => {
                 <span>Four merged pull requests</span>
               </div>
               <a
-                href="https://github.com/MokuLakshithReddy"
+                href="https://github.com/search?q=author%3AMokuLakshithReddy+is%3Amerged&type=pullrequests"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-[13px] font-mono-tech font-bold text-[#0755F5] hover:text-[#0043D6] group-hover:translate-x-1 transition-transform"
@@ -293,7 +294,7 @@ export const AchievementsSection: React.FC = () => {
           </div>
           <GitHubContributions />
         </div>
-      </div>
+      </ScrollReveal>
     </section>
   )
 }

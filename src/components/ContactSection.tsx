@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { ScrollReveal } from './MotionSystem'
 import { Mail, Send, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react'
 
 export const ContactSection: React.FC = () => {
@@ -8,14 +9,27 @@ export const ContactSection: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!formData.name || !formData.email || !formData.message) return
+
+    if (
+      status === 'submitting'
+      || !formData.name.trim()
+      || !formData.email.trim()
+      || !formData.message.trim()
+    ) {
+      return
+    }
+
+    const submittedName = formData.name.trim()
+    const submittedEmail = formData.email.trim()
+    const submittedMessage = formData.message.trim()
+    const controller = new AbortController()
+    const timeoutId = window.setTimeout(() => controller.abort(), 20_000)
 
     setStatus('submitting')
     setErrorMessage('')
 
     try {
-      // Endpoint can be configured via environment variable or default to formsubmit.co
-      const endpoint = (import.meta as { env?: { VITE_CONTACT_ENDPOINT?: string } }).env?.VITE_CONTACT_ENDPOINT 
+      const endpoint = (import.meta as { env?: { VITE_CONTACT_ENDPOINT?: string } }).env?.VITE_CONTACT_ENDPOINT
         || 'https://formsubmit.co/ajax/contact@lakshithreddy.dev'
 
       const response = await fetch(endpoint, {
@@ -24,33 +38,44 @@ export const ContactSection: React.FC = () => {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         },
+        signal: controller.signal,
         body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          message: formData.message,
-          _subject: `Portfolio Message from ${formData.name}`,
+          name: submittedName,
+          email: submittedEmail,
+          message: submittedMessage,
+          _subject: `Portfolio Message from ${submittedName}`,
           _template: 'table',
         }),
       })
 
-      if (response.ok) {
-        setStatus('success')
-        setFormData({ name: '', email: '', message: '' })
-        setTimeout(() => {
-          setStatus('idle')
-        }, 6000)
-      } else {
-        const data = await response.json().catch(() => ({}))
-        throw new Error(data.message || `Server responded with status ${response.status}`)
+      if (!response.ok) {
+        throw new Error(`Contact service rejected the request with status ${response.status}`)
       }
-    } catch (err) {
-      console.error('Contact form submission error:', err)
+
+      const result: unknown = await response.json().catch(() => null)
+      const serviceAccepted = (
+        typeof result === 'object'
+        && result !== null
+        && 'success' in result
+        && (result.success === true || result.success === 'true')
+      )
+
+      if (!serviceAccepted) {
+        throw new Error('Contact service did not provide an explicit acceptance confirmation')
+      }
+
+      setStatus('success')
+      setFormData({ name: '', email: '', message: '' })
+      window.setTimeout(() => setStatus('idle'), 6000)
+    } catch (error) {
       setStatus('error')
       setErrorMessage(
-        err instanceof Error 
-          ? err.message 
-          : 'Could not send message over network. Please use direct email.'
+        error instanceof Error && error.name === 'AbortError'
+          ? 'The request timed out. Please try again or use direct email.'
+          : 'Your message could not be confirmed as sent. Please try again or use direct email.'
       )
+    } finally {
+      window.clearTimeout(timeoutId)
     }
   }
 
@@ -62,7 +87,7 @@ export const ContactSection: React.FC = () => {
 
   return (
     <section id="contact" className="w-full py-20 px-6 md:px-12 lg:px-16 border-t border-[#D8CEBD] relative">
-      <div className="max-w-4xl mx-auto">
+      <ScrollReveal className="max-w-4xl mx-auto" amount={0.06}>
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 font-mono-tech text-[13px] text-[#0755F5] font-bold tracking-wider uppercase mb-2">
             <Mail className="w-4 h-4" />
@@ -110,7 +135,7 @@ export const ContactSection: React.FC = () => {
                 </a>
 
                 <a
-                  href="https://linkedin.com"
+                  href="https://www.linkedin.com/in/lakshith-reddy/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 text-[#333333] hover:text-[#0755F5] transition-colors group"
@@ -138,53 +163,61 @@ export const ContactSection: React.FC = () => {
               className="bg-[#FAF5EC] border border-[#222222]/80 rounded-[18px] p-6 sm:p-8 shadow-sm space-y-4"
             >
               <div>
-                <label className="block text-[13px] font-mono-tech font-semibold text-[#333333] mb-1.5">
+                <label htmlFor="contact-name" className="block text-[13px] font-mono-tech font-semibold text-[#333333] mb-1.5">
                   Your Name
                 </label>
                 <input
+                  id="contact-name"
+                  name="name"
+                  autoComplete="name"
                   type="text"
                   required
                   disabled={status === 'submitting'}
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="Ada Lovelace"
-                  className="w-full bg-[#F4ECE1] border border-[#C9BEAE] rounded-[10px] px-4 py-2.5 text-[14px] font-sans focus:outline-none focus:border-[#0755F5] transition-colors disabled:opacity-60"
+                  className="w-full bg-[#F4ECE1] border border-[#C9BEAE] rounded-[10px] px-4 py-2.5 text-[14px] font-sans focus:border-[#0755F5] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#0755F5] transition-colors disabled:opacity-60"
                 />
               </div>
 
               <div>
-                <label className="block text-[13px] font-mono-tech font-semibold text-[#333333] mb-1.5">
+                <label htmlFor="contact-email" className="block text-[13px] font-mono-tech font-semibold text-[#333333] mb-1.5">
                   Email Address
                 </label>
                 <input
+                  id="contact-email"
+                  name="email"
+                  autoComplete="email"
                   type="email"
                   required
                   disabled={status === 'submitting'}
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder="ada@computing.org"
-                  className="w-full bg-[#F4ECE1] border border-[#C9BEAE] rounded-[10px] px-4 py-2.5 text-[14px] font-sans focus:outline-none focus:border-[#0755F5] transition-colors disabled:opacity-60"
+                  className="w-full bg-[#F4ECE1] border border-[#C9BEAE] rounded-[10px] px-4 py-2.5 text-[14px] font-sans focus:border-[#0755F5] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#0755F5] transition-colors disabled:opacity-60"
                 />
               </div>
 
               <div>
-                <label className="block text-[13px] font-mono-tech font-semibold text-[#333333] mb-1.5">
+                <label htmlFor="contact-message" className="block text-[13px] font-mono-tech font-semibold text-[#333333] mb-1.5">
                   Message
                 </label>
                 <textarea
+                  id="contact-message"
+                  name="message"
                   required
                   rows={4}
                   disabled={status === 'submitting'}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   placeholder="Let's build intelligent systems..."
-                  className="w-full bg-[#F4ECE1] border border-[#C9BEAE] rounded-[10px] px-4 py-2.5 text-[14px] font-sans focus:outline-none focus:border-[#0755F5] transition-colors resize-none disabled:opacity-60"
+                  className="w-full bg-[#F4ECE1] border border-[#C9BEAE] rounded-[10px] px-4 py-2.5 text-[14px] font-sans focus:border-[#0755F5] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#0755F5] transition-colors resize-none disabled:opacity-60"
                 />
               </div>
 
               {/* Status feedback alerts */}
               {status === 'success' && (
-                <div className="p-3.5 bg-emerald-50 border border-emerald-300 rounded-[10px] flex items-start gap-2.5 text-emerald-800 text-[13.5px]">
+                <div role="status" aria-live="polite" className="p-3.5 bg-emerald-50 border border-emerald-300 rounded-[10px] flex items-start gap-2.5 text-emerald-800 text-[13.5px]">
                   <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                   <div>
                     <div className="font-semibold">Transmission Dispatched!</div>
@@ -194,7 +227,7 @@ export const ContactSection: React.FC = () => {
               )}
 
               {status === 'error' && (
-                <div className="p-3.5 bg-rose-50 border border-rose-300 rounded-[10px] flex flex-col gap-2 text-rose-800 text-[13px]">
+                <div role="alert" aria-live="assertive" className="p-3.5 bg-rose-50 border border-rose-300 rounded-[10px] flex flex-col gap-2 text-rose-800 text-[13px]">
                   <div className="flex items-start gap-2">
                     <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
                     <div>
@@ -237,7 +270,7 @@ export const ContactSection: React.FC = () => {
             </form>
           </div>
         </div>
-      </div>
+      </ScrollReveal>
     </section>
   )
 }

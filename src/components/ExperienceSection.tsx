@@ -1,10 +1,11 @@
 import React from 'react'
+import { ScrollReveal } from './MotionSystem'
 import { Briefcase, Calendar, GraduationCap, Code2, Sparkles, Building2 } from 'lucide-react'
 
 export const ExperienceSection: React.FC = () => {
   return (
     <section id="experience" className="w-full py-20 px-6 md:px-12 lg:px-16 border-t border-[#D8CEBD] bg-[#F1E9DC]/40 relative">
-      <div className="max-w-4xl mx-auto">
+      <ScrollReveal className="max-w-4xl mx-auto" amount={0.05}>
         {/* Section Header */}
         <div className="mb-14">
           <div className="font-mono-tech text-[13px] text-[#0755F5] font-bold tracking-wider uppercase mb-2 flex items-center gap-2">
@@ -169,7 +170,7 @@ export const ExperienceSection: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
+      </ScrollReveal>
     </section>
   )
 }

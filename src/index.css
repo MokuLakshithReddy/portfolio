@@ -14,6 +14,8 @@
 
 :root {
   color-scheme: light;
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
 }
 
 html, body {
@@ -46,11 +48,54 @@ html, body {
   font-family: 'Kalam', cursive;
 }
 
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid #0755F5;
+  outline-offset: 4px;
+}
+
+::selection {
+  color: #FFFFFF;
+  background: #0755F5;
+}
+
 /* Paper grain overlay */
 .paper-texture {
   background-color: #F5EFEB;
-  background-image: 
+  background-image:
     radial-gradient(at 10% 20%, rgba(245, 235, 220, 0.9) 0px, transparent 50%),
     radial-gradient(at 90% 10%, rgba(240, 230, 215, 0.9) 0px, transparent 50%),
     radial-gradient(at 50% 80%, rgba(242, 232, 218, 0.8) 0px, transparent 50%);
+}
+
+@keyframes sketch-float {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(0, -7px, 0) rotate(1deg); }
+}
+
+@keyframes sketch-wiggle {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
+
+.animate-sketch-float {
+  animation: sketch-float 6.5s ease-in-out infinite;
+}
+
+.animate-sketch-wiggle {
+  animation: sketch-wiggle 5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
