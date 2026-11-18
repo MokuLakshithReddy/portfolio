@@ -336,7 +336,7 @@ export const GitHubContributions: React.FC = () => {
         role="group"
         aria-label="GitHub daily contribution calendar. Focus a day and use the arrow keys to move one day or one week."
       >
-        <div className="w-full min-w-[700px] max-w-[1040px] mx-auto">
+        <div data-testid="contribution-grid" className="w-full min-w-[700px] max-w-[1040px] mx-auto">
           {/* Month Labels */}
           <div className="grid grid-cols-[28px_repeat(53,minmax(0,1fr))] text-[10px] font-mono-tech mb-1"
             style={{ color: isDark ? '#8B949E' : '#777777' }}
