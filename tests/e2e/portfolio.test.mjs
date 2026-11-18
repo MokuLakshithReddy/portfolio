@@ -170,29 +170,21 @@ test('the contribution heatmap remains independently scrollable', async () => {
   }
 })
 
-test('responsive status bar displays a compact clock on phones and full date on desktop', async () => {
+test('navigation switches cleanly between compact and desktop layouts', async () => {
   const page = await createPage()
   try {
-    await page.setViewport({ width: 320, height: 844 })
+    await page.setViewport({ width: 390, height: 844 })
     await page.goto(baseUrl, { waitUntil: 'domcontentloaded' })
+    const menuButton = await page.$('button[aria-controls="mobile-navigation"]')
+    assert.ok(menuButton)
+    assert.ok(await menuButton.boundingBox())
 
-    const visibleClocks = async () => page.evaluate(() => {
-      const clocks = [...document.querySelectorAll('header span')]
-        .filter((element) => /\d{1,2}:\d{2}\s[AP]M/.test(element.textContent ?? ''))
-      return clocks
-        .filter((element) => element.getBoundingClientRect().width > 0)
-        .map((element) => element.textContent?.trim() ?? '')
-    })
-
-    const mobileClock = await visibleClocks()
-    assert.equal(mobileClock.length, 1)
-    assert.match(mobileClock[0], /^\d{1,2}:\d{2}\s[AP]M$/)
-
-    await page.setViewport({ width: 1280, height: 900 })
+    await page.setViewport({ width: 1440, height: 900 })
     await page.reload({ waitUntil: 'domcontentloaded' })
-    const desktopClock = await visibleClocks()
-    assert.equal(desktopClock.length, 1)
-    assert.match(desktopClock[0], /,\s[A-Z][a-z]{2}\s\d{1,2},\s\d{4}/)
+    const projectLink = await page.$('nav a[href="#projects"]')
+    assert.ok(projectLink)
+    assert.ok(await projectLink.boundingBox())
+    assert.equal(await menuButton.boundingBox(), null)
   } finally {
     await page.close()
   }
@@ -215,16 +207,14 @@ test('mobile navigation opens and closes through keyboard and pointer controls',
   }
 })
 
-test('image preview closes with Escape', async () => {
+test('brand monogram replaces the folder icon and links to the homepage', async () => {
   const page = await createPage()
   try {
     await page.goto(baseUrl, { waitUntil: 'domcontentloaded' })
-    const trigger = await page.$('nav button[title="Click to open portfolio image preview"]')
-    assert.ok(trigger)
-    await trigger.click()
-    await page.waitForSelector('.max-w-4xl img')
-    await page.keyboard.press('Escape')
-    await page.waitForFunction(() => !document.querySelector('.max-w-4xl img'))
+    const brand = await page.$('a[aria-label="Lakshith Reddy — go to homepage"]')
+    assert.ok(brand)
+    assert.equal(await brand.evaluate((element) => element.getAttribute('href')), '#home')
+    assert.equal(await page.$eval('[data-testid="brand-monogram"]', (element) => element.textContent?.trim()), 'LR')
   } finally {
     await page.close()
   }
@@ -333,42 +323,25 @@ test('contact form fields have programmatic labels', async () => {
   }
 })
 
-test('image preview traps keyboard focus and restores focus to its trigger', async () => {
+test('brand link is keyboard accessible and stays inside the mobile viewport', async () => {
   const page = await createPage()
   try {
+    await page.setViewport({ width: 320, height: 844 })
     await page.goto(baseUrl, { waitUntil: 'domcontentloaded' })
-    const trigger = await page.$('nav button[aria-label="Open portfolio illustration preview"]')
-    assert.ok(trigger)
-    await trigger.focus()
-    await page.keyboard.press('Enter')
-    await page.waitForSelector('[role="dialog"][aria-modal="true"]')
-    await page.waitForFunction(() => document.activeElement?.getAttribute('aria-label') === 'Close image preview')
-
-    await page.keyboard.press('Tab')
+    const brand = await page.$('a[aria-label="Lakshith Reddy — go to homepage"]')
+    assert.ok(brand)
+    await brand.focus()
     assert.equal(
       await page.evaluate(() => document.activeElement?.getAttribute('aria-label')),
-      'Open full-size image in a new tab',
+      'Lakshith Reddy — go to homepage',
     )
-
-    await page.keyboard.down('Shift')
-    await page.keyboard.press('Tab')
-    await page.keyboard.up('Shift')
-    assert.equal(
-      await page.evaluate(() => document.activeElement?.getAttribute('aria-label')),
-      'Close image preview',
-    )
-
-    await page.keyboard.press('Escape')
-    await page.waitForFunction(() => !document.querySelector('[role="dialog"]'))
-    assert.equal(
-      await page.evaluate(() => document.activeElement?.getAttribute('aria-label')),
-      'Open portfolio illustration preview',
-    )
+    const bounds = await brand.boundingBox()
+    assert.ok(bounds)
+    assert.ok(bounds.x >= 0 && bounds.x + bounds.width <= 320)
   } finally {
     await page.close()
   }
 })
-
 
 test('hero keeps its content without a hero illustration or cinematic visual', async () => {
   const page = await createPage()
