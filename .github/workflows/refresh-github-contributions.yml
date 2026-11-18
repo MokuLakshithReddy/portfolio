@@ -1,0 +1,45 @@
+name: Refresh GitHub contribution snapshot
+
+on:
+  schedule:
+    - cron: '23 4 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: github-contributions-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    name: Refresh rolling-year contribution calendar
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout default branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Fetch and validate contribution calendar
+        run: node scripts/sync-github-contributions.mjs
+
+      - name: Create or update refresh pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: automation/refresh-github-contributions
+          delete-branch: true
+          commit-message: 'chore(stats): refresh GitHub contribution snapshot'
+          title: 'chore(stats): refresh GitHub contribution snapshot'
+          body: |
+            Automated daily refresh of the rolling-year GitHub contribution calendar.
+
+            The sync script validates every date, contribution count, color level, and the provider's total before updating the checked-in snapshot.
+            Merge this pull request to publish the refreshed calendar.
