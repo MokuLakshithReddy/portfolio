@@ -49,7 +49,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   }
 
   return (
-    <nav aria-label="Primary navigation" className="sticky top-0 w-full h-[68px] md:h-[72px] px-4 sm:px-6 lg:px-8 xl:px-12 flex items-center justify-between gap-4 text-[#111111] z-40 relative select-none bg-[#F5EFEB]/95 backdrop-blur-md border-b border-[#D8CEBD]/70 shadow-[0_3px_16px_rgba(17,17,17,0.045)]">
+    <nav aria-label="Primary navigation" className="sticky top-0 w-full h-[68px] md:h-[72px] px-4 sm:px-6 lg:px-8 xl:px-12 flex items-center justify-between gap-4 text-[#111111] z-40 relative select-none bg-transparent backdrop-blur-sm border-b border-[#D8CEBD]/55 shadow-[0_2px_12px_rgba(17,17,17,0.025)]">
       {/* Brand: a quiet LR monogram and clear name */}
       <a
         href="#home"

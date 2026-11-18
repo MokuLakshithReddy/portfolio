@@ -282,8 +282,8 @@ export const AchievementsSection: React.FC = () => {
         </div>
 
         {/* GitHub Contributions Interactive Heatmap */}
-        <div className="mt-12">
-          <div className="mb-4 flex items-center justify-between">
+        <div className="mt-8">
+          <div className="mb-3 flex items-center justify-between">
             <div className="flex items-center gap-2 font-mono-tech text-[12px] font-bold text-[#555555] uppercase tracking-wider">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block animate-pulse" />
               <span>Verifiable GitHub Activity &amp; Commit Cadence</span>
