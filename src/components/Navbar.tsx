@@ -16,13 +16,11 @@ import {
 interface NavbarProps {
   activeSection?: string
   onNavigate?: (id: string) => void
-  onOpenFolder?: () => void
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ 
   activeSection = 'home',
   onNavigate,
-  onOpenFolder
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
@@ -50,65 +48,32 @@ export const Navbar: React.FC<NavbarProps> = ({
     }
   }
 
-  const handleFolderClick = (e: React.MouseEvent) => {
-    e.stopPropagation()
-    e.preventDefault()
-    if (onOpenFolder) {
-      onOpenFolder()
-    }
-  }
-
   return (
-    <nav aria-label="Primary navigation" className="sticky top-0 w-full h-[58px] px-6 sm:px-8 lg:px-[48px] flex items-center justify-between text-[#111111] z-40 relative select-none bg-[#F5EFEB]/90 backdrop-blur-sm border-b border-[#D8CEBD]/80 shadow-[0_2px_10px_rgba(17,17,17,0.035)]">
-      {/* Brand on the left */}
-      <div className="flex items-center gap-3 shrink-0">
-        {/* Interactive Blue and Yellow Folder Icon: Click opens image modal */}
-        <button
-          type="button"
-          onClick={handleFolderClick}
-          aria-label="Open portfolio illustration preview"
-          className="relative w-8 h-7 flex items-center justify-center cursor-pointer transition-transform hover:scale-110 active:scale-95 group border-none bg-transparent p-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0755F5]"
-          title="Click to open portfolio image preview"
+    <nav aria-label="Primary navigation" className="sticky top-0 w-full h-[68px] md:h-[72px] px-4 sm:px-6 lg:px-8 xl:px-12 flex items-center justify-between gap-4 text-[#111111] z-40 relative select-none bg-[#F5EFEB]/95 backdrop-blur-md border-b border-[#D8CEBD]/70 shadow-[0_3px_16px_rgba(17,17,17,0.045)]">
+      {/* Brand: a quiet LR monogram and clear name */}
+      <a
+        href="#home"
+        onClick={(e) => handleNavClick('home', e)}
+        aria-label="Lakshith Reddy — go to homepage"
+        className="group flex items-center gap-2.5 shrink-0 rounded-xl no-underline text-[#111111] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0755F5]"
+      >
+        <span
+          data-testid="brand-monogram"
+          aria-hidden="true"
+          className="inline-flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl border border-[#DED3C5] bg-[#EFE7DD] text-[#111111] shadow-[inset_0_1px_0_rgba(255,255,255,0.8)] transition-colors group-hover:border-[#C4B6A4]"
         >
-          <svg aria-hidden="true" className="w-8 h-7 drop-shadow-xs" viewBox="0 0 32 26" fill="none">
-            {/* Back yellow tab */}
-            <path 
-              d="M3 5C3 3.89543 3.89543 3 5 3H12L15 6H27C28.1046 6 29 6.89543 29 8V20C29 21.1046 28.1046 22 27 22H5C3.89543 22 3 21.1046 3 20V5Z" 
-              fill="#FFB600"
-              stroke="#111111"
-              strokeWidth="1.4"
-              strokeLinejoin="round"
-            />
-            {/* Front electric blue pocket */}
-            <path 
-              d="M3 10.5C3 9.39543 3.89543 8.5 5 8.5H28C29.1046 8.5 30 9.39543 30 10.5V21C30 22.1046 29.1046 23 28 23H5C3.89543 23 3 22.1046 3 21V10.5Z" 
-              fill="#0755F5"
-              stroke="#111111"
-              strokeWidth="1.4"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
-
-        <a 
-          href="#home" 
-          onClick={(e) => handleNavClick('home', e)}
-          className="font-bold text-[18px] sm:text-[19px] tracking-tight text-[#111111] cursor-pointer ring-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0755F5] border-none no-underline flex items-center"
-        >
-          <span>Lakshith Reddy</span>
-          <span className="text-[#888888] font-normal text-[22px] ml-0.5 -top-[1px] relative select-none animate-pulse">
-            |
-          </span>
-        </a>
-      </div>
+          <span className="pr-1 font-serif text-[21px] sm:text-[23px] font-semibold tracking-[-0.14em]">LR</span>
+        </span>
+        <span className="whitespace-nowrap text-[16px] sm:text-[18px] font-bold tracking-[-0.035em]">Lakshith Reddy</span>
+      </a>
 
       {/* Navigation items: fluid, responsive spacing that avoids collision on all screen widths */}
-      <div className="hidden lg:flex items-center gap-4 xl:gap-7 text-[14px] xl:text-[14.5px]">
+      <div className="hidden xl:flex items-center gap-4 2xl:gap-6 text-[13.5px] 2xl:text-[14px]">
         {/* 1. Home - Prominent Electric-Blue Pill */}
         <a
           href="#home"
           onClick={(e) => handleNavClick('home', e)}
-          className={`flex items-center gap-2 px-4 xl:px-5 py-1.5 xl:py-2 rounded-full font-semibold transition-all duration-200 cursor-pointer shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0755F5] ${activeSection === 'home' ? 'bg-[#0755F5] text-white hover:bg-[#0043D6]' : 'text-[#111111] hover:text-[#0755F5]'}`}
+          className={`flex items-center gap-2 px-4 2xl:px-5 py-2 rounded-full font-semibold transition-all duration-200 cursor-pointer shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0755F5] ${activeSection === 'home' ? 'bg-[#0755F5] text-white hover:bg-[#0043D6]' : 'text-[#111111] hover:text-[#0755F5]'}`}
         >
           <Home className={`w-4 h-4 stroke-[2.2] ${activeSection === 'home' ? 'text-white' : 'text-[#0755F5]'}`} />
           <span>Home</span>
@@ -122,7 +87,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             activeSection === 'projects' ? 'text-[#0755F5]' : 'text-[#111111] hover:text-[#0755F5]'
           }`}
         >
-          <Folder className="w-4 h-4 stroke-[2]" />
+          <Folder className="w-[17px] h-[17px] stroke-[1.9]" />
           <span>Projects</span>
           {activeSection === 'projects' && (
             <motion.span
@@ -142,7 +107,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             activeSection === 'experience' ? 'text-[#0755F5]' : 'text-[#111111] hover:text-[#0755F5]'
           }`}
         >
-          <Briefcase className="w-4 h-4 stroke-[2]" />
+          <Briefcase className="w-[17px] h-[17px] stroke-[1.9]" />
           <span>Experience</span>
           {activeSection === 'experience' && (
             <motion.span
@@ -162,7 +127,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             activeSection === 'achievements' ? 'text-[#0755F5]' : 'text-[#111111] hover:text-[#0755F5]'
           }`}
         >
-          <Award className="w-4 h-4 stroke-[2]" />
+          <Award className="w-[17px] h-[17px] stroke-[1.9]" />
           <span>Achievements</span>
           {activeSection === 'achievements' && (
             <motion.span
@@ -182,7 +147,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             activeSection === 'skills' ? 'text-[#0755F5]' : 'text-[#111111] hover:text-[#0755F5]'
           }`}
         >
-          <Code2 className="w-4 h-4 stroke-[2]" />
+          <Code2 className="w-[17px] h-[17px] stroke-[1.9]" />
           <span>Skills</span>
           {activeSection === 'skills' && (
             <motion.span
@@ -202,7 +167,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             activeSection === 'blog' ? 'text-[#0755F5]' : 'text-[#111111] hover:text-[#0755F5]'
           }`}
         >
-          <FileText className="w-4 h-4 stroke-[2]" />
+          <FileText className="w-[17px] h-[17px] stroke-[1.9]" />
           <span>Blog</span>
           {activeSection === 'blog' && (
             <motion.span
@@ -222,7 +187,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             activeSection === 'contact' ? 'text-[#0755F5]' : 'text-[#111111] hover:text-[#0755F5]'
           }`}
         >
-          <Mail className="w-4 h-4 stroke-[2]" />
+          <Mail className="w-[17px] h-[17px] stroke-[1.9]" />
           <span>Contact</span>
           {activeSection === 'contact' && (
             <motion.span
@@ -240,7 +205,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           download="Lakshith_Reddy_CV.pdf"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[#222222]/80 bg-[#FAF5EC] hover:bg-[#111111] hover:text-white text-[#111111] font-semibold text-[13px] transition-all shadow-xs ml-1 cursor-pointer"
+          className="flex items-center gap-1.5 px-3.5 py-2 rounded-full border border-[#CFC3B4] bg-[#FBF7F1] hover:border-[#111111] hover:bg-[#111111] hover:text-white text-[#111111] font-semibold text-[13px] transition-all shadow-[0_1px_2px_rgba(17,17,17,0.05)] ml-1 cursor-pointer"
           title="Download Curriculum Vitae (PDF)"
         >
           <Download className="w-3.5 h-3.5 text-[#0755F5]" />
@@ -249,16 +214,16 @@ export const Navbar: React.FC<NavbarProps> = ({
       </div>
 
       {/* Accessible mobile navigation */}
-      <div className="lg:hidden flex items-center gap-2">
+      <div className="xl:hidden flex items-center gap-2 shrink-0">
         <a href="/Lakshith_Reddy_CV.pdf" download="Lakshith_Reddy_CV.pdf"
-          className="hidden min-[360px]:flex border border-[#222222]/80 bg-[#FAF5EC] text-[#111111] text-xs px-3 py-1.5 rounded-full font-semibold items-center gap-1">
+          className="hidden min-[360px]:flex border border-[#CFC3B4] bg-[#FBF7F1] text-[#111111] text-xs px-3 py-2 rounded-full font-semibold items-center gap-1">
           <Download className="w-3 h-3 text-[#0755F5]" />
           <span>CV</span>
         </a>
         <button type="button" aria-expanded={isMobileMenuOpen} aria-controls="mobile-navigation"
           aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
           onClick={() => setIsMobileMenuOpen((open) => !open)}
-          className="bg-[#0755F5] text-white text-xs px-3.5 py-1.5 rounded-full font-semibold inline-flex items-center gap-1.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0755F5]">
+          className="border border-[#CFC3B4] bg-[#FBF7F1] text-[#111111] text-xs px-3.5 py-2 rounded-full font-semibold inline-flex items-center gap-1.5 transition-colors hover:border-[#0755F5] hover:text-[#0755F5] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0755F5]">
           {isMobileMenuOpen ? <X className="w-3.5 h-3.5" /> : <Menu className="w-3.5 h-3.5" />}
           <span>{isMobileMenuOpen ? "Close" : "Menu"}</span>
         </button>
@@ -272,7 +237,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -8, scale: 0.985 }}
             transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute top-[calc(100%+8px)] left-4 right-4 z-50 lg:hidden rounded-2xl border border-[#222222]/80 bg-[#FAF5EC] p-3 shadow-xl"
+            className="absolute top-[calc(100%+8px)] left-4 right-4 z-50 xl:hidden rounded-2xl border border-[#D8CEBD] bg-[#FBF7F1]/[0.98] p-3 shadow-[0_16px_40px_rgba(17,17,17,0.14)]"
           >
           <div className="grid grid-cols-2 gap-2">
             {[
