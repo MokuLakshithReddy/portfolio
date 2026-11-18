@@ -50,3 +50,27 @@ export function buildRouteHtml(template, route, siteUrl, socialImage) {
   const canonicalTag = `<link rel="canonical" href="${escapeHtml(canonicalUrl)}" />`
   return upsertTag(html, '<link rel="canonical"', canonicalTag)
 }
+
+export function buildSitemap(routes, siteUrl) {
+  const origin = new URL(siteUrl).origin
+  const locations = [
+    { path: '/', priority: '1.0', changefreq: 'weekly' },
+    ...routes.map((route) => ({
+      path: `/projects/${route.slug}`,
+      priority: '0.7',
+      changefreq: 'monthly',
+    })),
+  ]
+
+  const entries = locations.map(({ path, priority, changefreq }) => (
+    `  <url><loc>${escapeHtml(new URL(path, origin).toString())}</loc><changefreq>${changefreq}</changefreq><priority>${priority}</priority></url>`
+  ))
+
+  return [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    ...entries,
+    '</urlset>',
+    '',
+  ].join('\n')
+}
