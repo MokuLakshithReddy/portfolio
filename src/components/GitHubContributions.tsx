@@ -199,7 +199,7 @@ export const GitHubContributions: React.FC = () => {
   }
 
   return (
-    <div className={`w-full rounded-[20px] transition-colors duration-300 p-6 md:p-8 border select-none relative overflow-hidden ${
+    <div data-testid="github-contributions-card" className={`w-full rounded-[18px] transition-colors duration-300 p-4 sm:p-5 md:p-5 border select-none relative overflow-hidden ${
       isDark 
         ? 'bg-[#0D1117] border-[#30363D] text-[#C9D1D9] shadow-xl' 
         : 'bg-[#FAF5EC] border-[#222222]/80 text-[#111111] shadow-sm'
@@ -210,16 +210,16 @@ export const GitHubContributions: React.FC = () => {
       )}
 
       {/* Top Header */}
-      <div className={`flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-5 border-b ${
+      <div className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-4 border-b ${
         isDark ? 'border-[#21262D]' : 'border-[#D5C9B7]/60'
       }`}>
         <div className="flex items-center gap-3.5">
           {/* GitHub Icon with pulsing live sync status */}
           <div className="relative">
-            <div className={`w-10 h-10 rounded-full flex items-center justify-center border ${
+            <div className={`w-9 h-9 rounded-full flex items-center justify-center border ${
               isDark ? 'bg-[#161B22] border-[#30363D]' : 'bg-[#EFE8DA] border-[#D0C4B0]'
             }`}>
-              <svg className={`w-5 h-5 ${isDark ? 'fill-[#F0F6FC]' : 'fill-[#111111]'}`} viewBox="0 0 24 24">
+              <svg className={`w-4 h-4 ${isDark ? 'fill-[#F0F6FC]' : 'fill-[#111111]'}`} viewBox="0 0 24 24">
                 <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
               </svg>
             </div>
@@ -234,24 +234,24 @@ export const GitHubContributions: React.FC = () => {
 
           <div>
             <div className="flex items-center gap-2">
-              <h3 className={`text-[19px] md:text-[21px] font-bold tracking-tight ${isDark ? 'text-[#F0F6FC]' : 'text-[#111111]'}`}>
+              <h3 className={`text-[18px] md:text-[19px] font-bold tracking-tight ${isDark ? 'text-[#F0F6FC]' : 'text-[#111111]'}`}>
                 {githubContributionData.totalContributions.toLocaleString()} contributions in the last year
               </h3>
             </div>
-            <p className={`text-[11px] font-mono-tech mt-1 ${isDark ? 'text-[#8B949E]' : 'text-[#777777]'}`}>
+            <p className={`text-[10px] font-mono-tech mt-1 ${isDark ? 'text-[#8B949E]' : 'text-[#777777]'}`}>
               Calendar: {firstCalendarDate ? formatTooltipDate(firstCalendarDate) : 'Unavailable'} – {lastCalendarDate ? formatTooltipDate(lastCalendarDate) : 'Unavailable'}
             </p>
-            <p className={`text-[11px] font-mono-tech ${isDark ? 'text-[#8B949E]' : 'text-[#777777]'}`}>
+            <p className={`text-[10px] font-mono-tech ${isDark ? 'text-[#8B949E]' : 'text-[#777777]'}`}>
               Snapshot refreshed {snapshotSyncedAt}
             </p>
             <div className="flex items-center gap-2 flex-wrap">
-              <span className={`inline-flex items-center gap-1 text-[11px] font-mono-tech px-2 py-0.5 rounded-full border ${
+              <span className={`inline-flex items-center gap-1 text-[10px] font-mono-tech px-2 py-0.5 rounded-full border ${
                 isDark ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' : 'bg-emerald-600/10 text-emerald-700 border-emerald-600/30'
               }`}>
                 <Radio className="w-3 h-3" />
                 <span>Recent Public Activity · 15 min refresh</span>
               </span>
-              <p className={`text-[12px] font-mono-tech ${isDark ? 'text-[#8B949E]' : 'text-[#666666]'}`}>
+              <p className={`text-[11px] font-mono-tech ${isDark ? 'text-[#8B949E]' : 'text-[#666666]'}`}>
                 Account <strong className={isDark ? 'text-[#58A6FF]' : 'text-[#0755F5]'}>@MokuLakshithReddy</strong>
               </p>
             </div>
@@ -259,13 +259,13 @@ export const GitHubContributions: React.FC = () => {
         </div>
 
         {/* Action Controls & Theme Toggle */}
-        <div className="flex items-center gap-2.5 flex-wrap">
+        <div className="flex items-center gap-2 flex-wrap">
           {/* Refresh Live Button */}
           <button
             onClick={fetchLiveGitHubEvents}
             disabled={isFetchingLive}
             title="Refresh recent public GitHub activity"
-            className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-[11px] font-mono-tech font-semibold transition-all border ${
+            className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-[10px] font-mono-tech font-semibold transition-all border ${
               isDark 
                 ? 'bg-[#161B22] hover:bg-[#21262D] border-[#30363D] text-[#8B949E] hover:text-white' 
                 : 'bg-[#EAE2D2] hover:bg-[#DDD2C0] border-[#D0C4B0] text-[#555555]'
@@ -316,7 +316,7 @@ export const GitHubContributions: React.FC = () => {
 
       {/* Latest Live Contribution Banner */}
       {latestEvent && (
-        <div className={`mb-6 p-3 rounded-[12px] border flex items-center justify-between gap-3 text-[12px] font-mono-tech ${
+        <div data-testid="latest-github-event" className={`mb-4 px-3 py-2 rounded-[10px] border flex items-center justify-between gap-3 text-[12px] font-mono-tech ${
           isDark ? 'bg-[#161B22]/90 border-[#30363D] text-[#C9D1D9]' : 'bg-[#F2EBDE] border-[#D5C9B7]/80 text-[#333333]'
         }`}>
           <div className="flex items-center gap-2 overflow-hidden">
@@ -336,9 +336,9 @@ export const GitHubContributions: React.FC = () => {
         role="group"
         aria-label="GitHub daily contribution calendar. Focus a day and use the arrow keys to move one day or one week."
       >
-        <div className="min-w-[760px]">
+        <div className="w-full min-w-[700px] max-w-[1040px] mx-auto">
           {/* Month Labels */}
-          <div className="grid grid-cols-[30px_repeat(53,minmax(0,1fr))] text-[11px] font-mono-tech mb-1.5"
+          <div className="grid grid-cols-[28px_repeat(53,minmax(0,1fr))] text-[10px] font-mono-tech mb-1"
             style={{ color: isDark ? '#8B949E' : '#777777' }}
           >
             <div /> {/* Day label spacer */}
@@ -353,10 +353,10 @@ export const GitHubContributions: React.FC = () => {
           </div>
 
           {/* Grid Rows (Sun=0 to Sat=6) */}
-          <div className="grid grid-cols-[30px_repeat(53,minmax(0,1fr))] gap-1">
+          <div className="grid grid-cols-[28px_repeat(53,minmax(0,1fr))] gap-0.5">
             {/* Day of Week Labels on the left */}
-            <div className="flex flex-col justify-between py-1 text-[9.5px] font-mono-tech"
-              style={{ color: isDark ? '#8B949E' : '#777777', height: '106px' }}
+            <div className="flex flex-col justify-between py-1 text-[9px] font-mono-tech"
+              style={{ color: isDark ? '#8B949E' : '#777777', height: '78px' }}
             >
               <span className="opacity-0">Sun</span>
               <span>Mon</span>
@@ -369,14 +369,14 @@ export const GitHubContributions: React.FC = () => {
 
             {/* 53 Columns */}
             {githubContributionData.weeks.map((week, weekIdx) => (
-              <div key={weekIdx} className="flex flex-col gap-1">
+              <div key={weekIdx} className="flex flex-col gap-0.5">
                 {[0, 1, 2, 3, 4, 5, 6].map(dayIdx => {
                   const day = week.contributionDays.find(d => d.weekday === dayIdx)
                   if (!day) {
                     return (
                       <div 
                         key={dayIdx} 
-                        className="w-[11px] h-[11px] rounded-[2px] opacity-0" 
+                        className="w-[9px] h-[9px] rounded-[2px] opacity-0" 
                       />
                     )
                   }
@@ -400,7 +400,7 @@ export const GitHubContributions: React.FC = () => {
                       }}
                       onBlur={() => setHoveredDay(null)}
                       onKeyDown={(event) => handleCalendarDayKeyDown(event, day)}
-                      className={`appearance-none p-0 w-[11px] h-[11px] rounded-[2px] border-[0.5px] cursor-pointer transition-transform duration-100 hover:scale-135 hover:z-10 relative ${colorClass} ${
+                      className={`appearance-none p-0 w-[9px] h-[9px] rounded-[2px] border-[0.5px] cursor-pointer transition-transform duration-100 hover:scale-135 hover:z-10 relative ${colorClass} ${
                         isToday ? 'ring-1 ring-emerald-400 ring-offset-1' : ''
                       }`}
                     />
@@ -411,7 +411,7 @@ export const GitHubContributions: React.FC = () => {
           </div>
 
           {/* Heatmap Footer: Learn how we count contributions + Less/More Legend */}
-          <div className={`flex items-center justify-between text-[11px] font-mono-tech mt-4 pt-3 border-t ${
+          <div className={`flex items-center justify-between text-[10px] font-mono-tech mt-3 pt-2 border-t ${
             isDark ? 'border-[#21262D] text-[#8B949E]' : 'border-[#D5C9B7]/60 text-[#666666]'
           }`}>
             <a
@@ -427,11 +427,11 @@ export const GitHubContributions: React.FC = () => {
             <div className="flex items-center gap-1.5">
               <span>Less</span>
               <div className="flex items-center gap-1">
-                <span className={`w-[11px] h-[11px] rounded-[2px] border-[0.5px] ${getCellColor(0)}`} />
-                <span className={`w-[11px] h-[11px] rounded-[2px] border-[0.5px] ${getCellColor(2)}`} />
-                <span className={`w-[11px] h-[11px] rounded-[2px] border-[0.5px] ${getCellColor(5)}`} />
-                <span className={`w-[11px] h-[11px] rounded-[2px] border-[0.5px] ${getCellColor(8)}`} />
-                <span className={`w-[11px] h-[11px] rounded-[2px] border-[0.5px] ${getCellColor(12)}`} />
+                <span className={`w-[9px] h-[9px] rounded-[2px] border-[0.5px] ${getCellColor(0)}`} />
+                <span className={`w-[9px] h-[9px] rounded-[2px] border-[0.5px] ${getCellColor(2)}`} />
+                <span className={`w-[9px] h-[9px] rounded-[2px] border-[0.5px] ${getCellColor(5)}`} />
+                <span className={`w-[9px] h-[9px] rounded-[2px] border-[0.5px] ${getCellColor(8)}`} />
+                <span className={`w-[9px] h-[9px] rounded-[2px] border-[0.5px] ${getCellColor(12)}`} />
               </div>
               <span>More</span>
             </div>
@@ -461,10 +461,10 @@ export const GitHubContributions: React.FC = () => {
       )}
 
       {/* Verified Developer Activity Highlights */}
-      <div className={`mt-6 pt-5 grid grid-cols-2 sm:grid-cols-4 gap-3 border-t text-[12px] font-mono-tech ${
+      <div className={`mt-4 pt-4 grid grid-cols-2 sm:grid-cols-4 gap-2 border-t text-[12px] font-mono-tech ${
         isDark ? 'border-[#21262D]' : 'border-[#D5C9B7]/60'
       }`}>
-        <div className={`p-3 rounded-[12px] border flex items-center gap-2.5 ${
+        <div className={`p-2.5 rounded-[10px] border flex items-center gap-2 ${
           isDark ? 'bg-[#161B22]/70 border-[#30363D]' : 'bg-[#F2EBDE] border-[#D5C9B7]/50'
         }`}>
           <Flame className="w-4 h-4 text-amber-500 shrink-0" />
@@ -478,7 +478,7 @@ export const GitHubContributions: React.FC = () => {
           </div>
         </div>
 
-        <div className={`p-3 rounded-[12px] border flex items-center gap-2.5 ${
+        <div className={`p-2.5 rounded-[10px] border flex items-center gap-2 ${
           isDark ? 'bg-[#161B22]/70 border-[#30363D]' : 'bg-[#F2EBDE] border-[#D5C9B7]/50'
         }`}>
           <GitCommit className="w-4 h-4 text-emerald-500 shrink-0" />
@@ -492,7 +492,7 @@ export const GitHubContributions: React.FC = () => {
           </div>
         </div>
 
-        <div className={`p-3 rounded-[12px] border flex items-center gap-2.5 ${
+        <div className={`p-2.5 rounded-[10px] border flex items-center gap-2 ${
           isDark ? 'bg-[#161B22]/70 border-[#30363D]' : 'bg-[#F2EBDE] border-[#D5C9B7]/50'
         }`}>
           <GitBranch className="w-4 h-4 text-[#58A6FF] shrink-0" />
@@ -506,7 +506,7 @@ export const GitHubContributions: React.FC = () => {
           </div>
         </div>
 
-        <div className={`p-3 rounded-[12px] border flex items-center gap-2.5 ${
+        <div className={`p-2.5 rounded-[10px] border flex items-center gap-2 ${
           isDark ? 'bg-[#161B22]/70 border-[#30363D]' : 'bg-[#F2EBDE] border-[#D5C9B7]/50'
         }`}>
           <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
