@@ -259,9 +259,9 @@ async function submitContactForm({ responseBody = '{"success":"true"}', response
 
   try {
     await page.goto(baseUrl, { waitUntil: 'domcontentloaded' })
-    await page.waitForSelector('#contact input[type="text"]')
+    await page.waitForSelector('#contact-name')
     await page.$eval('#contact', (element) => element.scrollIntoView())
-    await page.type('#contact input[type="text"]', 'Test Visitor')
+    await page.type('#contact-name', 'Test Visitor')
     await page.type('#contact input[type="email"]', 'visitor@example.com')
     await page.type('#contact textarea', 'Automated browser regression test.')
     await page.click('#contact button[type="submit"]')
@@ -286,7 +286,7 @@ test('contact form shows the email fallback when the service rejects the message
   try {
     await page.waitForFunction(() => document.body.innerText.includes('Unable to dispatch automatically'))
     assert.ok(await page.$('#contact a[href^="mailto:"]'))
-    assert.equal(await page.$eval('#contact input[type="text"]', (input) => input.value), 'Test Visitor')
+    assert.equal(await page.$eval('#contact-name', (input) => input.value), 'Test Visitor')
   } finally {
     await page.close()
   }
@@ -308,7 +308,7 @@ test('contact form rejects malformed success payloads', async () => {
   try {
     await page.waitForFunction(() => document.body.innerText.includes('Unable to dispatch automatically'))
     assert.ok(await page.$('#contact a[href^="mailto:"]'))
-    assert.equal(await page.$eval('#contact input[type="text"]', (input) => input.value), 'Test Visitor')
+    assert.equal(await page.$eval('#contact-name', (input) => input.value), 'Test Visitor')
   } finally {
     await page.close()
   }
@@ -409,6 +409,61 @@ test('command palette filters and opens a project using keyboard navigation', as
     await page.waitForFunction(() =>
       document.querySelector('main h1')?.textContent?.includes('Secret Leak Detector'),
     )
+  } finally {
+    await page.close()
+  }
+})
+
+
+test('contribution calendar supports keyboard navigation and accessible day labels', async () => {
+  const page = await createPage()
+  try {
+    await page.goto(baseUrl, { waitUntil: 'domcontentloaded' })
+    const firstDay = await page.$('button[id^="contribution-day-"][tabindex="0"]')
+    assert.ok(firstDay, 'Expected one keyboard entry point in the contribution calendar')
+    const firstId = await firstDay.evaluate((element) => element.id)
+    const firstLabel = await firstDay.evaluate((element) => element.getAttribute('aria-label'))
+    assert.match(firstLabel ?? '', /contributions? on /)
+
+    await firstDay.focus()
+    await page.keyboard.press('ArrowRight')
+    const nextId = await page.evaluate(() => document.activeElement?.id)
+    assert.match(nextId ?? '', /^contribution-day-\\d{4}-\\d{2}-\\d{2}$/)
+    assert.notEqual(nextId, firstId)
+  } finally {
+    await page.close()
+  }
+})
+
+test('contact honeypot stops automated submissions before the mail service is called', async () => {
+  const page = await createPage()
+  await page.evaluateOnNewDocument(() => {
+    window.__formSubmitRequests = 0
+    const originalFetch = window.fetch.bind(window)
+    window.fetch = async (input, init) => {
+      const requestUrl = typeof input === 'string' ? input : input instanceof URL ? input.href : input.url
+      if (requestUrl.startsWith('https://formsubmit.co/ajax/')) {
+        window.__formSubmitRequests += 1
+        return new Response('{"success":"true"}', { status: 200, headers: { 'Content-Type': 'application/json' } })
+      }
+      if (requestUrl.startsWith('https://api.github.com/users/MokuLakshithReddy/events')) {
+        return new Response('[]', { status: 200, headers: { 'Content-Type': 'application/json' } })
+      }
+      return originalFetch(input, init)
+    }
+  })
+
+  try {
+    await page.goto(baseUrl, { waitUntil: 'domcontentloaded' })
+    await page.waitForSelector('#contact-name')
+    await page.$eval('input[name="_honey"]', (input) => { input.value = 'automated spam' })
+    await page.type('#contact-name', 'Spam Bot')
+    await page.type('#contact input[type="email"]', 'bot@example.com')
+    await page.type('#contact textarea', 'Automated spam submission.')
+    await page.click('#contact button[type="submit"]')
+    await new Promise((resolveDelay) => setTimeout(resolveDelay, 250))
+    const requestCount = await page.evaluate(() => window.__formSubmitRequests)
+    assert.equal(requestCount, 0)
   } finally {
     await page.close()
   }
