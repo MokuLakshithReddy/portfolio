@@ -184,7 +184,9 @@ test('navigation switches cleanly between compact and desktop layouts', async ()
     const projectLink = await page.$('nav a[href="#projects"]')
     assert.ok(projectLink)
     assert.ok(await projectLink.boundingBox())
-    assert.equal(await menuButton.boundingBox(), null)
+    const desktopMenuButton = await page.$('button[aria-controls="mobile-navigation"]')
+    assert.ok(desktopMenuButton)
+    assert.equal(await desktopMenuButton.boundingBox(), null)
   } finally {
     await page.close()
   }
