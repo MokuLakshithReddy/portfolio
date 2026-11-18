@@ -390,6 +390,52 @@ test('command palette filters and opens a project using keyboard navigation', as
 })
 
 
+test('GitHub contribution panel uses compact spacing while preserving key controls', async () => {
+  const page = await createPage()
+  try {
+    await page.setViewport({ width: 1440, height: 900 })
+    await page.goto(baseUrl, { waitUntil: 'domcontentloaded' })
+
+    const measurements = await page.$eval('[data-testid="github-contributions-card"]', (card) => {
+      const styles = getComputedStyle(card)
+      const day = card.querySelector('button[id^="contribution-day-"]')
+      const dayBounds = day?.getBoundingClientRect()
+      return {
+        paddingTop: Number.parseFloat(styles.paddingTop),
+        dayWidth: dayBounds?.width ?? 0,
+        dayHeight: dayBounds?.height ?? 0,
+        hasRefresh: [...card.querySelectorAll('button')].some((button) => button.textContent?.includes('Refresh Activity')),
+        hasThemeToggle: [...card.querySelectorAll('button')].some((button) => button.textContent?.includes('Paper Theme')),
+        hasProfileLink: [...card.querySelectorAll('a')].some((link) => link.textContent?.includes('View Profile')),
+        hasCalendar: Boolean(day),
+      }
+    })
+
+    assert.ok(measurements.paddingTop <= 20, 'Expected compact card padding')
+    assert.ok(measurements.dayWidth <= 9 && measurements.dayHeight <= 9, 'Expected smaller contribution cells')
+    assert.ok(measurements.hasRefresh)
+    assert.ok(measurements.hasThemeToggle)
+    assert.ok(measurements.hasProfileLink)
+    assert.ok(measurements.hasCalendar)
+  } finally {
+    await page.close()
+  }
+})
+
+test('sticky navbar uses the page background instead of a separate cream fill', async () => {
+  const page = await createPage()
+  try {
+    await page.goto(baseUrl, { waitUntil: 'domcontentloaded' })
+    const backgroundColor = await page.$eval(
+      'nav[aria-label="Primary navigation"]',
+      (element) => getComputedStyle(element).backgroundColor,
+    )
+    assert.equal(backgroundColor, 'rgba(0, 0, 0, 0)')
+  } finally {
+    await page.close()
+  }
+})
+
 test('contribution calendar supports keyboard navigation and accessible day labels', async () => {
   const page = await createPage()
   try {
