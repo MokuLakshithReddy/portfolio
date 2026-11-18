@@ -150,8 +150,7 @@ test('the contribution heatmap remains independently scrollable', async () => {
     await page.setViewport({ width: 320, height: 844 })
     await page.goto(baseUrl, { waitUntil: 'domcontentloaded' })
     const scrollport = await page.evaluate(() => {
-      const grid = [...document.querySelectorAll('div')]
-        .find((element) => element.classList.contains('min-w-[760px]'))
+      const grid = document.querySelector('[data-testid="contribution-grid"]')
       const container = grid?.parentElement
       return container
         ? {
