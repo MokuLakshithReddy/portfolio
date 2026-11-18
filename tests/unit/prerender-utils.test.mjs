@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { test } from 'node:test'
-import { buildRouteHtml, escapeHtml, upsertTag } from '../../scripts/prerender-utils.mjs'
+import { buildRouteHtml, buildSitemap, escapeHtml, upsertTag } from '../../scripts/prerender-utils.mjs'
 
 const projectRoot = process.cwd()
 const metadata = JSON.parse(
@@ -53,4 +53,13 @@ test('metadata includes one complete entry for every featured project slug', () 
     assert.ok(entry.description.trim().length > 0, `Missing description for ${entry.slug}`)
     assert.ok(entry.description.length <= 160, `Description is too long for ${entry.slug}`)
   }
+})
+
+
+test('sitemap contains the home page and every case study on the configured origin', () => {
+  const sitemap = buildSitemap(metadata.slice(0, 2), 'https://portfolio.example.test/path')
+  assert.match(sitemap, /https:\/\/portfolio\.example\.test\//)
+  assert.match(sitemap, /https:\/\/portfolio\.example\.test\/projects\/secret-leak-detector/)
+  assert.match(sitemap, /https:\/\/portfolio\.example\.test\/projects\/local-ai-execution-agent/)
+  assert.equal((sitemap.match(/<url>/g) ?? []).length, 3)
 })

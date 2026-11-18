@@ -7,8 +7,14 @@ export const ContactSection: React.FC = () => {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
   const [errorMessage, setErrorMessage] = useState<string>('')
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    const submittedForm = e.currentTarget
+    const honeypot = new FormData(submittedForm).get('_honey')
+    if (typeof honeypot === 'string' && honeypot.trim().length > 0) {
+      return
+    }
 
     if (
       status === 'submitting'
@@ -43,6 +49,7 @@ export const ContactSection: React.FC = () => {
           name: submittedName,
           email: submittedEmail,
           message: submittedMessage,
+          _honey: '',
           _subject: `Portfolio Message from ${submittedName}`,
           _template: 'table',
         }),
@@ -160,8 +167,16 @@ export const ContactSection: React.FC = () => {
           <div className="md:col-span-3">
             <form 
               onSubmit={handleSubmit}
-              className="bg-[#FAF5EC] border border-[#222222]/80 rounded-[18px] p-6 sm:p-8 shadow-sm space-y-4"
+              className="relative bg-[#FAF5EC] border border-[#222222]/80 rounded-[18px] p-6 sm:p-8 shadow-sm space-y-4"
             >
+              <input
+                type="text"
+                name="_honey"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden opacity-0"
+              />
               <div>
                 <label htmlFor="contact-name" className="block text-[13px] font-mono-tech font-semibold text-[#333333] mb-1.5">
                   Your Name
@@ -172,6 +187,7 @@ export const ContactSection: React.FC = () => {
                   autoComplete="name"
                   type="text"
                   required
+                  maxLength={100}
                   disabled={status === 'submitting'}
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -190,6 +206,7 @@ export const ContactSection: React.FC = () => {
                   autoComplete="email"
                   type="email"
                   required
+                  maxLength={254}
                   disabled={status === 'submitting'}
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -206,6 +223,7 @@ export const ContactSection: React.FC = () => {
                   id="contact-message"
                   name="message"
                   required
+                  maxLength={5000}
                   rows={4}
                   disabled={status === 'submitting'}
                   value={formData.message}

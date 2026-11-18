@@ -13,11 +13,14 @@ export const HeroOrbitVisual: React.FC = () => {
       {/* 2. Core High-Fidelity Globe & Orbital Composition (strictly cropped below navbar) */}
       <div className="relative w-full h-full transition-transform duration-500 ease-out group-hover:scale-[1.015]">
         <img
-          src="/images/hero-orbit-globe.png"
+          src="/images/hero-orbit-globe.webp"
           alt="Lakshith Reddy - Connected Intelligent Systems & AI Engineering Globe"
           className="w-full h-full object-contain filter drop-shadow-[0_12px_32px_rgba(7,85,245,0.08)]"
           loading="eager"
+          fetchPriority="high"
           decoding="async"
+          width={1206}
+          height={832}
         />
 
         {/* 3. Interactive Floating Hotspot: Taped Handwritten Note (Top-Left) */}

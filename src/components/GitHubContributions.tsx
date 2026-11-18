@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useCallback, useState, useEffect } from 'react'
 import { githubContributionData, type ContributionDay } from '../data/githubData'
 import { ExternalLink, CheckCircle2, Flame, GitCommit, GitBranch, RefreshCw, Radio } from 'lucide-react'
 
@@ -26,6 +26,9 @@ interface GitHubEvent {
   }
 }
 
+const allContributionDays = githubContributionData.weeks.flatMap((week) => week.contributionDays)
+const snapshotSyncedAt = new Date(githubContributionData.lastSyncedAt).toLocaleString()
+
 // Calculate month label positions based on first week where month changes
 const getMonthPositions = () => {
   const positions: { month: string; weekIndex: number }[] = []
@@ -33,10 +36,10 @@ const getMonthPositions = () => {
 
   githubContributionData.weeks.forEach((week, index) => {
     if (week.contributionDays.length > 0) {
-      const firstDay = new Date(week.contributionDays[0].date)
-      const month = firstDay.getMonth()
+      const firstDay = new Date(`${week.contributionDays[0].date}T00:00:00.000Z`)
+      const month = firstDay.getUTCMonth()
       if (month !== lastMonth) {
-        const monthShort = firstDay.toLocaleDateString('en-US', { month: 'short' })
+        const monthShort = firstDay.toLocaleDateString('en-US', { month: 'short', timeZone: 'UTC' })
         positions.push({ month: monthShort, weekIndex: index })
         lastMonth = month
       }
@@ -71,10 +74,12 @@ export const GitHubContributions: React.FC = () => {
   const [todayHasActivity, setTodayHasActivity] = useState(false)
 
   const monthPositions = getMonthPositions()
-  const today = new Date()
-  const todayIso = [today.getFullYear(), String(today.getMonth() + 1).padStart(2, '0'), String(today.getDate()).padStart(2, '0')].join('-')
+  const [todayIso] = useState(() => {
+    const today = new Date()
+    return [today.getFullYear(), String(today.getMonth() + 1).padStart(2, '0'), String(today.getDate()).padStart(2, '0')].join('-')
+  })
 
-  const fetchLiveGitHubEvents = async () => {
+  const fetchLiveGitHubEvents = useCallback(async () => {
     setIsFetchingLive(true)
     try {
       const res = await fetch('https://api.github.com/users/MokuLakshithReddy/events?per_page=10')
@@ -102,22 +107,30 @@ export const GitHubContributions: React.FC = () => {
     } finally {
       setIsFetchingLive(false)
     }
-  }
+  }, [todayIso])
 
   useEffect(() => {
-    fetchLiveGitHubEvents()
-    // Poll live activity every 60 seconds
-    const interval = setInterval(fetchLiveGitHubEvents, 15 * 60 * 1000)
-    return () => clearInterval(interval)
-  }, [todayIso])
+    const initialRequest = window.setTimeout(() => {
+      void fetchLiveGitHubEvents()
+    }, 0)
+    const interval = window.setInterval(() => {
+      void fetchLiveGitHubEvents()
+    }, 15 * 60 * 1000)
+
+    return () => {
+      window.clearTimeout(initialRequest)
+      window.clearInterval(interval)
+    }
+  }, [fetchLiveGitHubEvents])
 
   // Format date helper for tooltip
   const formatTooltipDate = (dateStr: string) => {
-    const d = new Date(dateStr)
+    const d = new Date(`${dateStr}T00:00:00.000Z`)
     return d.toLocaleDateString('en-US', {
       month: 'short',
       day: 'numeric',
-      year: 'numeric'
+      year: 'numeric',
+      timeZone: 'UTC',
     })
   }
 
@@ -139,6 +152,32 @@ export const GitHubContributions: React.FC = () => {
   }
 
   const isDark = theme === 'dark'
+  const firstCalendarDate = githubContributionData.weeks[0]?.contributionDays[0]?.date
+  const lastCalendarDate = githubContributionData.weeks.at(-1)?.contributionDays.at(-1)?.date
+  const [activeDayDate, setActiveDayDate] = useState<string | null>(null)
+
+  const handleCalendarDayKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>, day: ContributionDay) => {
+    const movement = {
+      ArrowLeft: -1,
+      ArrowRight: 1,
+      ArrowUp: -7,
+      ArrowDown: 7,
+    }[event.key]
+
+    if (movement === undefined) return
+    const currentIndex = allContributionDays.findIndex((item) => item.date === day.date)
+    const nextDay = allContributionDays[currentIndex + movement]
+    if (!nextDay) return
+
+    event.preventDefault()
+    setActiveDayDate(nextDay.date)
+    document.getElementById(`contribution-day-${nextDay.date}`)?.focus()
+  }
+
+  const showDayTooltip = (day: ContributionDay, element: HTMLElement) => {
+    const rect = element.getBoundingClientRect()
+    setHoveredDay({ day, x: rect.left + rect.width / 2, y: rect.top })
+  }
 
   // Render text description of latest live event
   const renderEventDescription = (ev: GitHubEvent) => {
@@ -200,7 +239,10 @@ export const GitHubContributions: React.FC = () => {
               </h3>
             </div>
             <p className={`text-[11px] font-mono-tech mt-1 ${isDark ? 'text-[#8B949E]' : 'text-[#777777]'}`}>
-              Calendar snapshot synced {new Date(githubContributionData.lastSyncedAt).toLocaleString()}
+              Calendar: {firstCalendarDate ? formatTooltipDate(firstCalendarDate) : 'Unavailable'} – {lastCalendarDate ? formatTooltipDate(lastCalendarDate) : 'Unavailable'}
+            </p>
+            <p className={`text-[11px] font-mono-tech ${isDark ? 'text-[#8B949E]' : 'text-[#777777]'}`}>
+              Snapshot refreshed {snapshotSyncedAt}
             </p>
             <div className="flex items-center gap-2 flex-wrap">
               <span className={`inline-flex items-center gap-1 text-[11px] font-mono-tech px-2 py-0.5 rounded-full border ${
@@ -289,7 +331,11 @@ export const GitHubContributions: React.FC = () => {
       )}
 
       {/* Heatmap Container */}
-      <div className="w-full overflow-x-auto pb-2 scrollbar-thin">
+      <div
+        className="w-full overflow-x-auto pb-2 scrollbar-thin"
+        role="group"
+        aria-label="GitHub daily contribution calendar. Focus a day and use the arrow keys to move one day or one week."
+      >
         <div className="min-w-[760px]">
           {/* Month Labels */}
           <div className="grid grid-cols-[30px_repeat(53,minmax(0,1fr))] text-[11px] font-mono-tech mb-1.5"
@@ -339,18 +385,22 @@ export const GitHubContributions: React.FC = () => {
                   const colorClass = getCellColor(day.contributionCount, isToday)
 
                   return (
-                    <div
+                    <button
                       key={dayIdx}
-                      onMouseEnter={(e) => {
-                        const rect = e.currentTarget.getBoundingClientRect()
-                        setHoveredDay({
-                          day,
-                          x: rect.left + rect.width / 2,
-                          y: rect.top
-                        })
-                      }}
+                      id={`contribution-day-${day.date}`}
+                      type="button"
+                      tabIndex={day.date === (activeDayDate ?? firstCalendarDate) ? 0 : -1}
+                      aria-label={`${day.contributionCount} contribution${day.contributionCount === 1 ? '' : 's'} on ${formatTooltipDate(day.date)}`}
+                      title={`${day.contributionCount} contribution${day.contributionCount === 1 ? '' : 's'} on ${formatTooltipDate(day.date)}`}
+                      onMouseEnter={(event) => showDayTooltip(day, event.currentTarget)}
                       onMouseLeave={() => setHoveredDay(null)}
-                      className={`w-[11px] h-[11px] rounded-[2px] border-[0.5px] cursor-pointer transition-transform duration-100 hover:scale-135 hover:z-10 relative ${colorClass} ${
+                      onFocus={(event) => {
+                        setActiveDayDate(day.date)
+                        showDayTooltip(day, event.currentTarget)
+                      }}
+                      onBlur={() => setHoveredDay(null)}
+                      onKeyDown={(event) => handleCalendarDayKeyDown(event, day)}
+                      className={`appearance-none p-0 w-[11px] h-[11px] rounded-[2px] border-[0.5px] cursor-pointer transition-transform duration-100 hover:scale-135 hover:z-10 relative ${colorClass} ${
                         isToday ? 'ring-1 ring-emerald-400 ring-offset-1' : ''
                       }`}
                     />
@@ -420,10 +470,10 @@ export const GitHubContributions: React.FC = () => {
           <Flame className="w-4 h-4 text-amber-500 shrink-0" />
           <div>
             <div className={`text-[13px] font-bold ${isDark ? 'text-white' : 'text-[#111111]'}`}>
-              1,088+
+              {githubContributionData.totalContributions.toLocaleString()}
             </div>
             <div className={`text-[10.5px] ${isDark ? 'text-[#8B949E]' : 'text-[#666666]'}`}>
-              Yearly Contributions
+              Rolling-year Contributions
             </div>
           </div>
         </div>
@@ -437,7 +487,7 @@ export const GitHubContributions: React.FC = () => {
               53 Weeks
             </div>
             <div className={`text-[10.5px] ${isDark ? 'text-[#8B949E]' : 'text-[#666666]'}`}>
-              Continuous Activity
+              Calendar window
             </div>
           </div>
         </div>
@@ -462,10 +512,10 @@ export const GitHubContributions: React.FC = () => {
           <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
           <div>
             <div className={`text-[13px] font-bold ${isDark ? 'text-white' : 'text-[#111111]'}`}>
-              Automated CI Sync
+              Scheduled Data Refresh
             </div>
             <div className={`text-[10.5px] ${isDark ? 'text-[#8B949E]' : 'text-[#666666]'}`}>
-              Hourly &amp; Per Push
+              Daily GitHub Actions sync
             </div>
           </div>
         </div>
