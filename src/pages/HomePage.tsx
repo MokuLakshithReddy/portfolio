@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { StatusBar } from '../components/StatusBar'
 import { Navbar } from '../components/Navbar'
 import { HeroSection } from '../components/HeroSection'
 import { ProjectsSection } from '../components/ProjectsSection'
@@ -9,12 +8,10 @@ import { SkillsSection } from '../components/SkillsSection'
 import { BlogSection } from '../components/BlogSection'
 import { ContactSection } from '../components/ContactSection'
 import { Footer } from '../components/Footer'
-import { ImageModal } from '../components/ImageModal'
 import { updatePageMetadata } from '../utils/seo'
 
 export const HomePage: React.FC = () => {
   const [activeSection, setActiveSection] = useState('home')
-  const [isImageModalOpen, setIsImageModalOpen] = useState(false)
 
   useEffect(() => {
     updatePageMetadata({
@@ -75,11 +72,9 @@ export const HomePage: React.FC = () => {
 
   return (
     <div className="min-h-screen w-full bg-[#F5EFEB] text-[#111111] flex flex-col paper-texture font-sans antialiased">
-      <StatusBar />
       <Navbar
         activeSection={activeSection}
         onNavigate={handleNavigate}
-        onOpenFolder={() => setIsImageModalOpen(true)}
       />
 
       <main className="flex-1">
@@ -94,12 +89,6 @@ export const HomePage: React.FC = () => {
 
       <Footer />
 
-      <ImageModal
-        isOpen={isImageModalOpen}
-        onClose={() => setIsImageModalOpen(false)}
-        imageSrc="/images/folder_preview.jpg"
-        title="portfolio_illustration.png — Quick Look"
-      />
     </div>
   )
 }
