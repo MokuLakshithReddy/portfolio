@@ -428,7 +428,7 @@ test('contribution calendar supports keyboard navigation and accessible day labe
     await firstDay.focus()
     await page.keyboard.press('ArrowRight')
     const nextId = await page.evaluate(() => document.activeElement?.id)
-    assert.match(nextId ?? '', /^contribution-day-\\d{4}-\\d{2}-\\d{2}$/)
+    assert.match(nextId ?? '', /^contribution-day-\d{4}-\d{2}-\d{2}$/)
     assert.notEqual(nextId, firstId)
   } finally {
     await page.close()
