@@ -7,7 +7,7 @@ const OUTPUT_FILE = fileURLToPath(new URL('../src/data/githubData.ts', import.me
 const COLORS = ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39']
 
 function utcDate(value) {
-  if (!/^\\d{4}-\\d{2}-\\d{2}$/.test(value)) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) {
     throw new Error(`Invalid contribution date: ${value}`)
   }
   const date = new Date(`${value}T00:00:00.000Z`)
