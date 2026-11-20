@@ -28,5 +28,15 @@
     "slug": "bluecarbon-registry",
     "title": "BlueCarbon Registry — Lakshith Reddy",
     "description": "A research prototype for blue-carbon monitoring, reporting, and verification with geospatial validation and cryptographic evidence."
+  },
+  {
+    "slug": "scandium-assistant",
+    "title": "Scandium Assistant — Desktop AI Assistant | Lakshith Reddy",
+    "description": "A desktop AI assistant built with Electron and React, combining opt-in screen context, conversation audio, local models and document retrieval."
+  },
+  {
+    "slug": "campus-connect",
+    "title": "CampusConnect — College Clubs & Events Platform | Lakshith Reddy",
+    "description": "A college platform for club workspaces, student discussions, campus events, QR attendance and role-based administration."
   }
 ]
