@@ -238,6 +238,43 @@ test('contact section provides verified public contact channels and availability
   }
 })
 
+test('brand link is keyboard accessible and stays inside the mobile viewport', async () => {
+  const page = await createPage()
+  try {
+    await page.setViewport({ width: 320, height: 844 })
+    await page.goto(baseUrl, { waitUntil: 'domcontentloaded' })
+    const brand = await page.$('a[aria-label="Lakshith Reddy — go to homepage"]')
+    assert.ok(brand)
+    await brand.focus()
+    assert.equal(
+      await page.evaluate(() => document.activeElement?.getAttribute('aria-label')),
+      'Lakshith Reddy — go to homepage',
+    )
+    const bounds = await brand.boundingBox()
+    assert.ok(bounds)
+    assert.ok(bounds.x >= 0 && bounds.x + bounds.width <= 320)
+  } finally {
+    await page.close()
+  }
+})
+
+test('hero keeps its identity, project navigation and action links', async () => {
+  const page = await createPage()
+  try {
+    await page.setViewport({ width: 1440, height: 960 })
+    await page.goto(baseUrl, { waitUntil: 'domcontentloaded' })
+    await page.waitForSelector('#home h1')
+    const heading = await page.$eval('#home h1', element => (element.textContent ?? '').replace(/\\s+/g, ''))
+    assert.match(heading, /LAKSHITHREDDY\\./)
+    assert.ok(await page.$('#home a[href="#projects"]'))
+    assert.ok(await page.$('#home a[href="https://github.com/MokuLakshithReddy"]'))
+    assert.ok(await page.$('#home [aria-label="Areas of focus"]'))
+    assert.ok(await page.$('#home img[src="/images/hero-orbit-globe.webp"]'))
+  } finally {
+    await page.close()
+  }
+})
+
 test('command palette filters and opens a project using keyboard navigation', async () => {
   const page = await createPage()
   try {
