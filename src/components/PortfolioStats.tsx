@@ -21,7 +21,7 @@ export const PortfolioStats: React.FC<{ className?: string }> = ({ className = '
             </div>
             <div className="min-w-0">
               <div className="font-anton text-[19px] sm:text-[21px] lg:text-[23px] text-[#111111] leading-none mb-1 tracking-tight">
-                06+
+                08+
               </div>
               <div className="text-[10.5px] sm:text-[11.5px] lg:text-[12px] font-mono-tech text-[#555555] font-medium leading-tight whitespace-nowrap">
                 Projects Built
@@ -36,7 +36,7 @@ export const PortfolioStats: React.FC<{ className?: string }> = ({ className = '
             </div>
             <div className="min-w-0">
               <div className="font-anton text-[19px] sm:text-[21px] lg:text-[23px] text-[#111111] leading-none mb-1 tracking-tight">
-                04+
+                07+
               </div>
               <div className="text-[10.5px] sm:text-[11.5px] lg:text-[12px] font-mono-tech text-[#555555] font-medium leading-tight whitespace-nowrap">
                 Open Source Contributions
@@ -44,7 +44,7 @@ export const PortfolioStats: React.FC<{ className?: string }> = ({ className = '
             </div>
           </div>
 
-          {/* Stat 3: Hackathon Winner (VNR Convergence) */}
+          {/* Stat 3: 2nd Place (VNR Convergence) */}
           <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0 md:border-l md:border-[#222222]/20 md:pl-4 lg:pl-6 xl:pl-8">
             <div className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 rounded-xl bg-[#0755F5]/10 flex items-center justify-center shrink-0">
               <Trophy className="w-4 h-4 sm:w-5 sm:h-5 text-[#0755F5] fill-[#0755F5]" />
