@@ -1,6 +1,6 @@
 import React from 'react'
 import { ScrollReveal } from './MotionSystem'
-import { ExternalLink, Github, Linkedin, Sparkles } from 'lucide-react'
+import { ExternalLink, Sparkles } from 'lucide-react'
 
 export const ContactSection: React.FC = () => {
   return (
@@ -44,13 +44,13 @@ export const ContactSection: React.FC = () => {
             <div className="flex flex-wrap gap-3">
               <a href="https://www.linkedin.com/in/lakshith-reddy/" target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0755F5] px-5 py-3 text-[14px] font-semibold text-white shadow-md transition-colors hover:bg-[#0043D6] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0755F5]">
-                <Linkedin className="w-4 h-4" />
+                <ExternalLink className="w-4 h-4" />
                 <span>Contact on LinkedIn</span>
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
               <a href="https://github.com/MokuLakshithReddy" target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 rounded-full border border-[#222222]/70 bg-[#F4ECE1] px-5 py-3 text-[14px] font-semibold text-[#111111] transition-colors hover:border-[#0755F5] hover:text-[#0755F5] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0755F5]">
-                <Github className="w-4 h-4" />
+                <ExternalLink className="w-4 h-4" />
                 <span>Explore GitHub</span>
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
