@@ -3,7 +3,7 @@ import { join, resolve } from 'node:path'
 import sharp from 'sharp'
 import { buildRouteHtml, buildSitemap } from './prerender-utils.mjs'
 
-const configuredSiteUrl = process.env.VITE_SITE_URL || process.env.SITE_URL || 'https://portfolio-beta-roan-97.vercel.app'
+const configuredSiteUrl = process.env.VITE_SITE_URL || process.env.SITE_URL || 'https://lakshith-reddy.vercel.app'
 const parsedSiteUrl = new URL(configuredSiteUrl)
 if (parsedSiteUrl.protocol !== 'https:') {
   throw new Error('VITE_SITE_URL must be an HTTPS URL.')
