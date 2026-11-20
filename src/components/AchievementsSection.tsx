@@ -44,7 +44,7 @@ export const AchievementsSection: React.FC = () => {
               </h3>
 
               <p className="font-sans text-[14px] text-[#555555] leading-relaxed mb-6">
-                Secured second place with your team in a competitive software development hackathon, engineering innovative solutions under strict time constraints.
+                Placed second with my team at the VNR Convergence Software Hackathon, building a working solution under time constraints.
               </p>
             </div>
 
@@ -52,8 +52,8 @@ export const AchievementsSection: React.FC = () => {
             <div className="pt-4 border-t border-[#D5C9B7]/60">
               <div className="text-[12px] font-mono-tech text-[#666666] mb-2 flex items-center gap-1.5">
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                <span className="font-semibold text-[#111111]">Proof:</span>
-                <span>LinkedIn announcement &amp; certificate</span>
+                <span className="font-semibold text-[#111111]">Recognition:</span>
+                <span>Second-place team result</span>
               </div>
               <a
                 href="https://linkedin.com/in/lakshith-reddy"
@@ -61,7 +61,7 @@ export const AchievementsSection: React.FC = () => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-[13px] font-mono-tech font-bold text-[#0755F5] hover:text-[#0043D6] group-hover:translate-x-1 transition-transform"
               >
-                <span>View LinkedIn Announcement</span>
+                <span>View LinkedIn Profile</span>
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
             </div>
@@ -81,47 +81,29 @@ export const AchievementsSection: React.FC = () => {
               </div>
 
               <h3 className="font-sans font-bold text-[21px] text-[#111111] mb-2.5 leading-snug">
-                Four Merged Open-Source Contributions
+                Seven Merged Open-Source Contributions
               </h3>
-
               <p className="font-sans text-[14px] text-[#555555] leading-relaxed mb-4">
-                Successfully contributed changes to four established open-source projects:
+                Merged fixes and features across established projects in banking, image processing, search, networking and developer tooling:
               </p>
-
-              {/* 4 Merged Projects Sublist */}
-              <ul className="space-y-2 mb-6 font-mono-tech text-[12.5px] text-[#333333]">
-                <li className="flex items-start gap-2 bg-[#F2EBDE] p-2 rounded-[8px] border border-[#D5C9B7]/50">
-                  <span className="text-[#0755F5] font-bold mt-0.5">›</span>
-                  <span><strong className="text-[#111111]">Apache Fineract</strong> — correlation ID support</span>
-                </li>
-                <li className="flex items-start gap-2 bg-[#F2EBDE] p-2 rounded-[8px] border border-[#D5C9B7]/50">
-                  <span className="text-[#0755F5] font-bold mt-0.5">›</span>
-                  <span><strong className="text-[#111111]">Photocraft</strong> — nearest-neighbor image sampling</span>
-                </li>
-                <li className="flex items-start gap-2 bg-[#F2EBDE] p-2 rounded-[8px] border border-[#D5C9B7]/50">
-                  <span className="text-[#0755F5] font-bold mt-0.5">›</span>
-                  <span><strong className="text-[#111111]"><a href="https://github.com/xerj-org/xerj/pull/1804" target="_blank" rel="noopener noreferrer" className="underline decoration-dotted underline-offset-2 hover:text-[#0755F5]">XERJ</a></strong> — query operator parsing</span>
-                </li>
-                <li className="flex items-start gap-2 bg-[#F2EBDE] p-2 rounded-[8px] border border-[#D5C9B7]/50">
-                  <span className="text-[#0755F5] font-bold mt-0.5">›</span>
-                  <span><strong className="text-[#111111]">Libreswan</strong> — automatic page titles</span>
-                </li>
+              <ul className="space-y-2 mb-6 font-mono-tech text-[11.5px] text-[#333333]">
+                <li className="bg-[#F2EBDE] p-2 rounded-[8px] border border-[#D5C9B7]/50"><a href="https://github.com/apache/fineract-consumer-facing/pull/149" target="_blank" rel="noopener noreferrer" className="font-semibold text-[#0755F5] hover:underline">Apache Fineract #149</a> — correlation IDs across frontend and backend</li>
+                <li className="bg-[#F2EBDE] p-2 rounded-[8px] border border-[#D5C9B7]/50"><a href="https://github.com/apache/fineract-consumer-facing/pull/155" target="_blank" rel="noopener noreferrer" className="font-semibold text-[#0755F5] hover:underline">Apache Fineract #155</a> — savings account application command API</li>
+                <li className="bg-[#F2EBDE] p-2 rounded-[8px] border border-[#D5C9B7]/50"><a href="https://github.com/storytold/photocraft/pull/1141" target="_blank" rel="noopener noreferrer" className="font-semibold text-[#0755F5] hover:underline">Photocraft #1141</a> — nearest-neighbour sampling on image reductions</li>
+                <li className="bg-[#F2EBDE] p-2 rounded-[8px] border border-[#D5C9B7]/50"><a href="https://github.com/xerj-org/xerj/pull/1804" target="_blank" rel="noopener noreferrer" className="font-semibold text-[#0755F5] hover:underline">XERJ #1804</a> — standalone and infix query-operator parsing</li>
+                <li className="bg-[#F2EBDE] p-2 rounded-[8px] border border-[#D5C9B7]/50"><a href="https://github.com/libreswan/libreswan.github.io/pull/7" target="_blank" rel="noopener noreferrer" className="font-semibold text-[#0755F5] hover:underline">Libreswan #7</a> — automatic page titles in the default layout</li>
+                <li className="bg-[#F2EBDE] p-2 rounded-[8px] border border-[#D5C9B7]/50"><a href="https://github.com/guardana/guardana/pull/332" target="_blank" rel="noopener noreferrer" className="font-semibold text-[#0755F5] hover:underline">Guardana #332</a> — shell-path handling when paths contain spaces</li>
+                <li className="bg-[#F2EBDE] p-2 rounded-[8px] border border-[#D5C9B7]/50"><a href="https://github.com/PedestrianDynamics/pyFDS-Evac/pull/934" target="_blank" rel="noopener noreferrer" className="font-semibold text-[#0755F5] hover:underline">PyFDS-Evac #934</a> — floating-point tolerance for interval cadence checks</li>
               </ul>
             </div>
-
-            {/* Proof footer */}
             <div className="pt-4 border-t border-[#D5C9B7]/60">
               <div className="text-[12px] font-mono-tech text-[#666666] mb-2 flex items-center gap-1.5">
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                <span className="font-semibold text-[#111111]">Proof:</span>
-                <span>Four merged pull requests</span>
+                <span className="font-semibold text-[#111111]">Evidence:</span>
+                <span>Seven individual merged pull requests</span>
               </div>
-              <a
-                href="https://github.com/search?q=author%3AMokuLakshithReddy+is%3Amerged&type=pullrequests"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-[13px] font-mono-tech font-bold text-[#0755F5] hover:text-[#0043D6] group-hover:translate-x-1 transition-transform"
-              >
+              <a href="https://github.com/search?q=author%3AMokuLakshithReddy+is%3Amerged&type=pullrequests" target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-[13px] font-mono-tech font-bold text-[#0755F5] hover:text-[#0043D6] group-hover:translate-x-1 transition-transform">
                 <span>View GitHub Merged PRs</span>
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
