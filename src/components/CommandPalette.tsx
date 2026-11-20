@@ -28,12 +28,14 @@ type CommandItem = {
 }
 
 const commandItems: CommandItem[] = [
-  { id: 'section-projects', label: 'Explore featured projects', description: 'Six engineering case studies', group: 'Navigate', keywords: 'projects work portfolio case studies', icon: FolderGit2, action: 'section', target: 'projects' },
+  { id: 'section-projects', label: 'Explore featured projects', description: 'Eight engineering case studies', group: 'Navigate', keywords: 'projects work portfolio case studies', icon: FolderGit2, action: 'section', target: 'projects' },
   { id: 'section-experience', label: 'Experience & education', description: 'Roles, leadership and education', group: 'Navigate', keywords: 'experience education career about', icon: BriefcaseBusiness, action: 'section', target: 'experience' },
   { id: 'section-achievements', label: 'Achievements', description: 'Awards and open-source contributions', group: 'Navigate', keywords: 'achievements awards contributions github', icon: Trophy, action: 'section', target: 'achievements' },
   { id: 'section-skills', label: 'Technical skills', description: 'AI, web development and tools', group: 'Navigate', keywords: 'skills technologies stack tools', icon: Sparkles, action: 'section', target: 'skills' },
   { id: 'section-contact', label: 'Get in touch', description: 'Open the contact section', group: 'Navigate', keywords: 'contact email message hire', icon: Mail, action: 'section', target: 'contact' },
   { id: 'project-secret-leak-detector', label: 'Secret Leak Detector', description: 'Developer security · secret scanning', group: 'Projects', keywords: 'security secrets git detector', icon: ShieldCheck, action: 'route', target: '/projects/secret-leak-detector' },
+  { id: 'project-scandium-assistant', label: 'Scandium Assistant', description: 'Desktop AI · audio, screen and document context', group: 'Projects', keywords: 'scandium desktop electron multimodal audio screen rag', icon: Command, action: 'route', target: '/projects/scandium-assistant' },
+  { id: 'project-campus-connect', label: 'CampusConnect', description: 'Campus clubs, events and QR attendance', group: 'Projects', keywords: 'campus connect clubs events QR attendance students', icon: FolderGit2, action: 'route', target: '/projects/campus-connect' },
   { id: 'project-thinkmate', label: 'ThinkMate', description: 'AI thinking partner', group: 'Projects', keywords: 'ai reasoning thinking partner', icon: Sparkles, action: 'route', target: '/projects/thinkmate' },
   { id: 'project-cluely-copilot', label: 'Cluely Copilot', description: 'Multimodal desktop AI assistant', group: 'Projects', keywords: 'desktop ai assistant audio screen', icon: Command, action: 'route', target: '/projects/cluely-copilot' },
   { id: 'project-coding-orchestrator', label: 'Autonomous AI Coding Orchestrator', description: 'Planner, coding agent and verifier', group: 'Projects', keywords: 'agent coding automation orchestration', icon: FolderGit2, action: 'route', target: '/projects/autonomous-ai-coding-orchestrator' },

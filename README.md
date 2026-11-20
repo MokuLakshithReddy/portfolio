@@ -7,6 +7,8 @@
 
 An illustrated, creative developer portfolio homepage for **Lakshith Reddy** (AI & ML Student · Software Developer). Built with React, TypeScript, Tailwind CSS v4, and Vite, featuring an anime/notebook hand-drawn aesthetic, interactive navigation, and responsive design across desktop and mobile devices.
 
+**Live portfolio:** https://lakshith-reddy.vercel.app
+
 
 ## Site structure and proof of work
 

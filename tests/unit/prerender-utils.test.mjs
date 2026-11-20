@@ -47,7 +47,10 @@ test('metadata includes one complete entry for every featured project slug', () 
   const slugs = metadata.map((entry) => entry.slug)
 
   assert.equal(new Set(slugs).size, slugs.length, 'Project metadata slugs must be unique')
-  assert.equal(slugs.length, 6)
+  assert.equal(slugs.length, 8)
+  for (const expectedSlug of ['scandium-assistant', 'campus-connect']) {
+    assert.ok(slugs.includes(expectedSlug), `Missing project metadata for ${expectedSlug}`)
+  }
   for (const entry of metadata) {
     assert.ok(entry.title.trim().length > 0, `Missing title for ${entry.slug}`)
     assert.ok(entry.description.trim().length > 0, `Missing description for ${entry.slug}`)

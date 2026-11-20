@@ -55,7 +55,7 @@ export const ExperienceSection: React.FC = () => {
                   <ul className="space-y-2 text-[14px] text-[#444444] font-sans">
                     <li className="flex items-start gap-2">
                       <span className="text-[#0755F5] font-bold mt-0.5">›</span>
-                      <span>Contributing to organizational direction, business operations and growth initiatives.</span>
+                      <span>Serving as Managing Director and contributing to business operations, planning and day-to-day coordination.</span>
                     </li>
                   </ul>
                 </div>
@@ -74,7 +74,7 @@ export const ExperienceSection: React.FC = () => {
                     </h4>
                     <div className="font-mono-tech text-[12px] font-semibold text-[#555555] bg-[#111111]/5 px-2.5 py-0.5 rounded-full w-fit flex items-center gap-1.5">
                       <Calendar className="w-3.5 h-3.5" />
-                      <span>Professional Role</span>
+                      <span>Previous Role</span>
                     </div>
                   </div>
 
@@ -85,11 +85,11 @@ export const ExperienceSection: React.FC = () => {
                   <ul className="space-y-2 text-[14px] text-[#444444] font-sans">
                     <li className="flex items-start gap-2">
                       <span className="text-[#0755F5] font-bold mt-0.5">›</span>
-                      <span>Supported business development, lead generation, client outreach and social media content operations.</span>
+                      <span>Supported business development through lead generation, prospect outreach and client follow-up.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-[#0755F5] font-bold mt-0.5">›</span>
-                      <span>Worked across business development activities and digital content management.</span>
+                      <span>Planned and managed social media content while supporting work across three client accounts.</span>
                     </li>
                   </ul>
                 </div>

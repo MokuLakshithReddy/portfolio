@@ -88,6 +88,8 @@ test('homepage renders its primary portfolio content', async () => {
 test('featured case-study routes load directly', async () => {
   const projects = [
     ['secret-leak-detector', 'Secret Leak Detector'],
+    ['scandium-assistant', 'Scandium Assistant'],
+    ['campus-connect', 'CampusConnect'],
     ['local-ai-execution-agent', 'Local AI Execution Agent'],
     ['thinkmate', 'ThinkMate'],
     ['cluely-copilot', 'Cluely Copilot'],
@@ -221,104 +223,16 @@ test('brand monogram replaces the folder icon and links to the homepage', async 
   }
 })
 
-async function submitContactForm({ responseBody = '{"success":"true"}', responseStatus = 200, networkError = false } = {}) {
-  const page = await createPage()
-  await page.evaluateOnNewDocument((config) => {
-    const originalFetch = window.fetch.bind(window)
-    window.fetch = async (input, init) => {
-      const requestUrl = typeof input === 'string'
-        ? input
-        : input instanceof URL
-          ? input.href
-          : input.url
-
-      if (requestUrl.startsWith('https://api.github.com/users/MokuLakshithReddy/events')) {
-        return new Response('[]', { status: 200, headers: { 'Content-Type': 'application/json' } })
-      }
-
-      if (requestUrl.startsWith('https://formsubmit.co/ajax/')) {
-        if (config.networkError) throw new TypeError('Simulated network failure')
-        return new Response(config.responseBody, {
-          status: config.responseStatus,
-          headers: { 'Content-Type': 'application/json' },
-        })
-      }
-
-      return originalFetch(input, init)
-    }
-  }, { responseBody, responseStatus, networkError })
-
-  try {
-    await page.goto(baseUrl, { waitUntil: 'domcontentloaded' })
-    await page.waitForSelector('#contact-name')
-    await page.$eval('#contact', (element) => element.scrollIntoView())
-    await page.type('#contact-name', 'Test Visitor')
-    await page.type('#contact input[type="email"]', 'visitor@example.com')
-    await page.type('#contact textarea', 'Automated browser regression test.')
-    await page.click('#contact button[type="submit"]')
-    return page
-  } catch (error) {
-    await page.close()
-    throw error
-  }
-}
-
-test('contact form reports success only for an explicit accepted response', async () => {
-  const page = await submitContactForm()
-  try {
-    await page.waitForFunction(() => document.body.innerText.includes('Transmission Dispatched!'))
-  } finally {
-    await page.close()
-  }
-})
-
-test('contact form shows the email fallback when the service rejects the message', async () => {
-  const page = await submitContactForm({ responseBody: '{"success":"false"}' })
-  try {
-    await page.waitForFunction(() => document.body.innerText.includes('Unable to dispatch automatically'))
-    assert.ok(await page.$('#contact a[href^="mailto:"]'))
-    assert.equal(await page.$eval('#contact-name', (input) => input.value), 'Test Visitor')
-  } finally {
-    await page.close()
-  }
-})
-
-test('contact form reports network failures without clearing the message', async () => {
-  const page = await submitContactForm({ networkError: true })
-  try {
-    await page.waitForFunction(() => document.body.innerText.includes('Unable to dispatch automatically'))
-    assert.ok(await page.$('#contact a[href^="mailto:"]'))
-    assert.equal(await page.$eval('#contact textarea', (textarea) => textarea.value), 'Automated browser regression test.')
-  } finally {
-    await page.close()
-  }
-})
-
-test('contact form rejects malformed success payloads', async () => {
-  const page = await submitContactForm({ responseBody: 'not-json' })
-  try {
-    await page.waitForFunction(() => document.body.innerText.includes('Unable to dispatch automatically'))
-    assert.ok(await page.$('#contact a[href^="mailto:"]'))
-    assert.equal(await page.$eval('#contact-name', (input) => input.value), 'Test Visitor')
-  } finally {
-    await page.close()
-  }
-})
-
-test('contact form fields have programmatic labels', async () => {
+test('contact section provides verified public contact channels and availability', async () => {
   const page = await createPage()
   try {
     await page.goto(baseUrl, { waitUntil: 'domcontentloaded' })
-    for (const fieldId of ['contact-name', 'contact-email', 'contact-message']) {
-      const label = await page.$(`label[for="${fieldId}"]`)
-      const field = await page.$(`#${fieldId}`)
-      assert.ok(label, `Missing accessible label for ${fieldId}`)
-      assert.ok(field, `Missing field ${fieldId}`)
-      assert.equal(
-        await field.evaluate((element) => element.getAttribute('aria-label') || element.getAttribute('id')),
-        fieldId,
-      )
-    }
+    const linkedIn = await page.$('#contact a[href="https://www.linkedin.com/in/lakshith-reddy/"]')
+    const github = await page.$('#contact a[href="https://github.com/MokuLakshithReddy"]')
+    assert.ok(linkedIn, 'Expected a working LinkedIn contact route')
+    assert.ok(github, 'Expected a working GitHub profile route')
+    assert.match(await page.$eval('#contact', element => element.innerText), /Remote · Part-time · 15–20 hrs\/week/)
+    assert.equal(await page.$('#contact-name'), null, 'Do not render a form with an unconfigured destination')
   } finally {
     await page.close()
   }
@@ -344,20 +258,18 @@ test('brand link is keyboard accessible and stays inside the mobile viewport', a
   }
 })
 
-test('hero keeps its content without a hero illustration or cinematic visual', async () => {
+test('hero keeps its identity, project navigation and action links', async () => {
   const page = await createPage()
   try {
     await page.setViewport({ width: 1440, height: 960 })
     await page.goto(baseUrl, { waitUntil: 'domcontentloaded' })
-
     await page.waitForSelector('#home h1')
-    const heading = await page.$eval('#home h1', (element) => (element.textContent ?? '').replace(/\s+/g, ''))
+    const heading = await page.$eval('#home h1', element => (element.textContent ?? '').replace(/\s+/g, ''))
     assert.match(heading, /LAKSHITHREDDY\./)
-    assert.equal(await page.$('#home [data-testid="hero-cinematic-visual"]'), null)
     assert.ok(await page.$('#home a[href="#projects"]'))
     assert.ok(await page.$('#home a[href="https://github.com/MokuLakshithReddy"]'))
     assert.ok(await page.$('#home [aria-label="Areas of focus"]'))
-    assert.equal(await page.$('#home img[src="/images/character.png"]'), null)
+    assert.ok(await page.$('#home img[src="/images/hero-orbit-globe.webp"]'))
   } finally {
     await page.close()
   }
@@ -450,40 +362,6 @@ test('contribution calendar supports keyboard navigation and accessible day labe
     const nextId = await page.evaluate(() => document.activeElement?.id)
     assert.match(nextId ?? '', /^contribution-day-\d{4}-\d{2}-\d{2}$/)
     assert.notEqual(nextId, firstId)
-  } finally {
-    await page.close()
-  }
-})
-
-test('contact honeypot stops automated submissions before the mail service is called', async () => {
-  const page = await createPage()
-  await page.evaluateOnNewDocument(() => {
-    window.__formSubmitRequests = 0
-    const originalFetch = window.fetch.bind(window)
-    window.fetch = async (input, init) => {
-      const requestUrl = typeof input === 'string' ? input : input instanceof URL ? input.href : input.url
-      if (requestUrl.startsWith('https://formsubmit.co/ajax/')) {
-        window.__formSubmitRequests += 1
-        return new Response('{"success":"true"}', { status: 200, headers: { 'Content-Type': 'application/json' } })
-      }
-      if (requestUrl.startsWith('https://api.github.com/users/MokuLakshithReddy/events')) {
-        return new Response('[]', { status: 200, headers: { 'Content-Type': 'application/json' } })
-      }
-      return originalFetch(input, init)
-    }
-  })
-
-  try {
-    await page.goto(baseUrl, { waitUntil: 'domcontentloaded' })
-    await page.waitForSelector('#contact-name')
-    await page.$eval('input[name="_honey"]', (input) => { input.value = 'automated spam' })
-    await page.type('#contact-name', 'Spam Bot')
-    await page.type('#contact input[type="email"]', 'bot@example.com')
-    await page.type('#contact textarea', 'Automated spam submission.')
-    await page.click('#contact button[type="submit"]')
-    await new Promise((resolveDelay) => setTimeout(resolveDelay, 250))
-    const requestCount = await page.evaluate(() => window.__formSubmitRequests)
-    assert.equal(requestCount, 0)
   } finally {
     await page.close()
   }

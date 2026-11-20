@@ -7,7 +7,6 @@ on:
 
 permissions:
   contents: write
-  pull-requests: write
 
 concurrency:
   group: github-contributions-refresh
@@ -19,27 +18,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout default branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: main
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
+          package-manager-cache: false
 
       - name: Fetch and validate contribution calendar
         run: node scripts/sync-github-contributions.mjs
 
-      - name: Create or update refresh pull request
-        uses: peter-evans/create-pull-request@v7
-        with:
-          branch: automation/refresh-github-contributions
-          delete-branch: true
-          commit-message: 'chore(stats): refresh GitHub contribution snapshot'
-          title: 'chore(stats): refresh GitHub contribution snapshot'
-          body: |
-            Automated daily refresh of the rolling-year GitHub contribution calendar.
+      - name: Commit updated snapshot when changed
+        run: |
+          if git diff --quiet -- src/data/githubData.ts; then
+            echo "Contribution snapshot is already current."
+            exit 0
+          fi
 
-            The sync script validates every date, contribution count, color level, and the provider's total before updating the checked-in snapshot.
-            Merge this pull request to publish the refreshed calendar.
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/githubData.ts
+          git commit -m "chore(stats): refresh rolling-year contribution snapshot"
+          git push origin HEAD:main

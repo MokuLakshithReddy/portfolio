@@ -6,7 +6,7 @@ import { FileText, ArrowRight, Layers } from 'lucide-react'
 export const BlogSection: React.FC = () => {
   const posts = [
     {
-      articleNo: 'Case Study 01',
+      articleNo: 'Project Deep Dive 01',
       title: 'Beyond AI Responses: Building Agents That Prove Their Work',
       snippet: "Why an AI agent claiming task completion isn't enough, and how independent verification, isolated execution, and machine-readable evidence can make autonomous systems more trustworthy.",
       caseStudySlug: 'local-ai-execution-agent',
@@ -14,7 +14,7 @@ export const BlogSection: React.FC = () => {
       tag: 'AI Agents',
     },
     {
-      articleNo: 'Case Study 02',
+      articleNo: 'Project Deep Dive 02',
       title: 'Fail-Closed Security: Designing Systems That Refuse to Guess',
       snippet: 'Exploring how secret detection, Git hook enforcement, staged-diff analysis, and safe failure handling help prevent sensitive credentials from entering version control.',
       caseStudySlug: 'secret-leak-detector',
@@ -22,7 +22,7 @@ export const BlogSection: React.FC = () => {
       tag: 'Security Engineering',
     },
     {
-      articleNo: 'Case Study 03',
+      articleNo: 'Project Deep Dive 03',
       title: 'The Architecture Behind a Reliable Autonomous Coding Agent',
       snippet: 'A technical breakdown of connecting an LLM planner, coding agent, and independent verifier through controlled execution, persistent state, and iterative repair workflows.',
       caseStudySlug: 'autonomous-ai-coding-orchestrator',
@@ -39,14 +39,14 @@ export const BlogSection: React.FC = () => {
           <div>
             <div className="font-mono-tech text-[13px] text-[#0755F5] font-bold tracking-wider uppercase mb-2 flex items-center gap-2">
               <FileText className="w-4 h-4" />
-              <span>// 04. Engineering Notes &amp; Case Studies</span>
+              <span>// 04. Engineering Notes &amp; Project Deep Dives</span>
             </div>
             <h2 className="font-anton text-[42px] md:text-[56px] text-[#111111] uppercase tracking-tight leading-none">
-              Notes &amp; Articles
+              Project Deep Dives
             </h2>
           </div>
           <p className="font-mono-tech text-[14px] text-[#555555] max-w-md mt-4 md:mt-0">
-            Selected engineering questions and the detailed project case studies behind the systems I build.
+            Technical breakdowns of the decisions, trade-offs and implementation details behind the systems I build.
           </p>
         </div>
 

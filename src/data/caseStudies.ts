@@ -710,6 +710,207 @@ Transaction Receipt & Cryptographic Audit Trail`,
       'Regional biomass models require ground-truthed soil core calibration for extreme environmental zones.'
     ],
     projectOutcome: 'A research-grade digital MRV prototype proving how cryptographic evidence provenance, geospatial validation, scientific formulas, and blockchain anchoring ensure transparent environmental accounting.'
+  },
+
+  {
+    slug: 'scandium-assistant',
+    number: '02',
+    title: 'Scandium Assistant',
+    subtitle: 'A privacy-conscious desktop AI assistant combining conversation, screen context and document retrieval',
+    category: 'Desktop AI Engineering',
+    badgeStatus: 'Public Repository',
+    sourceVisibility: 'Public Repository',
+    technologies: ['Electron', 'React', 'TypeScript', 'Ollama', 'Whisper.cpp', 'TF-IDF Retrieval', 'IPC Security'],
+    links: [
+      { label: 'GitHub Repository', url: 'https://github.com/MokuLakshithReddy/Scandium-Assistant', type: 'primary' },
+      { label: 'Releases', url: 'https://github.com/MokuLakshithReddy/Scandium-Assistant/releases', type: 'external' }
+    ],
+    problemStatement: {
+      overview: 'Desktop work is spread across meetings, code, presentations and reference documents. Scandium brings selected desktop context and conversation transcripts into one assistant workflow, with local inference options and user-managed cloud provider credentials.',
+      challenges: [
+        'Coordinating audio capture, screen context and assistant windows inside a desktop application.',
+        'Keeping privileged Electron operations behind a validated main-process and preload boundary.',
+        'Making local and cloud model choices understandable without implying that every provider workflow stays on-device.',
+        'Retrieving relevant passages from uploaded documents without overstating lexical retrieval as embedding-based semantic search.'
+      ],
+      corePrinciple: 'Desktop context should be gathered with user control, processed through explicit security boundaries, and described honestly according to the selected local or cloud provider.'
+    },
+    workflow: [
+      { step: '01', title: 'CAPTURE', description: 'Start user-controlled microphone, system-audio or screen-context capture.' },
+      { step: '02', title: 'TRANSCRIBE', description: 'Turn audio segments into speaker-attributed transcript context using configured speech recognition.' },
+      { step: '03', title: 'RETRIEVE', description: 'Find relevant passages from user-provided documents using the current local TF-IDF lexical retrieval pipeline.' },
+      { step: '04', title: 'ROUTE', description: 'Send the assembled context to the selected local Ollama or configured cloud model adapter.' },
+      { step: '05', title: 'RESPOND', description: 'Stream the response into the desktop assistant interface and preserve session context.' }
+    ],
+    architectureDiagram: `Desktop Inputs
+  |-- Microphone / system audio
+  |-- User-approved screen capture
+  |-- Uploaded reference documents
+             |
+             v
+      Electron Main Process
+             |
+       Typed IPC Boundary
+             |
+             v
+       React Assistant UI
+             |
+      Context Assembly Layer
+       |              |
+       v              v
+  Transcript      TF-IDF Document
+   Context          Retrieval
+       \              /
+        \            /
+         v          v
+        Model Provider Adapters
+        |-- Local Ollama
+        |-- Configured cloud APIs
+                  |
+                  v
+          Streamed Assistant Reply`,
+    architectureDetails: [
+      { title: 'Desktop Runtime', description: 'Uses Electron with a privileged main process, preload bridge and React renderer for desktop window coordination.' },
+      { title: 'Conversation Context', description: 'Combines microphone and system-audio transcription into a speaker-attributed timeline for assistant prompts.' },
+      { title: 'Screen Context', description: 'Uses explicit screen-capture flows and documents OS-specific limitations rather than promising universal capture invisibility.' },
+      { title: 'Document Retrieval', description: 'Uses overlapping text chunks and local TF-IDF lexical ranking; this is not an embedding or vector-database retrieval system.' },
+      { title: 'Provider Choice', description: 'Supports local Ollama workflows and configured cloud model providers; cloud requests may transmit selected context to the chosen provider.' }
+    ],
+    implementationTable: [
+      { area: 'Desktop Shell', implementation: 'Electron main process, preload bridge and React renderer' },
+      { area: 'IPC Security', implementation: 'Origin checks, payload validation and bounded privileged operations' },
+      { area: 'Audio Context', implementation: 'Independent microphone and system-audio capture paths with VAD and transcription' },
+      { area: 'Screen Context', implementation: 'User-approved screen capture and proportional image downscaling' },
+      { area: 'Knowledge Retrieval', implementation: 'Overlapping document chunks with local TF-IDF lexical ranking' },
+      { area: 'Model Integration', implementation: 'Local Ollama and configured cloud provider adapters' }
+    ],
+    evidence: {
+      ciDate: 'Check the live repository Actions history',
+      ciStatus: 'Current release readiness must be confirmed against the latest CI run',
+      metrics: [],
+      executedEvidence: [],
+      projectReportedResults: [
+        'The repository README documents automated unit, integration and Electron smoke checks; use the current GitHub Actions run as the source of truth for the active revision.'
+      ],
+      outstandingValidation: [
+        'Confirm physical microphone, system-audio and screen-capture behaviour on each supported operating system before publishing a release.',
+        'Verify provider quotas, API credentials and privacy disclosures for each configured cloud integration.',
+        'Keep retrieval claims aligned with the implemented TF-IDF lexical ranker unless embeddings or vector search are added.'
+      ],
+      evidenceLinks: [
+        { label: 'Public GitHub Repository', url: 'https://github.com/MokuLakshithReddy/Scandium-Assistant', type: 'github' },
+        { label: 'GitHub Actions', url: 'https://github.com/MokuLakshithReddy/Scandium-Assistant/actions', type: 'ci' },
+        { label: 'Release History', url: 'https://github.com/MokuLakshithReddy/Scandium-Assistant/releases', type: 'external' }
+      ]
+    },
+    limitations: [
+      'The document retrieval path described in the repository is TF-IDF lexical retrieval, not embedding-based semantic search.',
+      'Local processing is available for supported workflows, but selected cloud providers receive the context required for their requests.',
+      'Desktop capture and content-protection behaviour varies by operating system and capture stack; it is not a universal invisibility guarantee.',
+      'Automated CI does not replace physical-device and real-provider verification.'
+    ],
+    projectOutcome: 'A desktop AI assistant that explores how conversation, screen context, document retrieval and model-provider choice can be combined behind explicit desktop security boundaries.'
+  },
+  {
+    slug: 'campus-connect',
+    number: '03',
+    title: 'CampusConnect',
+    subtitle: 'A college community platform for club spaces, campus events and QR-based attendance',
+    category: 'Full-Stack Product Engineering',
+    badgeStatus: 'Public Repository',
+    sourceVisibility: 'Public Repository',
+    technologies: ['React', 'TypeScript', 'Supabase', 'PostgreSQL', 'Realtime', 'Capacitor', 'Row Level Security'],
+    links: [
+      { label: 'GitHub Repository', url: 'https://github.com/MokuLakshithReddy/campus-connect', type: 'primary' },
+      { label: 'Android Releases', url: 'https://github.com/MokuLakshithReddy/campus-connect/releases', type: 'external' }
+    ],
+    problemStatement: {
+      overview: 'Students often have to search across disconnected chats and notices to find club activities, project teams and campus events. CampusConnect brings club workspaces, announcements, discussions, event registration and attendance into one college-focused web and Android experience.',
+      challenges: [
+        'Separating student, club-organizer and college-administrator permissions.',
+        'Keeping membership, event capacity and attendance records consistent in a relational database.',
+        'Giving each club dedicated spaces for announcements, discussion, project work and events.',
+        'Supporting both a responsive web experience and an Android distribution path.'
+      ],
+      corePrinciple: 'Campus communities need clear roles and structured spaces, with sensitive operations enforced at the data layer rather than trusted to the client UI.'
+    },
+    workflow: [
+      { step: '01', title: 'VERIFY', description: 'Authenticate students and associate profiles with college identity and roles.' },
+      { step: '02', title: 'DISCOVER', description: 'Browse clubs, campus announcements, workshops and events.' },
+      { step: '03', title: 'PARTICIPATE', description: 'Request membership and collaborate in club announcement, discussion and project spaces.' },
+      { step: '04', title: 'REGISTER', description: 'Register for events while respecting published capacity limits.' },
+      { step: '05', title: 'CHECK IN', description: 'Present a unique QR attendance pass for organizer verification.' }
+    ],
+    architectureDiagram: `React Web / Capacitor Android Client
+                 |
+                 v
+          Supabase Auth
+                 |
+                 v
+       Role-aware Application
+                 |
+          Supabase Client
+                 |
+       +---------+----------+
+       |                    |
+       v                    v
+ PostgreSQL + RLS      Supabase Realtime
+       |
+       +-- Profiles and roles
+       +-- Clubs and memberships
+       +-- Channels and messages
+       +-- Events and registrations
+       +-- QR attendance records
+                 |
+                 v
+          Supabase Storage`,
+    architectureDetails: [
+      { title: 'Client Applications', description: 'Uses React and TypeScript for the web interface and Capacitor for the Android application.' },
+      { title: 'Authentication & Profiles', description: 'Connects authenticated users to student profiles, academic context and role information.' },
+      { title: 'Relational Data Model', description: 'Stores clubs, memberships, channels, messages, events and registrations in PostgreSQL.' },
+      { title: 'Authorization', description: 'Uses PostgreSQL Row Level Security policies to enforce access boundaries for students, organizers and administrators.' },
+      { title: 'Live Collaboration', description: 'Uses Supabase Realtime for community communication and Supabase Storage for uploaded assets.' }
+    ],
+    implementationTable: [
+      { area: 'Frontend', implementation: 'React, TypeScript, Tailwind CSS and Radix-based UI components' },
+      { area: 'Mobile', implementation: 'Capacitor Android runtime and release workflow' },
+      { area: 'Authentication', implementation: 'Supabase Auth connected to student profile records' },
+      { area: 'Authorization', implementation: 'PostgreSQL Row Level Security and role-aware policies' },
+      { area: 'Campus Workspaces', implementation: 'Club announcements, discussion, project rooms and event spaces' },
+      { area: 'Event Operations', implementation: 'Capacity-aware registration and QR attendance passes' }
+    ],
+    evidence: {
+      ciDate: 'Check the live repository Actions history',
+      ciStatus: 'Current release readiness must be confirmed against the latest CI run',
+      metrics: [],
+      executedEvidence: [],
+      projectReportedResults: [
+        'The repository documents web and Android workflows, database-backed campus features and a published release history; verify the latest artifact on the Releases page before distributing it.'
+      ],
+      outstandingValidation: [
+        'Verify the latest Android APK and its release notes before sharing a download link.',
+        'Run live Supabase integration checks against the intended staging or production project.',
+        'Review Row Level Security policies whenever the data model or role permissions change.'
+      ],
+      evidenceLinks: [
+        { label: 'Public GitHub Repository', url: 'https://github.com/MokuLakshithReddy/campus-connect', type: 'github' },
+        { label: 'GitHub Actions', url: 'https://github.com/MokuLakshithReddy/campus-connect/actions', type: 'ci' },
+        { label: 'Android Release History', url: 'https://github.com/MokuLakshithReddy/campus-connect/releases', type: 'external' }
+      ]
+    },
+    limitations: [
+      'A working deployment depends on a correctly configured Supabase project and its environment variables.',
+      'Live database and realtime behaviour must be validated against the target Supabase environment, not inferred from a local build.',
+      'QR attendance should be tested for token integrity, replay handling and organizer authorization before use at a live event.'
+    ],
+    projectOutcome: 'A full-stack campus platform that combines student communities, structured club collaboration and event operations across web and Android clients.'
   }
 ]
 
+const featuredProjectOrder = [
+  'secret-leak-detector', 'scandium-assistant', 'campus-connect',
+  'local-ai-execution-agent', 'thinkmate', 'cluely-copilot',
+  'autonomous-ai-coding-orchestrator', 'bluecarbon-registry',
+]
+caseStudies.sort((a, b) => featuredProjectOrder.indexOf(a.slug) - featuredProjectOrder.indexOf(b.slug))
+caseStudies.forEach((study, index) => { study.number = String(index + 1).padStart(2, '0') })
