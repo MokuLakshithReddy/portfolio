@@ -1,4 +1,4 @@
-const SITE_URL = (import.meta.env.VITE_SITE_URL || 'https://portfolio-beta-roan-97.vercel.app').replace(/\/+$/, '')
+const SITE_URL = (import.meta.env.VITE_SITE_URL || 'https://lakshith-reddy.vercel.app').replace(/\/+$/, '')
 const SOCIAL_IMAGE = `${SITE_URL}/images/portfolio-social-card.png`
 
 interface PageMetadata {
