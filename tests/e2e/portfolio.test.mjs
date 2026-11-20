@@ -223,16 +223,22 @@ test('brand monogram replaces the folder icon and links to the homepage', async 
   }
 })
 
-test('contact section provides verified public contact channels and availability', async () => {
+test('contact section renders the original message form and direct channels without availability copy', async () => {
   const page = await createPage()
   try {
     await page.goto(baseUrl, { waitUntil: 'domcontentloaded' })
+    const contact = await page.$eval('#contact', element => element.innerText)
     const linkedIn = await page.$('#contact a[href="https://www.linkedin.com/in/lakshith-reddy/"]')
     const github = await page.$('#contact a[href="https://github.com/MokuLakshithReddy"]')
     assert.ok(linkedIn, 'Expected a working LinkedIn contact route')
     assert.ok(github, 'Expected a working GitHub profile route')
-    assert.match(await page.$eval('#contact', element => element.innerText), /Remote · Part-time · 15–20 hrs\/week/)
-    assert.equal(await page.$('#contact-name'), null, 'Do not render a form with an unconfigured destination')
+    for (const fieldId of ['contact-name', 'contact-email', 'contact-message']) {
+      assert.ok(await page.$(`#${fieldId}`), `Missing form field ${fieldId}`)
+      assert.ok(await page.$(`label[for="${fieldId}"]`), `Missing accessible label for ${fieldId}`)
+    }
+    assert.ok(await page.$('#contact button[type="submit"]'), 'Expected a message submit button')
+    assert.doesNotMatch(contact, /availability|15–20|part-time|remote/i)
+    assert.doesNotMatch(contact, /contact@lakshithreddy\.dev/i)
   } finally {
     await page.close()
   }
